@@ -1,0 +1,17 @@
+@import "variables-functions-and-mixins";
+
+::selection { background: rgba($green-color, .5); }
+
+.align-right { text-align: right; }
+.align-left { text-align: left; }
+.align-center { text-align: center; }
+.padding-left-right-0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+@import 'media';
+@import "fonts";

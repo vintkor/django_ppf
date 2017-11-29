@@ -1,0 +1,332 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.mb-60 {
+  margin-bottom: 60px;
+}
+
+.mb-70 {
+  margin-bottom: 70px;
+}
+
+.mb-80 {
+  margin-bottom: 80px;
+}
+
+.mb-90 {
+  margin-bottom: 90px;
+}
+
+.mb-100 {
+  margin-bottom: 100px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-40 {
+  margin-top: 40px;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.mt-60 {
+  margin-top: 60px;
+}
+
+.mt-70 {
+  margin-top: 70px;
+}
+
+.mt-80 {
+  margin-top: 80px;
+}
+
+.mt-90 {
+  margin-top: 90px;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+::-moz-selection {
+  background: rgba(84, 165, 97, 0.5);
+}
+
+::selection {
+  background: rgba(84, 165, 97, 0.5);
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.padding-left-right-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+body {
+  background: #f6f6f6;
+}
+
+.squares .container-fluid,
+.header .container-fluid,
+.info .container-fluid {
+  max-width: 1600px;
+}
+
+.header {
+  z-index: 2;
+  position: fixed;
+  -webkit-transition: .2s;
+  transition: .2s;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.header__pinned {
+  background: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.heeader-nav__ul {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.heeader-nav__li {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+
+.heeader-nav__link {
+  display: inline-block;
+  position: relative;
+  padding: 20px 30px;
+  color: #000;
+}
+
+.heeader-nav__link:hover {
+  text-decoration: none;
+}
+
+.square__center {
+  background: #e5f5ff;
+  height: 100vh;
+  max-height: 1000px;
+  min-height: 800px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.square__center:after, .square__center:before {
+  left: 0;
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-position: center bottom;
+}
+
+.square__center:before {
+  bottom: -1px;
+  background-image: url("https://avatanplus.com/files/resources/mid/57235c66365691546220ef4f.png");
+  z-index: 2;
+  height: 200px;
+}
+
+.square__not-center {
+  height: 50vh;
+  max-height: 500px;
+  background: #fff;
+  min-height: 400px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.square__not-center.active .square__image {
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.square__image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  position: absolute;
+  top: 40%;
+  margin-top: -100px;
+  left: 50%;
+  margin-left: -100px;
+  height: 200px;
+  width: 200px;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  -webkit-transition: 1.5s;
+  transition: 1.5s;
+}
+
+.square__title {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.square__1 {
+  background: #f3f8ff;
+}
+
+.square__2 {
+  background: #d2e6f4;
+}
+
+.square__3 {
+  background: #d7f3ff;
+}
+
+.square__4 {
+  background: #f0ffff;
+}
+
+#typed {
+  font-size: 30px;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.typed-cursor {
+  color: #000;
+  font-size: 30px;
+  font-weight: 700;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.accent {
+  color: #54a561;
+}
+
+#cloud {
+  left: 0;
+  display: block;
+  position: absolute;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  top: 0;
+  height: 250px;
+  background-image: url("http://clipart-db.ru/file_content/rastr/cloud_010.png");
+  background-size: cover;
+  -webkit-transition: .05s;
+  transition: .05s;
+}
+
+.info {
+  background: #a2d1f3;
+  overflow: hidden;
+  position: relative;
+}
+
+.info:before {
+  display: block;
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: -2000px;
+  background: #5aadea;
+}
+
+.info__wrapper {
+  padding: 30px 15px;
+}
+
+.info__news {
+  background: #90c8f1;
+}
+
+.info__objects {
+  background: #7ebfee;
+}
+
+.info__callbac {
+  background: #6cb6ec;
+}
+
+.info__title {
+  margin-top: 0;
+}
+
+/*# sourceMappingURL=../css/main.css.map */

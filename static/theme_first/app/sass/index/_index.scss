@@ -1,0 +1,178 @@
+body {
+    background: #f6f6f6;
+}
+
+.squares .container-fluid,
+.header .container-fluid,
+.info .container-fluid {
+    max-width: 1600px;
+}
+
+.header {
+    z-index: 2;
+    position: fixed;
+    transition: .2s;
+    top: 0;
+    left: 0;
+    right: 0;
+    &__pinned {
+        background: $white-color;
+        box-shadow: 0 0 5px rgba($black-color, .2);
+    }
+}
+
+.heeader-nav {
+    &__ul {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    &__li {
+        list-style: none;
+        display: inline-block;
+        position: relative;
+    }
+    &__link {
+        display: inline-block;
+        position: relative;
+        padding: 20px 30px;
+        color: $black-color;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.square {
+    &__center {
+        background: #e5f5ff;
+        height: 100vh;
+        max-height: 1000px;
+        min-height: 800px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        flex-direction: column;
+        &:after,
+        &:before {
+            left: 0;
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            background-repeat: repeat-x;
+            background-position: center bottom;
+        }
+        &:before {
+            bottom: -1px;
+            background-image: url('https://avatanplus.com/files/resources/mid/57235c66365691546220ef4f.png');
+            z-index: 2;
+            height: 200px;
+        }
+    }
+    &__not-center {
+        height: 50vh;
+        max-height: 500px;
+        background: $white-color;
+        min-height: 400px;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        &.active {
+            .square__image {
+                transform: scale(1.1);
+                box-shadow: 0 0 20px rgba($black-color, .2);
+            }
+        }
+    }
+    &__image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center bottom;
+        position: absolute;
+        top: 40%;
+        margin-top: -100px;
+        left: 50%;
+        margin-left: -100px;
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        transition: 1.5s;
+    }
+    &__title {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        height: 70px;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+    &__1 { background: #f3f8ff; }
+    &__2 { background: #d2e6f4; }
+    &__3 { background: #d7f3ff; }
+    &__4 { background: #f0ffff; }
+}
+
+#typed {
+    font-size: 30px;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.typed-cursor {
+    color: $black-color;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.accent {
+    color: $green-color;
+}
+
+#cloud {
+    left: 0;
+    display: block;
+    position: absolute;
+    width: 100%;
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    top: 0;
+    height: 250px;
+    background-image: url('http://clipart-db.ru/file_content/rastr/cloud_010.png');
+    background-size: cover;
+    transition: .05s;
+}
+
+.info {
+    background: $bg-color;
+    overflow: hidden;
+    position: relative;
+    &:before {
+        display: block;
+        position: absolute;
+        content: '';
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        right: -2000px;
+        background: darken($bg-color, 16%);
+    }
+    &__wrapper {
+        padding: 30px 15px;
+    }
+    &__news {
+        background: darken($bg-color, 4%);
+    }
+    &__objects {
+        background: darken($bg-color, 8%);
+    }
+    &__callbac {
+        background: darken($bg-color, 12%);
+    }
+    &__title {
+        margin-top: 0;
+    }
+}

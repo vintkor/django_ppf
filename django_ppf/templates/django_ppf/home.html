@@ -1,0 +1,73 @@
+{% extends 'theme_first_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="squares">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-md-push-3 padding-left-right-0">
+        <div class="square square__center">
+          <div id="cloud"></div>
+          <img src="{% static '/theme_first/app/' %}img/logo-500px.png" class="square__logo" alt="Компания ППФ логотип">
+          <div>
+            <div id="typed-strings">
+              <p class="demo"><span class="accent">Самый большой</span> выбор кровельных и <br>фасадных материалов</p>
+              <p class="demo"><span class="accent">Огромный ассортимент</span> материалов <br>для внутренних работ</p>
+              <p class="demo"><span class="accent">10 лет</span> на строительном рынке</p>
+              <p class="demo">Более <span class="accent">2000</span> выполненых объектов <br>по всей Украине</p>
+              <p class="demo"><span class="accent">Бесплатный</span> расчёт и <br>грамотная консультация</p>
+            </div>
+            <span id="typed" style="white-space:pre;"></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-md-pull-6 padding-left-right-0">
+        <div class="row">
+            {% for category in categories %}
+                {% if forloop.counter == 1 or forloop.counter == 2 %}
+          <div class="col-md-12">
+            <div class="square square__not-center square__{{ category.id }}">
+              <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
+              <h2 class="square__title">{{ category.title }}</h2>
+            </div>
+          </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-3 padding-left-right-0">
+        <div class="row">
+            {% for category in categories %}
+                {% if forloop.counter == 3 or forloop.counter == 4 %}
+          <div class="col-md-12">
+            <div class="square square__not-center square__{{ category.id }}">
+              <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
+              <h2 class="square__title">{{ category.title }}</h2>
+            </div>
+          </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 info__wrapper info__news">
+        <h3 class="info__title">Новости</h3>
+      </div>
+      <div class="col-md-4 info__wrapper info__objects">
+        <h3 class="info__title">Наши объекты</h3>
+      </div>
+      <div class="col-md-4 info__wrapper info__callbac">
+        <h3 class="info__title">Обратная связь</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
