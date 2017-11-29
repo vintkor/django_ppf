@@ -3,7 +3,7 @@ from django_ppf.basemodel import BaseModel
 from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
 from mptt.models import MPTTModel, TreeForeignKey
-
+from django.shortcuts import reverse
 
 def set_image_name(instanse, filename):
     name = get_random_string(40)
@@ -29,3 +29,6 @@ class Category(BaseModel, MPTTModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('catalog-category', args=[str(self.id)])

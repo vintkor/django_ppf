@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -6,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}PPF Company{% endblock title %}</title>
+  <title>{% block title %}{% trans 'PPF Company' %}{% endblock title %}</title>
   <link rel="stylesheet" href="{% static '/theme_first/app/' %}css/libs.css">
   <link rel="stylesheet" href="{% static '/theme_first/app/' %}css/main.css">
 
@@ -27,10 +28,10 @@
       <div class="col-md-6">
         <nav class="heeader-nav">
           <ul class="heeader-nav__ul">
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Главная</a></li>
+            <li class="heeader-nav__li"><a class="heeader-nav__link" href="/">{% trans 'Home' %}</a></li>
             <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Lorem 2</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Каталог</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Контакты</a></li>
+            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Catalog' %}</a></li>
+            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Contact us' %}</a></li>
             <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Кабинет диллера</a></li>
           </ul>
         </nav>
