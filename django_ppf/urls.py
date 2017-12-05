@@ -18,9 +18,18 @@ from django.contrib import admin
 from django_ppf.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
 from .views import HomeView
+from django.conf import settings
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^catalog/', include('catalog.urls')),
+    url(r'^our-objects/', include('geo.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

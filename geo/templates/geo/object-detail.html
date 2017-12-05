@@ -1,0 +1,16 @@
+{% extends 'theme_first_base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+{% block META_DESC %}{{ object.meta_description }}{% endblock %}
+{% block META_KEY %}{{ object.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block content %}
+    {{ object.title }}
+    <hr>
+    {% for image in object.objectimage_set.all %}
+        <p><img src="{{ image.image.url }}" alt="{{ image.title }}"></p>
+    {% endfor %}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

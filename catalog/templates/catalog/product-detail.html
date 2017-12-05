@@ -1,0 +1,14 @@
+{% extends 'theme_first_base.html' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+{% block META_DESC %}{{ product.meta_description }}{% endblock %}
+{% block META_KEY %}{{ product.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block content %}
+    {{ product.title }}
+    <hr>
+    {{ product.text }}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

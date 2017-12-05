@@ -1,5 +1,5 @@
-from django.views.generic import ListView
-from .models import Category
+from django.views.generic import ListView, DetailView
+from .models import Category, Product
 
 
 class CategoryListView(ListView):
@@ -10,3 +10,9 @@ class CategoryListView(ListView):
     def get_queryset(self):
         category = Category.objects.get(pk=self.kwargs.get('pk'))
         return category
+
+
+class ProductDetailView(DetailView):
+    template_name = 'catalog/product-detail.html'
+    context_object_name = 'product'
+    model = Product

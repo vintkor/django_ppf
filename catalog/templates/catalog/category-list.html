@@ -1,8 +1,8 @@
 {% extends 'theme_first_base.html' %}
 
 {% block title %}{{ category.title }}{% endblock %}
-{% block description %}{% endblock %}
-{% block keywords %}{% endblock %}
+{% block META_DESC %}{{ category.meta_description }}{% endblock %}
+{% block META_KEY %}{{ category.meta_keywords }}{% endblock %}
 {% block header_scripts %}{% endblock %}
 
 {% block content %}
