@@ -1,0 +1,14 @@
+{% extends 'theme_first_base.html' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+{% block META_DESC %}{{ news.meta_description }}{% endblock %}
+{% block META_KEY %}{{ news.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block content %}
+    {{ news.title }}
+    <hr>
+    {{ news.text }}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

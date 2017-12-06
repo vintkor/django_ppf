@@ -25,7 +25,7 @@
       <div class="col-md-3 col-md-pull-6 padding-left-right-0">
         <div class="row">
             {% for category in categories %}
-                {% if forloop.counter == 1 or forloop.counter == 2 %}
+                {% if forloop.counter == 1 or forloop.counter == 3 %}
           <div class="col-md-12">
             <div class="square square__not-center square__{{ category.id }}">
               <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
@@ -39,7 +39,7 @@
       <div class="col-md-3 padding-left-right-0">
         <div class="row">
             {% for category in categories %}
-                {% if forloop.counter == 3 or forloop.counter == 4 %}
+                {% if forloop.counter == 2 or forloop.counter == 4 %}
           <div class="col-md-12">
             <div class="square square__not-center square__{{ category.id }}">
               <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'profile',
     'catalog',
     'geo',
+    'news',
 ]
 
 MIDDLEWARE = [

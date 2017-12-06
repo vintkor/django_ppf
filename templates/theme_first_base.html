@@ -31,10 +31,10 @@
         <nav class="heeader-nav">
           <ul class="heeader-nav__ul">
             <li class="heeader-nav__li"><a class="heeader-nav__link" href="/">{% trans 'Home' %}</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Lorem 2</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Catalog' %}</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Contact us' %}</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">Кабинет диллера</a></li>
+            <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a></li>
+              <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'news-list' %}">{% trans 'News' %}</a></li>
+            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Cabinet of partner' %}</a></li>
+              <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Contact us' %}</a></li>
           </ul>
         </nav>
       </div>

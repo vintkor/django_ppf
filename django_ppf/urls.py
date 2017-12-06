@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^catalog/', include('catalog.urls')),
     url(r'^our-objects/', include('geo.urls')),
+    url(r'^news/', include('news.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 
