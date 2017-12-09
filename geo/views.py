@@ -9,7 +9,8 @@ class RegionRootView(View):
     template_name = 'geo/geo-root.html'
 
     def get(self, request, *args, **kwargs):
-        regions = Region.objects.filter(code__iregex='UA')
+        regions_all = Region.objects.filter(code__iregex='UA')
+        regions = [item for item in regions_all if item.count_objects() > 0]
         categories = Category.objects.filter(level=0)
         context = {
             'regions': regions,
