@@ -32,6 +32,7 @@ INTERNAL_IPS = '127.0.0.1'
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,11 +42,17 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'mptt',
+    'ckeditor',
+    'ckeditor_uploader',
+    'rangefilter',
 
     'profile',
     'catalog',
     'geo',
     'news',
+    'currency',
+    'catalog_prom',
+    'partners',
 ]
 
 MIDDLEWARE = [
@@ -140,4 +147,5 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 MPTT_ADMIN_LEVEL_INDENT = 20
