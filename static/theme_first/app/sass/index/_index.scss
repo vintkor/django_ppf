@@ -49,12 +49,8 @@ body {
         height: 100vh;
         max-height: 1000px;
         min-height: 800px;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
         position: relative;
         overflow: hidden;
-        flex-direction: column;
         &:after,
         &:before {
             left: 0;
@@ -67,10 +63,21 @@ body {
         }
         &:before {
             bottom: -1px;
-            background-image: url('https://avatanplus.com/files/resources/mid/57235c66365691546220ef4f.png');
+            background-image: url('../img/gress.png');
             z-index: 2;
             height: 200px;
         }
+    }
+    &__logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20%;
+    }
+    &__info {
+        position: absolute;
+        left: 30%;
+        top: 70%;
     }
     &__not-center {
         height: 50vh;
@@ -141,7 +148,7 @@ body {
     background-position: center bottom;
     top: 0;
     height: 250px;
-    background-image: url('http://clipart-db.ru/file_content/rastr/cloud_010.png');
+    background-image: url('../img/cloud.png');
     background-size: cover;
     transition: .05s;
 }

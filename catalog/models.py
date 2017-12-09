@@ -45,7 +45,7 @@ class Category(BaseModel, MPTTModel):
 
 
 class Product(BaseModel):
-    category = models.ForeignKey(Category, verbose_name=_('Category'))
+    category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Product'))
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
     text = models.TextField(verbose_name=_('Text'), blank=True, null=True)

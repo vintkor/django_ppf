@@ -46,7 +46,7 @@ class Region(MPTTModel, BaseModel):
 
 
 class ObjectPPF(BaseModel):
-    region = models.ForeignKey(Region, verbose_name=_('Region'))
+    region = models.ForeignKey(Region, verbose_name=_('Region'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)

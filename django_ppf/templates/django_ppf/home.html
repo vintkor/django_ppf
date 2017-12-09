@@ -10,7 +10,7 @@
         <div class="square square__center">
           <div id="cloud"></div>
           <img src="{% static '/theme_first/app/' %}img/logo-500px.png" class="square__logo" alt="Компания ППФ логотип">
-          <div>
+          <div class="square__info">
             <div id="typed-strings">
               <p class="demo"><span class="accent">Самый большой</span> выбор кровельных и <br>фасадных материалов</p>
               <p class="demo"><span class="accent">Огромный ассортимент</span> материалов <br>для внутренних работ</p>
@@ -26,12 +26,7 @@
         <div class="row">
             {% for category in categories %}
                 {% if forloop.counter == 1 or forloop.counter == 3 %}
-          <div class="col-md-12">
-            <div class="square square__not-center square__{{ category.id }}">
-              <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
-              <h2 class="square__title"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></h2>
-            </div>
-          </div>
+                    {% include 'catalog/partials/_category.html' %}
                 {% endif %}
             {% endfor %}
         </div>
@@ -40,12 +35,7 @@
         <div class="row">
             {% for category in categories %}
                 {% if forloop.counter == 2 or forloop.counter == 4 %}
-          <div class="col-md-12">
-            <div class="square square__not-center square__{{ category.id }}">
-              <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
-              <h2 class="square__title"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></h2>
-            </div>
-          </div>
+                    {% include 'catalog/partials/_category.html' %}
                 {% endif %}
             {% endfor %}
         </div>
