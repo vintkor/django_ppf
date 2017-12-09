@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{% trans 'PPF Company' %}{% endblock title %}</title>
+  <title>{% block title %}{% endblock title %} &rarr; {% trans 'PPF Company' %}  &rarr; Кровельные и фасадны материалы</title>
   <meta name="description" content="{% block META_DESC %}{% endblock %}">
   <meta name="keywords" content="{% block META_KEY %}{% endblock %}">
   <link rel="stylesheet" href="{% static '/theme_first/app/' %}css/libs.css">
@@ -21,29 +21,35 @@
   <![endif]-->
 
 </head>
-<body>
+<body class="{% block body %}home{% endblock body %}">
 
 <header class="header">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <nav class="heeader-nav">
-          <ul class="heeader-nav__ul">
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="/">{% trans 'Home' %}</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a></li>
-              <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'news-list' %}">{% trans 'News' %}</a></li>
-            <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Cabinet of partner' %}</a></li>
-              <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Contact us' %}</a></li>
-          </ul>
-        </nav>
+      <div class="header__wrap">
+          <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+              <nav class="heeader-nav">
+                  <ul class="heeader-nav__ul">
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="/">{% trans 'Home' %}</a></li>
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a></li>
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'news-list' %}">{% trans 'News' %}</a></li>
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="{% url 'geo-root' %}">{% trans 'Our objects' %}</a></li>
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Cabinet of partner' %}</a></li>
+                      <li class="heeader-nav__li"><a class="heeader-nav__link" href="#">{% trans 'Contact us' %}</a></li>
+                  </ul>
+              </nav>
+          </div>
+          <div class="col-md-3"></div>
       </div>
-      <div class="col-md-3"></div>
     </div>
   </div>
 </header>
 
 {% block content %}{% endblock content %}
+
+{% include 'django_ppf/partials/_pre-footer.html' %}
+{% include 'django_ppf/partials/_footer.html' %}
 
 <script src="{% static '/theme_first/app/' %}js/libs.min.js"></script>
 <script src="http://www.mattboldt.com/typed.js/lib/typed.min.js"></script>

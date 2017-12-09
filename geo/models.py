@@ -21,11 +21,12 @@ def set_object_image_name(instanse, filename):
     return path
 
 
-class Region(MPTTModel, BaseModel):
+class Region(BaseModel, MPTTModel):
     parent = TreeForeignKey(
         'self', verbose_name=_('Parent region'), null=True, blank=True,
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Title'))
+    code = models.CharField(max_length=15, blank=True, null=True, default=None, unique=True)
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_region_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
@@ -44,6 +45,10 @@ class Region(MPTTModel, BaseModel):
     def get_absolute_url(self):
         return reverse('geo-region', args=[str(self.id)])
 
+    def count_objects(self):
+        objects = ObjectPPF.objects.all()
+        return len([obj for obj in objects if obj.region.get_ancestors(ascending=False).first() == self])
+
 
 class ObjectPPF(BaseModel):
     region = models.ForeignKey(Region, verbose_name=_('Region'), on_delete=models.CASCADE)
@@ -53,6 +58,7 @@ class ObjectPPF(BaseModel):
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     products = models.ManyToManyField(Product, verbose_name=_('Products'))
+    favorite = models.BooleanField(verbose_name=_('Favorite objects'), default=False)
 
     class Meta:
         verbose_name = _('Object')

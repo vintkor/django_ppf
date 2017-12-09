@@ -1,5 +1,26 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from .models import Region, ObjectPPF
+from catalog.models import Category
+from django.shortcuts import render
+from django.http import JsonResponse
+
+
+class RegionRootView(View):
+    template_name = 'geo/geo-root.html'
+
+    def get(self, request, *args, **kwargs):
+        regions = Region.objects.filter(code__iregex='UA')
+        categories = Category.objects.filter(level=0)
+        context = {
+            'regions': regions,
+            'categories': categories,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        code = request.POST.get('code')
+        id = Region.objects.get(code=code).id
+        return JsonResponse({'id': id})
 
 
 class RegionListView(ListView):

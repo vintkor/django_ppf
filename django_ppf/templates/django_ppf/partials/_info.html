@@ -1,0 +1,19 @@
+{% load ppf_tags %}
+{% load i18n %}
+
+<section class="info">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 info__wrapper info__news">
+                <h3 class="info__title">{% trans 'Last news' %}</h3>
+                {% last_news %}
+            </div>
+            <div class="col-md-4 info__wrapper info__objects">
+                <h3 class="info__title">{% trans 'Our objects' %}</h3>
+            </div>
+            <div class="col-md-4 info__wrapper info__callbac">
+                <h3 class="info__title">{% trans 'Feedback' %}</h3>
+            </div>
+        </div>
+    </div>
+</section>

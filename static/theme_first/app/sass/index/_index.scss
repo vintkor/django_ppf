@@ -2,12 +2,6 @@ body {
     background: #f6f6f6;
 }
 
-.squares .container-fluid,
-.header .container-fluid,
-.info .container-fluid {
-    max-width: 1600px;
-}
-
 .header {
     z-index: 2;
     position: fixed;
@@ -76,7 +70,7 @@ body {
     }
     &__info {
         position: absolute;
-        left: 30%;
+        left: 20%;
         top: 70%;
     }
     &__not-center {
@@ -121,6 +115,14 @@ body {
     &__2 { background: #d2e6f4; }
     &__3 { background: #d7f3ff; }
     &__4 { background: #f0ffff; }
+    &__link {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
 }
 
 #typed {
@@ -154,32 +156,55 @@ body {
 }
 
 .info {
-    background: $bg-color;
+    //background: $bg-color;
     overflow: hidden;
     position: relative;
-    &:before {
-        display: block;
-        position: absolute;
-        content: '';
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        right: -2000px;
-        background: darken($bg-color, 16%);
-    }
+    //&:before {
+    //    display: block;
+    //    position: absolute;
+    //    content: '';
+    //    top: 0;
+    //    bottom: 0;
+    //    left: 50%;
+    //    right: -2000px;
+    //    background: darken($bg-color, 16%);
+    //}
     &__wrapper {
         padding: 30px 15px;
     }
     &__news {
         background: darken($bg-color, 4%);
+        min-height: 300px;
+        position: relative;
     }
     &__objects {
         background: darken($bg-color, 8%);
+        min-height: 300px;
     }
     &__callbac {
         background: darken($bg-color, 12%);
+        min-height: 300px;
     }
     &__title {
         margin-top: 0;
+    }
+    .owl-next,
+    .owl-prev {
+        display: block;
+        position: absolute;
+        top: -33px;
+        color: darken($white-color, 8%);
+    }
+    .owl-next {
+        right: 10px;
+    }
+    .owl-prev {
+        right: 50px;
+    }
+}
+
+.last-news {
+    &__content {
+        margin-bottom: 20px;
     }
 }

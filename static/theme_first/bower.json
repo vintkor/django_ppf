@@ -19,6 +19,7 @@
   "devDependencies": {
     "bootstrap": "^3",
     "jquery": "^3",
-    "typed.js": "^2.0.6"
+    "typed.js": "^2.0.6",
+    "owl.carousel": "owl-carousel2#^2.2.1"
   }
 }

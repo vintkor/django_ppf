@@ -1,0 +1,66 @@
+{% extends 'theme_first_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Our objects' %}{% endblock %}
+{% block META_DESC %}{{ object.meta_description }}{% endblock %}
+{% block META_KEY %}{{ object.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block body %}geo-root{% endblock body %}
+
+{% block content %}
+
+<section class="geo">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="geo__map">
+                <h1 class="text-center mb-40 geo__title">{% trans 'Select region for looking our objects' %}</h1>
+                {% include 'geo/partials/_ukraine.svg' %}
+            </div>
+        </div>
+        <div class="row geo__products">
+            {% for category in categories %}
+                <div class="col-md-3 without-padding">
+                    <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% include 'django_ppf/partials/_info.html' %}
+
+{% endblock content %}
+
+{% block footer_scripts %}
+<script>
+    var regions = [
+        {% for region in regions %}
+            "{{ region.code }}",
+        {% endfor %}
+    ];
+
+    regions.forEach(function (item) {
+        $('#' + item).addClass('is_objects')
+    });
+
+    $('.land.is_objects').click(function (e) {
+        e.preventDefault();
+        var code = $(this).attr('id');
+
+        $.ajax({
+            url: "{% url 'geo-root' %}?code=" + code,
+            method: 'POST',
+            dataType: 'json',
+            data: {'code': code},
+            success: function (data) {
+                console.log(data.id);
+                location.href = "{% url 'geo-region' 2 %}".replace(2, data.id);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    });
+</script>
+{% endblock %}

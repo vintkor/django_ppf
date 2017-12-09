@@ -11,12 +11,13 @@ class ObjectImageInline(admin.TabularInline):
 
 @admin.register(Region)
 class RegionAdmin(DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title',)
+    list_display = ('tree_actions', 'indented_title', 'code', 'count_objects')
 
 
 @admin.register(ObjectPPF)
 class ObjectPPFAdmin(admin.ModelAdmin):
-    list_display = ('title', 'region')
-    list_filter = ('region',)
+    list_display = ('title', 'region', 'favorite')
+    list_filter = ('region', 'favorite')
     search_fields = ('title',)
     inlines = (ObjectImageInline,)
+    list_editable = ('favorite',)

@@ -1,0 +1,15 @@
+.pre-footer {
+  &__bg {
+    //background: $bg-color;
+    background: lighten($main-color, 15%);
+    padding: 30px 0;
+    height: 300px;
+  }
+}
+
+.footer {
+  &__bg {
+    background: lighten($main-color, 10%);
+    padding: 15px 0;
+  }
+}
