@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from catalog_prom.views import CatalogList, CatalogDetail, CatalogSearch, CatalogForPromXLSX, CatalogCategoryList
+from assistant.views import CatalogList, CatalogDetail, CatalogSearch, CatalogForPromXLSX, CatalogCategoryList
 
 
 urlpatterns = [

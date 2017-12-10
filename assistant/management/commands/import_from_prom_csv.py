@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 import csv
-from catalog_prom.models import Product
+from assistant.models import Product
 from urllib.request import urlopen
 from django.core.files.images import ImageFile
 from django.core.files.temp import NamedTemporaryFile

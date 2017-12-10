@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^catalog/', include('catalog.urls')),
-    url(r'^assistant/', include('catalog_prom.urls')),
+    url(r'^assistant/', include('assistant.urls')),
     url(r'^partners/', include('partners.urls')),
     url(r'^our-objects/', include('geo.urls')),
     url(r'^news/', include('news.urls')),

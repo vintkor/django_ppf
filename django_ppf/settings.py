@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'geo',
     'news',
     'currency',
-    'catalog_prom',
+    'assistant',
     'partners',
 ]
 

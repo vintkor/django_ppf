@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from catalog_prom.models import Product, Feature, Category
+from assistant.models import Product, Feature, Category
 from partners.models import Region
 from xlsxwriter import Workbook
 from django.http import HttpResponse

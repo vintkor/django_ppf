@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from partners.models import Provider, Branch, File
-from catalog_prom.models import Product, Delivery
+from assistant.models import Product, Delivery
 
 
 def get_providers(request):
