@@ -17,7 +17,6 @@ $('document').ready(function(){
         }
         return cookieValue;
     }
-
   function csrfSafeMethod(method) {
       // these HTTP methods do not require CSRF protection
       return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -47,7 +46,9 @@ $('document').ready(function(){
       }
   });
 
-  // Добавляем клас к header при скроле
+
+  // ---------------------------------- Добавляем клас к header при скроле ----------------------------------
+
   $(document).scroll(function() {
     var scrollWindow = $(document).scrollTop();
     if(scrollWindow > 40){
@@ -61,7 +62,7 @@ $('document').ready(function(){
     $(this).toggleClass('active');
   });
 
-  // Cloud parralax
+  // ---------------------------------- Cloud parralax ----------------------------------
   var cloud = $('#cloud');
   $('body').mousemove(function(event) {
     cloud.css({
@@ -69,7 +70,7 @@ $('document').ready(function(){
     });
   });
 
-  //  Widget last news
+  //  ---------------------------------- Widget last news ----------------------------------
 
     $(".last-news").owlCarousel({
         items: 1,
@@ -80,17 +81,20 @@ $('document').ready(function(){
         navText: ['&larr;', '&rarr;'],
     });
 
-  var typed = new Typed("#typed", {
-    stringsElement: '#typed-strings',
-    typeSpeed: 60,
-    backSpeed: 20,
-    backDelay: 500,
-    startDelay: 1000,
-    loop: true
-  });
-
-
-
-
-  
 });
+
+
+(function () {
+    try {
+        new Typed("#typed", {
+            stringsElement: '#typed-strings',
+            typeSpeed: 60,
+            backSpeed: 20,
+            backDelay: 500,
+            startDelay: 1000,
+            loop: true
+        });
+    } catch(e){}
+}());
+
+waterfall('.my-grid');

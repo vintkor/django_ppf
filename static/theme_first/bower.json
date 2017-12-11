@@ -20,6 +20,7 @@
     "bootstrap": "^3",
     "jquery": "^3",
     "typed.js": "^2.0.6",
-    "owl.carousel": "owl-carousel2#^2.2.1"
+    "owl.carousel": "owl-carousel2#^2.2.1",
+    "waterfall": "^1.1.0"
   }
 }

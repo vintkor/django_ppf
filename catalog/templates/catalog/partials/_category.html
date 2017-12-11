@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <div class="square square__not-center square__{{ category.id }}">
-        <div class="square__image" style="background-image: url('{{ category.image.url }}');"></div>
+        <div class="square__image" style="background-image: url('{% if category.image %}{{ category.image.url }}{% endif %}');"></div>
         <h2 class="square__title">{{ category.title }}</h2>
         <a href="{{ category.get_absolute_url }}" class="square__link"></a>
     </div>

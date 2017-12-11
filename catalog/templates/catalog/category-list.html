@@ -8,7 +8,56 @@
 {% block body %}category-list{% endblock body %}
 
 {% block content %}
-    {{ category.title }}
+
+<section class="page-title">
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="page-title__title align-center">{{ category.title }}</h1>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="filter">
+                {% for category in children %}
+                    <h4><a class="filter__link" href="{{ category.get_absolute_url }}">{{ category.title }}</a></h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="products">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="products__grid">
+                {% for product in products %}
+                <div class="product">
+                    <div class="product__body">
+                        <div class="product__image" style="background-image: url('{{ product.image.url }}');"></div>
+                    </div>
+                    <div class="product__footer">
+                        <h2 class="product__title">{{ product.title }}</h2>
+                    </div>
+                    <a class="product__link" href="{{ product.get_absolute_url }}"></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'django_ppf/partials/_info.html' %}
+
+    <style>
+    .item {
+        width: 200px;
+        height: 300px;
+        background: #dee;
+    }
+    </style>
 {% endblock %}
 
 {% block footer_scripts %}{% endblock %}
