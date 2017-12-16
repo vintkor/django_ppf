@@ -1,0 +1,24 @@
+.form-control,
+.alert,
+.btn {
+  border-radius: 0;
+}
+
+.btn-success {
+  background: $green-color;
+}
+
+.sign-in {
+  &__wrapper {
+    padding: 30px 0;
+  }
+  .container-fluid {
+    background: $white-color;
+  }
+  .btn-success {
+    padding: 10px 30px;
+  }
+  &__center {
+    text-align: center;
+  }
+}

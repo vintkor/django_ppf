@@ -1,0 +1,59 @@
+{% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Sign in' %}{% endblock %}
+{% block META_DESC %}{% trans 'Sign in' %}{% endblock %}
+{% block META_KEY %}{% trans 'Sign in' %}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block body %}sign-in-page{% endblock body %}
+
+{% block content %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{% trans 'Sign in' %}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="sign-in">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="sign-in__wrapper">
+                    <div class="col-md-4 col-md-offset-4">
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                            {% endif %}
+                            {% for field in form %}
+                                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                                    {{ field }}
+                                </div>
+                            {% endfor %}
+                            <div class="sign-in__center">
+                                <button class="btn btn-success">{% trans 'Sign in' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    {% include 'django_ppf/partials/_info.html' %}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

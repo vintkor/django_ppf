@@ -719,4 +719,31 @@ body.catalog-root .header__pinned {
   color: #737373;
 }
 
+.form-control,
+.alert,
+.btn {
+  -webkit-border-radius: 0;
+          border-radius: 0;
+}
+
+.btn-success {
+  background: #54a561;
+}
+
+.sign-in__wrapper {
+  padding: 30px 0;
+}
+
+.sign-in .container-fluid {
+  background: #fff;
+}
+
+.sign-in .btn-success {
+  padding: 10px 30px;
+}
+
+.sign-in__center {
+  text-align: center;
+}
+
 /*# sourceMappingURL=../css/main.css.map */

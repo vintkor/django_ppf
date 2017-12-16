@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^our-objects/', include('geo.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^accounts/', include('profile.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 
