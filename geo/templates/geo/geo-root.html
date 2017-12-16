@@ -10,11 +10,18 @@
 
 {% block content %}
 
+<section class="page-title">
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="page-title__title align-center">{% trans 'Select region for looking our objects' %}</h1>
+        </div>
+    </div>
+</section>
+
 <section class="geo">
     <div class="container-fluid">
         <div class="row">
             <div class="geo__map">
-                <h1 class="text-center mb-40 geo__title">{% trans 'Select region for looking our objects' %}</h1>
                 {% include 'geo/partials/_ukraine.svg' %}
             </div>
         </div>

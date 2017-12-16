@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 from mptt.models import MPTTModel, TreeForeignKey
 from django.shortcuts import reverse
 from catalog.models import Product
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 def set_region_image_name(instanse, filename):
@@ -30,7 +31,7 @@ class Region(BaseModel, MPTTModel):
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_region_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
+    description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['title']
@@ -46,14 +47,14 @@ class Region(BaseModel, MPTTModel):
         return reverse('geo-region', args=[str(self.id)])
 
     def count_objects(self):
-        objects = ObjectPPF.objects.all()
-        return len([obj for obj in objects if obj.region.get_ancestors(ascending=False).first() == self])
+        children = (i.id for i in self.get_descendants(include_self=True))
+        return ObjectPPF.objects.filter(region__id__in=children).count()
 
 
 class ObjectPPF(BaseModel):
     region = models.ForeignKey(Region, verbose_name=_('Region'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
-    text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
+    text = RichTextUploadingField(verbose_name=_('Text'), blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
@@ -70,12 +71,19 @@ class ObjectPPF(BaseModel):
     def get_absolute_url(self):
         return reverse('geo-object', args=[str(self.id)])
 
+    def get_main_or_first_image(self):
+        try:
+            return self.objectimage_set.get(is_main=True).image
+        except ObjectImage.DoesNotExist:
+            return self.objectimage_set.first().image
+
 
 class ObjectImage(BaseModel):
     object_ppf = models.ForeignKey(ObjectPPF, verbose_name=_('Object'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_object_image_name, blank=True, null=True)
     weight = models.PositiveSmallIntegerField(verbose_name=_('Weight'), default=0)
+    is_main = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Image')

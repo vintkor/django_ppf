@@ -1,4 +1,5 @@
 {% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
 
 {% block title %}{{ region.title }}{% endblock %}
 {% block META_DESC %}{{ region.meta_description }}{% endblock %}
@@ -8,7 +9,57 @@
 {% block body %}region-list{% endblock body %}
 
 {% block content %}
-    {{ region.title }}
+
+    {% catalog_breadcrumbs region False _('Our objects') 'geo-root' %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{{ region.title }} <small>{{ region.parent.title }}</small></h1>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="filter">
+                    {% for category in children %}
+                        <h4><a class="filter__link" href="{{ category.get_absolute_url }}">{{ category.title }}</a></h4>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="products__grid">
+                    {% for object in objects %}
+                    <div class="product">
+                        <div class="product__body">
+                            <div class="product__image" style="background-image: url('{{ object.get_main_or_first_image.url }}');"></div>
+                        </div>
+                        <div class="product__footer">
+                            <h2 class="product__title">{{ object.title }}</h2>
+                        </div>
+                        <a class="product__link" href="{{ object.get_absolute_url }}"></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
 {% endblock %}
 
 {% block footer_scripts %}{% endblock %}

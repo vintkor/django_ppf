@@ -1,4 +1,5 @@
 {% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
 
 {% block title %}{{ category.title }}{% endblock %}
 {% block META_DESC %}{{ category.meta_description }}{% endblock %}
@@ -9,6 +10,8 @@
 
 {% block content %}
 
+{% catalog_breadcrumbs category False _('Catalog') 'catalog' %}
+
 <section class="page-title">
     <div class="container-fluid">
         <div class="row">
@@ -17,12 +20,13 @@
     </div>
 </section>
 
+
 <section>
     <div class="container-fluid">
         <div class="row">
             <div class="filter">
-                {% for category in children %}
-                    <h4><a class="filter__link" href="{{ category.get_absolute_url }}">{{ category.title }}</a></h4>
+                {% for region in children %}
+                    <h4><a class="filter__link" href="{{ region.get_absolute_url }}">{{ region.title }}</a></h4>
                 {% endfor %}
             </div>
         </div>

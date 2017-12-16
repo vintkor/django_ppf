@@ -1,24 +1,17 @@
-body.geo-root .header__wrap {
-    background: lighten($main-color, 15%);
-    margin-left: -15px;
-    margin-right: -15px;
-}
-
-body.geo-root .header__pinned .header__wrap {
-    background: inherit;
-}
+//body.geo-root .header__wrap {
+//    background: lighten($main-color, 15%);
+//    margin-left: -15px;
+//    margin-right: -15px;
+//}
+//
+//body.geo-root .header__pinned .header__wrap {
+//    background: inherit;
+//}
 
 .geo {
-  &__title {
-    background: lighten($main-color, 19%);
-    margin-left: -150px;
-    margin-right: -150px;
-    margin-top: 60px;
-    padding: 20px 0;
-  }
   &__map {
     background: lighten($main-color, 23%);
-    padding: 0 150px 30px;
+    padding: 20px 150px;
     .is_objects {
       fill: $main-color;
       transition: .2s;
@@ -33,5 +26,16 @@ body.geo-root .header__pinned .header__wrap {
       padding-left: 0;
       padding-right: 0;
     }
+  }
+}
+
+.object-detail {
+  &__image {
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 600px;
+    position: relative;
+    margin: 0 auto;
   }
 }

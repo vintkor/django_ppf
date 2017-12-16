@@ -52,9 +52,9 @@ $('document').ready(function(){
   $(document).scroll(function() {
     var scrollWindow = $(document).scrollTop();
     if(scrollWindow > 40){
-      $('.header').addClass('header__pinned');
+      $('.header__wrap').addClass('header__pinned');
     } else {
-      $('.header').removeClass('header__pinned');
+      $('.header__wrap').removeClass('header__pinned');
     }
   });
 
@@ -73,6 +73,15 @@ $('document').ready(function(){
   //  ---------------------------------- Widget last news ----------------------------------
 
     $(".last-news").owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        navText: ['&larr;', '&rarr;'],
+    });
+
+    $(".object-detail__carousel").owlCarousel({
         items: 1,
         loop: true,
         nav: true,

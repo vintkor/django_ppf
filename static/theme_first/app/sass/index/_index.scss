@@ -4,15 +4,50 @@ body {
 
 .header {
     z-index: 2;
-    position: fixed;
+    position: relative;
     transition: .2s;
-    top: 0;
-    left: 0;
-    right: 0;
     &__pinned {
         background: $white-color;
         box-shadow: 0 0 5px rgba($black-color, .2);
     }
+}
+
+.super {
+    background: $white-color;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 15px;
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+    &__logo {
+        width: 100%;
+        max-width: 350px;
+        position: relative;
+        display: block;
+        margin: 0 auto;
+    }
+    &__phones {
+        justify-content: flex-end;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 18px;
+        font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        &__wrapper {
+            margin-left: 15px;
+        }
+        span {
+            color: lighten($black-color, 45%);
+            font-size: 14px;
+        }
+    }
+}
+
+.header__wrap {
+    background: lighten($main-color, 10%);
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .heeader-nav {
@@ -31,8 +66,10 @@ body {
         position: relative;
         padding: 20px 30px;
         color: $black-color;
+        transition: .2s;
         &:hover {
             text-decoration: none;
+            color: $green-color;
         }
     }
 }
@@ -187,6 +224,14 @@ body {
     }
     &__title {
         margin-top: 0;
+        &__absolute {
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            padding: 5px 15px;
+        }
     }
     .owl-next,
     .owl-prev {
@@ -206,5 +251,95 @@ body {
 .last-news {
     &__content {
         margin-bottom: 20px;
+    }
+    &__image {
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: -1px;
+        height: 300px;
+        width: 100%;
+        //filter: grayscale(.5);
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba($main-color, .5);
+        }
+    }
+    &__title-absolute {
+        position: absolute;
+        top: 60px;
+        z-index: 2;
+        left: 15px;
+    }
+    &__read-absolute {
+        position: absolute;
+        z-index: 2;
+        top: 250px;
+        right: 0;
+        padding: 5px 15px;
+        background: darken($bg-color, 8%);
+        color: $white-color;
+        text-decoration: none;
+        &:hover {
+            background: $green-color;
+            color: $white-color;
+            text-decoration: none;
+        }
+    }
+}
+.info__objects {
+    height: 300px;
+    padding: 0;
+    .owl-carousel .owl-stage-outer,
+    .owl-carousel {
+        height: 300px;
+    }
+
+}
+
+body.home,
+body.catalog-root {
+    .super {
+        display: none;
+    }
+    .header__wrap {
+        background: none;
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: 0;
+    }
+    .header__pinned {
+        background: $white-color;
+    }
+}
+
+.breadcrumbs {
+    .breadcrumb {
+        margin-bottom: 0;
+        background: lighten($main-color, 15%);
+        a {
+            &:hover {
+                color: $green-color;
+            }
+        }
+    }
+}
+
+.about-us {
+    .row {
+        background: lighten($main-color, 19%);
+    }
+    &__text {
+        padding: 20px 0;
     }
 }

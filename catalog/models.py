@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
 from mptt.models import MPTTModel, TreeForeignKey
 from django.shortcuts import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 def set_image_name(instanse, filename):
@@ -28,7 +29,7 @@ class Category(BaseModel, MPTTModel):
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
+    description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['title']

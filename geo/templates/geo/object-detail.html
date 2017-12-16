@@ -1,4 +1,6 @@
 {% extends 'theme_first_base.html' %}
+{% load i18n %}
+{% load ppf_tags %}
 
 {% block title %}{{ object.title }}{% endblock %}
 {% block META_DESC %}{{ object.meta_description }}{% endblock %}
@@ -8,11 +10,76 @@
 {% block body %}object-detail{% endblock body %}
 
 {% block content %}
-    {{ object.title }}
-    <hr>
-    {% for image in object.objectimage_set.all %}
-        <p><img src="{{ image.image.url }}" alt="{{ image.title }}"></p>
-    {% endfor %}
+
+    {% catalog_breadcrumbs object.region object.title _('Our objects') 'geo-root' %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{{ object.title }}
+                    <small>(
+                        {% for path in paths %}
+                            {% if forloop.last %}
+                                {{ path.title }}
+                                {% else %}
+                                {{ path.title }},
+                            {% endif %}
+                        {% endfor %})
+                    </small>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="object-detail">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="object-detail__carousel owl-carousel">
+                    {% for image in object.objectimage_set.all %}
+                        <div class="object-detail__image" style="background-image: url('{{ image.image.url }}');" role="img"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h2 class="page-title__secondary-title align-center">{% trans 'During construction was used' %}</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="products__grid">
+                    {% for product in object.products.all %}
+                    <div class="product">
+                        <div class="product__body">
+                            <div class="product__image" style="background-image: url('{{ product.image.url }}');"></div>
+                        </div>
+                        <div class="product__footer">
+                            <h2 class="product__title">{{ product.title }}</h2>
+                        </div>
+                        <a class="product__link" href="{{ product.get_absolute_url }}"></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
 {% endblock %}
 
 {% block footer_scripts %}{% endblock %}

@@ -1,20 +1,50 @@
 {% extends 'theme_first_base.html' %}
 {% load i18n %}
+{% load ppf_tags %}
 
 {% block title %}{% trans 'All news' %}{% endblock %}
 {% block META_DESC %}{% endblock %}
 {% block META_KEY %}{% endblock %}
 {% block header_scripts %}{% endblock %}
+{% block body %}news-list-page{% endblock body %}
 
 {% block content %}
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    {% for news in news_list %}
-        <li><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></li>
-    {% endfor %}
+
+    {% news_breadcrumbs False False _('News') %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{% trans 'News' %}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-list">
+        <div class="container-fluid">
+            <div class="row news-list__wrapper">
+                {% for news in news_list %}
+                    <div class="news-item">
+                        <div class="news-item__header">
+                            <a class="news-item__link" href="{{ news.get_absolute_url }}"><h2 class="news-item__link__title">{{ news.title }}</h2></a>
+                        </div>
+                        <div class="news-item__body">{{ news.text | truncatewords_html:30 | safe }}</div>
+                        <div class="news-item__footer">{{ news.created }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
 {% endblock %}
 
 {% block footer_scripts %}{% endblock %}

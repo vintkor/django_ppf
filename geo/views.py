@@ -30,8 +30,16 @@ class RegionListView(ListView):
     model = Region
 
     def get_queryset(self):
-        category = Region.objects.get(pk=self.kwargs.get('pk'))
+        category = Region.objects.select_related('parent').get(pk=self.kwargs.get('pk'))
         return category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['children'] = self.get_queryset().get_children()
+        regions = (i.id for i in self.get_queryset().get_descendants(include_self=True))
+        context['objects'] = ObjectPPF.objects.prefetch_related('objectimage_set').filter(region_id__in=regions)
+        context['categories'] = Category.objects.filter(level=0)
+        return context
 
 
 class ObjectPPFDetailView(DetailView):
@@ -39,5 +47,12 @@ class ObjectPPFDetailView(DetailView):
     context_object_name = 'object'
 
     def get_object(self, queryset=None):
-        queryset = ObjectPPF.objects.prefetch_related('objectimage_set').get(pk=self.kwargs.get('pk'))
+        queryset = ObjectPPF.objects.prefetch_related('objectimage_set', 'products').get(pk=self.kwargs.get('pk'))
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        category = self.get_object().region
+        context['paths'] = Category.get_ancestors(category, include_self=True, ascending=True)
+        context['categories'] = Category.objects.filter(level=0)
+        return context
