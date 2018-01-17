@@ -1,5 +1,5 @@
 try:
-    from django_ppf import prod_settings
+    from django_ppf.prod_settings import *
 except:
     """
     Django settings for django_ppf project.
