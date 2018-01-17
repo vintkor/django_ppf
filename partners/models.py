@@ -12,17 +12,6 @@ def set_file_name(instance, filename):
     return path
 
 
-class Region(BaseModel):
-    title = models.CharField(verbose_name=_('Region'), max_length=255)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = _('Region')
-        verbose_name_plural = _('Regions')
-
-
 class Provider(BaseModel):
     title = models.CharField(verbose_name='Поставщик', max_length=255)
 
@@ -32,20 +21,6 @@ class Provider(BaseModel):
     class Meta:
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщики'
-
-
-class Branch(BaseModel):
-    title = models.CharField(verbose_name='Филлиал', max_length=255)
-    info = RichTextUploadingField(verbose_name='Информация о поставщике', default='', blank=True, null=True)
-    parent_provider = models.ForeignKey(Provider, verbose_name='Поставщик', default=None, null=True, blank=True, on_delete=models.SET_NULL)
-    region_for_work = models.ManyToManyField(Region, verbose_name='Область', related_name='Regions', default=None)
-
-    def __str__(self):
-        return "{}-{}".format(self.parent_provider, self.title)
-
-    class Meta:
-        verbose_name = 'Филлиал'
-        verbose_name_plural = 'Филлиалы'
 
 
 class File(BaseModel):

@@ -4,7 +4,9 @@
 {% block title %}{{ product.title }}{% endblock %}
 {% block META_DESC %}{{ product.meta_description }}{% endblock %}
 {% block META_KEY %}{{ product.meta_keywords }}{% endblock %}
-{% block header_scripts %}{% endblock %}
+{% block header_scripts %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block body %}product-detail{% endblock body %}
 
@@ -28,12 +30,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">{{ product.text }}</div>
+                <div class="col-md-12">
+                    {{ product.text | safe }}
+                </div>
             </div>
         </div>
     </section>
 
     {% include 'django_ppf/partials/_info.html' %}
+
+    {% if user.is_staff %}
+        <a href="{% url 'catalog-product-edit' product.id %}" target="_blank" class="product__edit">
+            <i class="fa fa-2x fa-pencil" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+
 {% endblock %}
 
-{% block footer_scripts %}{% endblock %}
+
+{% block footer_scripts %}
+    <style>
+    .after {
+        margin-left: -15px;
+        margin-right: -15px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    </style>
+{% endblock %}

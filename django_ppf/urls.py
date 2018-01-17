@@ -17,20 +17,21 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django_ppf.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
-from .views import HomeView
+from .views import HomeView, ContactsView
 from django.conf import settings
 
 urlpatterns = [
-    url(r'^jet/', include('jet.urls', 'jet')),
+    # url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^catalog/', include('catalog.urls')),
     url(r'^assistant/', include('assistant.urls')),
-    url(r'^partners/', include('partners.urls')),
+    # url(r'^partners/', include('partners.urls')),
     url(r'^our-objects/', include('geo.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^accounts/', include('profile.urls')),
+    url(r'^contacts/', ContactsView.as_view(), name='contacts'),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 

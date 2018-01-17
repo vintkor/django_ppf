@@ -1,13 +1,13 @@
 <div class="panel-group" id="dop-info" role="tablist" aria-multiselectable="true">
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="info-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="info-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-info"
                                        aria-expanded="true"
-                                       aria-controls="collapse-info">Информация о филлиале</a>
+                                       aria-controls="collapse-info">
+            <h4 class="panel-title"><a>Информация о филлиале</a>
             </h4>
         </div>
         <div id="collapse-info" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="info-head">
@@ -16,13 +16,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="delivery-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="delivery-head"role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-delivery"
                                        aria-expanded="true"
-                                       aria-controls="collapse-delivery">Доставка</a>
+                                       aria-controls="collapse-delivery">
+            <h4 class="panel-title"><a>Доставка</a>
             </h4>
         </div>
         <div id="collapse-delivery" class="panel-collapse collapse" role="tabpanel" aria-labelledby="delivery-head">
@@ -31,13 +31,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="deliverymy-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="deliverymy-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-deliverymy"
                                        aria-expanded="true"
-                                       aria-controls="collapse-deliverymy">Самовывоз</a>
+                                       aria-controls="collapse-deliverymy">
+            <h4 class="panel-title"><a >Самовывоз</a>
             </h4>
         </div>
         <div id="collapse-deliverymy" class="panel-collapse collapse" role="tabpanel" aria-labelledby="deliverymy-head">
@@ -46,13 +46,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="discount-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="discount-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-discount"
                                        aria-expanded="true"
-                                       aria-controls="collapse-discount">Скидки</a>
+                                       aria-controls="collapse-discount">
+            <h4 class="panel-title"><a >Скидки</a>
             </h4>
         </div>
         <div id="collapse-discount" class="panel-collapse collapse" role="tabpanel" aria-labelledby="discount-head">
@@ -61,13 +61,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="payment_cash-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="payment_cash-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-payment_cash"
                                        aria-expanded="true"
-                                       aria-controls="collapse-payment_cash">Оплата наличными</a>
+                                       aria-controls="collapse-payment_cash">
+            <h4 class="panel-title"><a >Оплата наличными</a>
             </h4>
         </div>
         <div id="collapse-payment_cash" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_cash-head">
@@ -76,13 +76,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="payment_card-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="payment_card-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-payment_card"
                                        aria-expanded="true"
-                                       aria-controls="collapse-payment_card">Оплата на карточку</a>
+                                       aria-controls="collapse-payment_card">
+            <h4 class="panel-title"><a>Оплата на карточку</a>
             </h4>
         </div>
         <div id="collapse-payment_card" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_card-head">
@@ -91,13 +91,13 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="payment_bank-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="payment_bank-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-payment_bank"
                                        aria-expanded="true"
-                                       aria-controls="collapse-payment_bank">Оплата на расчётный счёт</a>
+                                       aria-controls="collapse-payment_bank">
+            <h4 class="panel-title"><a>Оплата на расчётный счёт</a>
             </h4>
         </div>
         <div id="collapse-payment_bank" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_bank-head">
@@ -106,17 +106,32 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="delivery_condition-head">
-            <h4 class="panel-title"><a role="button"
+        <div class="panel-heading" id="delivery_condition-head" role="button"
                                        data-toggle="collapse"
                                        data-parent="#dop-info"
                                        href="#collapse-delivery_condition"
                                        aria-expanded="true"
-                                       aria-controls="collapse-delivery_condition">Условия поставки</a>
+                                       aria-controls="collapse-delivery_condition">
+            <h4 class="panel-title"><a>Условия поставки</a>
             </h4>
         </div>
         <div id="collapse-delivery_condition" class="panel-collapse collapse" role="tabpanel" aria-labelledby="delivery_condition-head">
             <div class="panel-body">{{ delivery.delivery_condition | safe }}</div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" id="return_product-head" role="button"
+                                       data-toggle="collapse"
+                                       data-parent="#dop-info"
+                                       href="#collapse-return_product"
+                                       aria-expanded="true"
+                                       aria-controls="collapse-return_product">
+            <h4 class="panel-title"><a>Возврат</a>
+            </h4>
+        </div>
+        <div id="collapse-return_product" class="panel-collapse collapse" role="tabpanel" aria-labelledby="return_product-head">
+            <div class="panel-body">{{ delivery.return_product | safe }}</div>
         </div>
     </div>
 

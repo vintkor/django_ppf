@@ -1,9 +1,16 @@
 from django.shortcuts import render
-from django.views.generic import FormView
+from django.views.generic import FormView, View
 from .forms import AuthForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from catalog.models import Category
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')
 
 
 class AuthView(FormView):
@@ -29,3 +36,9 @@ class AuthView(FormView):
             if user.is_active:
                 login(self.request, user)
                 return redirect('/')
+
+
+class ProfileDetailView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = User.objects.select_related('profile').get(id=self.request.user.id)
+        return render(request, 'profile/profile.html', {'user': user})

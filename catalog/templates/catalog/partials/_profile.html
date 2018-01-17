@@ -1,0 +1,14 @@
+{% load static %}
+{% load i18n %}
+
+<div class="profile-header">
+    {% if user.profile.avatar %}
+        <div class="profile-header__avatar" style="background-image: url('{{ user.profile.avatar.url }}')"></div>
+    {% else %}
+        <div class="profile-header__avatar" style="background-image: url('{% static 'images/no-avatar.jpg' %}')"></div>
+    {% endif %}
+    <div>
+        <a href="{% url 'profile' %}" class="profile-header__link">{{ user.get_full_name }}</a><br>
+        <a href="{% url 'logout' %}" class="profile-header__link">{% trans 'Logout' %}</a>
+    </div>
+</div>

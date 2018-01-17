@@ -1,0 +1,50 @@
+{% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ user.get_full_name }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block body %}profile-page{% endblock body %}
+
+{% block content %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="page-title__title">
+                {% if user.profile.avatar %}
+                    <div class="user__avatar" style="background-image: url('{{ user.profile.avatar.url }}');"></div>
+                {% else %}
+                    <div class="user__avatar" style="background-image: url('{% static 'images/no-avatar.jpg' %}');"></div>
+                {% endif %}
+            </div>
+                <h1 class="page-title__title align-center"><small>{{ user.username }}</small>
+                    <br>{{ user.get_full_name }}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    Some profile info or ...
+                </div>
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    {% include 'django_ppf/partials/_info.html' %}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

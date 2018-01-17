@@ -1,0 +1,80 @@
+{% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Contact us' %}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block body %}profile-page{% endblock body %}
+
+{% block content %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Contacts</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="map" class="contacts__map"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile">
+        <div class="container-fluid">
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-md-3 without-padding">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    {% include 'django_ppf/partials/_info.html' %}
+{% endblock %}
+
+{% block footer_scripts %}
+    <script>
+        function initMap() {
+            var markerImage = {
+                url: "{% static 'theme_first/app/img/marker.png' %}", // url
+                scaledSize: new google.maps.Size(64, 64), // scaled size
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(32, 64) // anchor
+            };
+            var bazar = {lat: 50.951608, lng: 28.633815};
+            var pashini = {lat: 50.966683, lng: 28.660048};
+            var center = {lat: 49.416054, lng: 31.897697};
+            var style = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: center,
+                styles: style
+            });
+            var marker = new google.maps.Marker({
+                position: bazar,
+                map: map,
+                icon: markerImage
+            });
+            var marker2 = new google.maps.Marker({
+                position: pashini,
+                map: map,
+                icon: markerImage
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGY956dMVM8LoLfsi_gl0XouvW3CNpxy4&callback=initMap">
+    </script>
+{% endblock %}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["contacts.scss"],"names":[],"mappings":"AAAA;EAEI,YAAY;EACZ,cAAc;CACf","file":"../sass/contacts.css","sourcesContent":[".contacts {\n  &__map {\n    width: 100%;\n    height: 500px;\n  }\n}"]}

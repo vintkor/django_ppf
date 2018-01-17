@@ -1,35 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'theme_first_base.html' %}
 {% load my_tags %}
 
 {% block title %}{{ product.title }} - ППФ{% endblock title %}
+{% block body %}assistant-single-product{% endblock body %}
 
 {% block content %}
     {% breadcrumbs product.category product.title %}
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3" style="border-right: 1px solid #f6f6f6;">
-            <img src="{% if product.image %}{{ product.image.url }}{% else %}//via.placeholder.com/350x300{% endif %}" class="img-responsive big-image">
-            <ul class="product-images">
-                {% if product.image %}
-                <li class="product-images__li active" style="background-image: url('{{ product.image.url }}');" data-image="{{ product.image.url }}"></li>
-                {% endif %}
-                {% for image in product.get_images %}
-                    <li class="product-images__li" style="background-image: url('{{ image.image.url }}');" data-image="{{ image.image.url }}"></li>
-                {% endfor %}
-            </ul>
-            {% if product.get_price_UAH %}
-            <hr>
-            <h4>{{ product.get_price_UAH }} UAH <small>{{ product.price }} {{ product.currency.code }} (курс {{ product.course }})</small></h4>
-            <hr>
-            {% endif %}
-            <h3>Область</h3>
-            {% for region in regions %}
-                <button class="btn get-regions" style="margin-bottom: 4px;" data-product="{{ product.id }}" data-region="{{ region.id }}">{{ region }}</button>
-            {% endfor %}
-            <div id="providers"></div>
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{{ product.title }}
+                    <small><span class="label label-success" style="position: relative; top: -5px;">{{ product.code }}</span></small>
+                </h1>
+            </div>
         </div>
-        <div class="col-md-9">
-            <h1>{{ product.title }} <small><span class="label label-success pull-right">{{ product.code }}</span></small></h1>
+    </section>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3" style="border-right: 1px solid #f6f6f6;">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}//via.placeholder.com/350x300{% endif %}" class="img-responsive big-image">
+                <ul class="product-images">
+                    {% if product.image %}
+                    <li class="product-images__li active" style="background-image: url('{{ product.image.url }}');" data-image="{{ product.image.url }}"></li>
+                    {% endif %}
+                    {% for image in product.get_images %}
+                        <li class="product-images__li" style="background-image: url('{{ image.image.url }}');" data-image="{{ image.image.url }}"></li>
+                    {% endfor %}
+                </ul>
+                {% if product.get_price_UAH %}
+                <hr>
+                <h4>{{ product.get_price_UAH }} UAH <small>{{ product.price }} {{ product.currency.code }} (курс {{ product.course }})</small></h4>
+                <hr>
+                {% endif %}
+                <h3>Поставщики</h3>
+                {% for del in delivery %}
+                    <button class="btn get-regions" style="margin-bottom: 4px;">{{ del.provider.title }}</button>
+                {% endfor %}
+                <div id="providers"></div>
+            </div>
+            <div class="col-md-9">
 
 
             <div>
@@ -67,13 +79,178 @@
                         </div>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="delivery"><div id="branch"><p class="text-warning">Выберите регион и поставщика</p></div></div>
+                    <div role="tabpanel" class="tab-pane fade" id="delivery">
+                        {% for del in delivery %}
+                            <div class="panel-group" id="dop-info" role="tablist" aria-multiselectable="true">
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="info-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-info"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-info">
+                                        <h4 class="panel-title"><a>Информация о филлиале</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-info" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="info-head">
+                                        <div class="panel-body">{{ del.info | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="delivery-head"role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-delivery"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-delivery">
+                                        <h4 class="panel-title"><a>Доставка</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-delivery" class="panel-collapse collapse" role="tabpanel" aria-labelledby="delivery-head">
+                                        <div class="panel-body">{{ del.delivery | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="deliverymy-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-deliverymy"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-deliverymy">
+                                        <h4 class="panel-title"><a >Самовывоз</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-deliverymy" class="panel-collapse collapse" role="tabpanel" aria-labelledby="deliverymy-head">
+                                        <div class="panel-body">{{ del.delivery_my | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="discount-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-discount"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-discount">
+                                        <h4 class="panel-title"><a >Скидки</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-discount" class="panel-collapse collapse" role="tabpanel" aria-labelledby="discount-head">
+                                        <div class="panel-body">{{ del.discount | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="payment_cash-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-payment_cash"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-payment_cash">
+                                        <h4 class="panel-title"><a >Оплата наличными</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-payment_cash" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_cash-head">
+                                        <div class="panel-body">{{ del.payment_cash | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="payment_card-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-payment_card"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-payment_card">
+                                        <h4 class="panel-title"><a>Оплата на карточку</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-payment_card" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_card-head">
+                                        <div class="panel-body">{{ del.payment_card | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="payment_bank-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-payment_bank"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-payment_bank">
+                                        <h4 class="panel-title"><a>Оплата на расчётный счёт</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-payment_bank" class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_bank-head">
+                                        <div class="panel-body">{{ del.payment_bank | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="delivery_condition-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-delivery_condition"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-delivery_condition">
+                                        <h4 class="panel-title"><a>Условия поставки</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-delivery_condition" class="panel-collapse collapse" role="tabpanel" aria-labelledby="delivery_condition-head">
+                                        <div class="panel-body">{{ del.delivery_condition | safe }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="return_product-head" role="button"
+                                         data-toggle="collapse"
+                                         data-parent="#dop-info"
+                                         href="#collapse-return_product"
+                                         aria-expanded="true"
+                                         aria-controls="collapse-return_product">
+                                        <h4 class="panel-title"><a>Возврат</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-return_product" class="panel-collapse collapse" role="tabpanel" aria-labelledby="return_product-head">
+                                        <div class="panel-body">{{ del.return_product | safe }}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% if prices %}
+                                <h3>Прайсы поставщика</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Ссылка</th>
+                                        <th>Дата обновления</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for price in prices %}
+                                        <tr>
+                                            <td>{{ price.title }}</td>
+                                            <td><a href="{{ price.file.url }}" target="_blank">Скачать</a></td>
+                                            <td>{{ price.updated }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
 
             </div>
 
 
         </div>
+        </div>
+    </div>
     <style>
     .tab-pane {
         padding: 20px 0;
@@ -102,34 +279,34 @@
     </style>
 {% endblock content %}
 
-{% block scripts_footer %}
+{% block footer_scripts %}
 <script>
-    var loader = $('.loader');
-    $('.get-regions').click(function () {
-        $('.get-regions').removeClass('btn-success');
-        $(this).addClass('btn-success');
-        $.ajax({
-            url: '{% url 'ajax-get-providers' %}',
-            type: 'GET',
-            data: {
-                'region': $(this).data('region'),
-                'product': $(this).data('product')
-            },
-            dataType: 'text',
-            beforeSend: function () {
-                loader.toggleClass('active');
-            },
-            complete: function () {
-                loader.toggleClass('active');
-            },
-            success: function (data) {
-                $('#providers').html(data);
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        });
-    });
+{#    var loader = $('.loader');#}
+{#    $('.get-regions').click(function () {#}
+{#        $('.get-regions').removeClass('btn-success');#}
+{#        $(this).addClass('btn-success');#}
+{#        $.ajax({#}
+{#            url: '{% url 'ajax-get-providers' %}',#}
+{#            type: 'GET',#}
+{#            data: {#}
+{#                'region': $(this).data('region'),#}
+{#                'product': $(this).data('product')#}
+{#            },#}
+{#            dataType: 'text',#}
+{#            beforeSend: function () {#}
+{#                loader.toggleClass('active');#}
+{#            },#}
+{#            complete: function () {#}
+{#                loader.toggleClass('active');#}
+{#            },#}
+{#            success: function (data) {#}
+{#                $('#providers').html(data);#}
+{#            },#}
+{#            error: function (e) {#}
+{#                console.log(e);#}
+{#            }#}
+{#        });#}
+{#    });#}
 
     var little_image = $('.product-images__li');
     little_image.click(function (e) {
@@ -140,4 +317,9 @@
         $('.big-image').attr('src', image);
     });
 </script>
-{% endblock scripts_footer %}
+    <style>
+    .nav-tabs {
+        margin-top: 15px;
+    }
+    </style>
+{% endblock footer_scripts %}

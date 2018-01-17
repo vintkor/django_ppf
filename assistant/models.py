@@ -3,9 +3,10 @@ from django_ppf.basemodel import BaseModel
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.crypto import get_random_string
-from partners.models import Branch
+from partners.models import Provider
 from django.urls import reverse
 from currency.models import Currency
+from django.utils.html import format_html
 
 
 def set_image_name(instance, filename):
@@ -47,7 +48,7 @@ class Unit(BaseModel):
 
 class Category(BaseModel, MPTTModel):
     title = models.CharField(verbose_name='Категория', max_length=255)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True, on_delete=None)
     active = models.BooleanField(default=True, verbose_name="Вкл/Выкл")
 
     class Meta:
@@ -156,7 +157,7 @@ class Feature(BaseModel):
 
 class Delivery(BaseModel):
     product = models.ForeignKey(Product, verbose_name="Товар", on_delete=models.CASCADE)
-    branch = models.ForeignKey(Branch, verbose_name="Филлиал", on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, verbose_name="Поставщик", on_delete=models.CASCADE, blank=True, null=True)
     delivery = RichTextUploadingField(verbose_name="Доставка")
     delivery_my = RichTextUploadingField(verbose_name="Самовывоз")
     discount = RichTextUploadingField(verbose_name="Скидка")
@@ -164,13 +165,14 @@ class Delivery(BaseModel):
     payment_card = RichTextUploadingField(verbose_name="Оплата картой")
     payment_bank = RichTextUploadingField(verbose_name="Оплата расчётный счёт")
     delivery_condition = RichTextUploadingField(verbose_name="Условие поставки", default=' ')
+    return_product = RichTextUploadingField(verbose_name="Возврат", blank=True, null=True, default=None)
 
     class Meta:
         verbose_name = "Доп инфо"
         verbose_name_plural = "Доп инфо"
 
     def __str__(self):
-        return "{} - {}".format(self.product, self.branch)
+        return "{} - {}".format(self.provider.title, self.product)
 
 
 class Photo(BaseModel):
@@ -187,14 +189,14 @@ class Photo(BaseModel):
         return "Image to product {}".format(self.product)
 
     def get_img_tag(self):
-        return """<span style="
+        return format_html("""<span style="
                                 background-image: url('{}');
                                 background-size: cover;
                                 background-position: center;
                                 width: 60px; height: 40px;
                                 display: block;
                                 position: relative;
-                                "><span>""".format(self.image.url)
+                                "><span>""", self.image.url)
 
     get_img_tag.short_description = 'Preview'
     get_img_tag.allow_tags = True

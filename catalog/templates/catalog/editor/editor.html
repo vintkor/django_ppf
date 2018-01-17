@@ -1,0 +1,410 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT - {{ product.title }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/js/medium-editor.min.js"></script>
+    <script src="http://mkawczynski07.github.io/medium-editor-list/medium-editor-list.js"></script>
+    <script src="http://yabwe.github.io/medium-editor-tables/bower_components/medium-editor-tables/dist/js/medium-editor-tables.js"></script>
+</head>
+<body>
+    <div class="remove">Remove zone</div>
+
+        <div class="one">
+            <div class="container-fluid">
+                <div id="drag">{{ product.text | safe }}</div>
+            </div>
+        </div>
+
+        <div class="presets">
+            <div class="container-fluid" id="presets">
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-12 editor">1</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-6 editor">1/2</div>
+                        <div class="bg col-md-6 editor">1/2</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-4 editor">1/3</div>
+                        <div class="bg col-md-4 editor">1/3</div>
+                        <div class="bg col-md-4 editor">1/3</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-3 editor">1/4</div>
+                        <div class="bg col-md-3 editor">1/4</div>
+                        <div class="bg col-md-3 editor">1/4</div>
+                        <div class="bg col-md-3 editor">1/4</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-3 editor">1/4</div>
+                        <div class="bg col-md-6 editor">1/2</div>
+                        <div class="bg col-md-3 editor">1/4</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-offset-4 col-md-4 editor">1/3</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-offset-3 col-md-6 editor">1/2</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-offset-2 col-md-8 editor">2/3</div>
+                    </div>
+                </div>
+                <div class="after">
+                    <button class="edit-btn"></button>
+                    <div class="bg row">
+                        <div class="bg col-md-offset-1 col-md-5 editor">5/12</div>
+                        <div class="bg col-md-5 editor">5/12</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="options">
+            <h5></h5>
+            <hr>
+            <form action="" class="form" id="optionsForm">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="backgroundColor">Цвет фона</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="color" id="backgroundColor" data-unit="" class="input form-control">
+                    </div>
+                </div>
+                <h4>Внутренние отступы</h4>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="paddingTop">Сверху</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="numper" id="paddingTop" data-unit="px" class="input form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="paddingBottom">Снизу</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="numper" id="paddingBottom" data-unit="px" class="input form-control">
+                    </div>
+                </div>
+                <h4>Наружние отступы</h4>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="marginTop">Сверху</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="numper" id="marginTop" data-unit="px" class="input form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="marginBottom">Снизу</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="numper" id="marginBottom" data-unit="px" class="input form-control">
+                    </div>
+                </div>
+            </form>
+            <button id="optionsSave" class="btn btn-success">Close</button>
+        </div>
+    </div>
+
+
+    <a class="product__edit" href="">
+        <i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i>
+    </a>
+
+<script>
+
+    $('#drag .after').append('<button class="edit-btn"></button>');
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+
+
+    var drake = dragula({
+        containers: [document.getElementById('drag'), document.getElementById('presets')],
+        copy: function (el, source) {
+            return source === document.getElementById('presets');
+        },
+        accepts: function (el, target) {
+            return target !== document.getElementById('drop')
+        },
+        removeOnSpill: true
+    });
+
+    var idCount = 0;
+    drake.on('cloned', function(clone){
+        $(clone).attr('id', 'cloned_' + idCount);
+        idCount ++;
+    });
+
+    drake.on('dragend', function(el){
+        var editor = new MediumEditor('#drag .editor', {
+            buttonLabels: 'fontawesome',
+            extensions: {
+                table: new MediumEditorTable({
+                    rows: 40,
+                    columns: 40
+                })
+            },
+            toolbar: {
+                buttons: [
+                    'bold',
+                    'italic',
+                    'underline',
+                    'h2',
+                    'h3',
+                    'justifyLeft',
+                    'justifyCenter',
+                    'justifyRight',
+                    'justifyFull',
+                    'unorderedlist',
+                    'orderedlist',
+                    'image',
+                    'html',
+                    'removeFormat',
+                    'table'
+                ],
+                static: true,
+                sticky: true
+            },
+        });
+
+        $('#drag').find('.edit-btn').on('click', function(event) {
+            $('.input').each(function () {
+                $(this).val('');
+            });
+            var parent = $(this).parent();
+            var options = $('#options');
+
+            options.addClass('active');
+            options.find('h5').text(parent.attr('id'));
+        });
+
+    });
+
+    $('#optionsSave').click(function(event) {
+        $(this).parent().removeClass('active');
+    });
+
+    $('.input').on('input', function(e){
+        containerId = $('#options h5').text();
+        var property = $(this).attr('id');
+        var value = $(this).val();
+        var unit = $(this).data('unit');
+        $('body').find('#' + containerId).css(property, value + unit);
+    });
+
+    function cleanContent(content) {
+
+        var newContent = $(content);
+
+        var newEl = document.createElement('div');
+        newEl.innerHTML = content;
+        var some = $(newEl);
+        some.find('button').remove();
+        some.find('.editor').removeAttr('medium-editor-index contenteditable spellcheck data-medium-editor-element aria-multiline data-medium-editor-editor-index data-placeholder role');
+
+{#        newContent.find('button').remove();#}
+{#        newContent.find('.editor').removeAttr('medium-editor-index contenteditable spellcheck data-medium-editor-element aria-multiline data-medium-editor-editor-index data-placeholder role');#}
+
+
+        return some.html();
+    }
+
+
+    $('.product__edit').click(function (e) {
+        e.preventDefault();
+
+        var content = $('#drag').html();
+
+        content = cleanContent(content);
+
+        var jsonData = JSON.stringify({content: content});
+
+{#        console.log(content);#}
+
+        $.ajax({
+            url: "{% url 'catalog-product-edit' product.id %}",
+            data: jsonData,
+            method: "POST",
+            success: function (data) {
+{#                console.log(data);#}
+            },
+            error: function (error) {
+{#                console.log(error);#}
+            }
+        });
+
+    });
+
+
+</script>
+<link rel="stylesheet" href="http://yabwe.github.io/medium-editor-tables/bower_components/normalize.css/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/css/medium-editor.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/css/themes/flat.css">
+<link rel="stylesheet" href="http://yabwe.github.io/medium-editor-tables/bower_components/medium-editor-tables/dist/css/medium-editor-tables.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'theme_first/app/css/main.css' %}">
+
+
+    <style>
+        #drag {
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+.presets {
+    background: #dee;
+    position: fixed;
+    width: 20%;
+    top: 0; left: 80%;
+    bottom: 0;
+    overflow: scroll;
+}
+.one {
+    position: fixed;
+    width: 80%;
+    top: 60px; left: 0;
+    height: calc(100vh - 60px);
+    overflow: scroll;
+}
+.bg {
+    background: #f6f6f6;
+    padding: 10px;
+    transition: .s2;
+}
+.bg:hover {
+    cursor: pointer;
+}
+.presets .bg {
+    text-align: center;
+    border: 1px solid #c7c3c3;
+    margin-bottom: -1px;
+}
+.presets .row:hover {
+    background: #ffee44;
+}
+.after {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.after .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+#drag .after {
+    position: relative;
+}
+#drag .bg {
+    background: none;
+}
+#drag .bg:hover {
+    background: rgba(0,0,0,.1);
+}
+.edit-btn {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fee324;
+    border: 1px solid #e6ca00;
+    cursor: pointer;
+    outline: none;
+    z-index: 10;
+}
+#drag .after:hover .edit-btn {
+    display: block;
+}
+.remove {
+    padding: 20px;
+    text-align: center;
+    background: #fff4f4;
+    position: fixed;
+    top: 0; left: 0;
+    height: auto;
+    width: 80%;
+}
+
+#options {
+    width: 20%;
+    position: fixed;
+    display: block;
+    background: #f6f6f6;
+    top: 0;
+    height: 100vh;
+    transition: .3s;
+    left: 100%;
+    padding: 15px;
+}
+#options.active {
+    transform: translateX(-100%);
+}
+    </style>
+
+</body>
+</html>

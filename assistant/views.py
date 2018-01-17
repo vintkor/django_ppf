@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from assistant.models import Product, Feature, Category
-from partners.models import Region
+from assistant.models import Product, Feature, Category, Delivery
+from partners.models import Provider
 from xlsxwriter import Workbook
 from django.http import HttpResponse
 
@@ -60,12 +60,13 @@ class CatalogDetail(LoginRequiredMixin, DetailView):
     template_name = 'single-product.html'
     login_url = 'home'
 
+    def get_object(self, queryset=None):
+        return Product.objects.get(id=self.kwargs['pk'])
+
     def get_context_data(self, **kwargs):
         context = super(CatalogDetail, self).get_context_data(**kwargs)
         context['features'] = Feature.objects.filter(product=self.object)
-        regions = set(Region.objects.filter(Regions__delivery__product=self.object).order_by('title'))
-        context['regions'] = regions
-
+        context['delivery'] = Delivery.objects.filter(product=self.object)
         return context
 
 

@@ -9,3 +9,12 @@ class HomeView(View):
         categories = Category.objects.all()
         context = {'categories': categories}
         return render(request, 'django_ppf/home.html', context)
+
+
+class ContactsView(View):
+
+    def get(self, request):
+        categories = Category.objects.filter(level=0)
+        context = {'categories': categories}
+        return render(request, 'django_ppf/contacts.html', context)
+

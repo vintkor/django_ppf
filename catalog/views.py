@@ -1,5 +1,8 @@
 from django.views.generic import ListView, DetailView
 from .models import Category, Product
+import json
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CatalogRootView(ListView):
@@ -28,3 +31,16 @@ class ProductDetailView(DetailView):
     template_name = 'catalog/product-detail.html'
     context_object_name = 'product'
     model = Product
+
+
+class ProductEditView(LoginRequiredMixin, ProductDetailView):
+    template_name = 'catalog/editor/editor.html'
+
+    def post(self, request, pk):
+        content = json.loads(str(self.request.body, 'UTF-8')).get('content')
+
+        product = Product.objects.get(id=pk)
+        product.text = content
+        product.save(update_fields=('text',))
+
+        return JsonResponse({'save': 'true'})

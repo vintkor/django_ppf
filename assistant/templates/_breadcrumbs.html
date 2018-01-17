@@ -1,8 +1,14 @@
-<ol class="breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="{% url 'all-catalog' %}">Catalog</a></li>
-    {% for page in pages %}
-        <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
-    {% endfor %}
-    <li class="active">{{ product }}</li>
-</ol>
+<section class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url 'all-catalog' %}">Catalog</a></li>
+                {% for page in pages %}
+                    <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+                {% endfor %}
+                <li class="active">{{ product }}</li>
+            </ol>
+        </div>
+    </div>
+</section>

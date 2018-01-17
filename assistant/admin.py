@@ -4,8 +4,8 @@ from django.db import models
 from mptt.admin import DraggableMPTTAdmin
 from .models import Category, Product, Feature, Delivery, Unit, Photo
 # from import_export import resources
-from jet.admin import CompactInline
-from jet.filters import DateRangeFilter
+# from jet.admin import CompactInline
+# from jet.filters import DateRangeFilter
 from .forms import SetCourseForm, SetUnitForm, SetCategoryForm, SetCurrencyForm, SetPriceForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -24,12 +24,12 @@ class ProductResource(admin.StackedInline):
         model = Product
 
 
-class DeliveryInline(CompactInline):
+class DeliveryInline(admin.StackedInline):
     extra = 0
     model = Delivery
 
 
-class FeatureInline(CompactInline):
+class FeatureInline(admin.TabularInline):
     extra = 0
     model = Feature
 
@@ -286,16 +286,18 @@ save_as_xlsx.short_description = 'Сохранить в формате XLSX'
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "code", "active", "price", "get_currency_code", "course",
                     "re_count", "get_price_UAH", "unit", "step", "get_images_count", "updated")
-    list_filter = (('created', DateRangeFilter), 'code', 'category', 'currency', 're_count')
+    list_filter = ('currency', 're_count')
     list_editable = ('price', 're_count', 'course')
     readonly_fields = ["code"]
-    search_fields = ('title',)
+    search_fields = ('title', 'code', 'category__title')
     resource_class = ProductResource
     inlines = (FeatureInline, DeliveryInline, PhotoInline)
     formfield_overrides = {
         models.ManyToManyField: {'widget': FilteredSelectMultiple("Поставщики", is_stacked=False)},
     }
     actions = (set_category, set_course, set_unit, re_count_off, re_count_on, save_as_xlsx, set_currency, set_price)
+    save_on_top = True
+    save_as = True
 
 
 admin.site.register(Product, ProductAdmin)
