@@ -9,6 +9,9 @@
     {% endif %}
     <div>
         <a href="{% url 'profile' %}" class="profile-header__link">{{ user.get_full_name }}</a><br>
+        {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}" class="profile-header__link" target="_blank">{% trans 'Admin panel' %}</a><br>
+        {% endif %}
         <a href="{% url 'logout' %}" class="profile-header__link">{% trans 'Logout' %}</a>
     </div>
 </div>
