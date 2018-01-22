@@ -14,6 +14,7 @@ def set_file_name(instance, filename):
 
 class Provider(BaseModel):
     title = models.CharField(verbose_name='Поставщик', max_length=255)
+    about = RichTextUploadingField(verbose_name='Информация о поставщике')
 
     def __str__(self):
         return self.title
