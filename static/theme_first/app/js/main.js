@@ -106,4 +106,4 @@ $('document').ready(function(){
     } catch(e){}
 }());
 
-waterfall('.my-grid');
+// waterfall('.my-grid');

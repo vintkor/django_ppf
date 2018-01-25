@@ -1,6 +1,12 @@
+{% load thumbnail %}
+
 <div class="col-md-12">
     <div class="square square__not-center square__{{ category.id }}">
-        <div class="square__image" style="background-image: url('{% if category.image %}{{ category.image.url }}{% endif %}');"></div>
+        {% if category.image %}
+            {% thumbnail category.image "200x200" crop="center" format="PNG" as im %}
+                <div class="square__image" style="background-image: url('{{ im.url }}');"></div>
+            {% endthumbnail %}
+        {% endif %}
         <h2 class="square__title">{{ category.title }}</h2>
         <a href="{{ category.get_absolute_url }}" class="square__link"></a>
     </div>

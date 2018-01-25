@@ -95,7 +95,7 @@ body {
         &:before {
             bottom: -1px;
             background-image: url('../img/gress.png');
-            z-index: 2;
+            //z-index: 2;
             height: 200px;
         }
     }
@@ -229,7 +229,7 @@ body {
             display: block;
             top: 0;
             left: 0;
-            z-index: 2;
+            //z-index: 2;
             padding: 5px 15px;
         }
     }
@@ -320,6 +320,7 @@ body.catalog-root {
     }
     .header__pinned {
         background: $white-color;
+        z-index: 2000;
     }
 }
 

@@ -1,5 +1,6 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ region.title }}{% endblock %}
 {% block META_DESC %}{{ region.meta_description }}{% endblock %}
@@ -39,7 +40,9 @@
                     {% for object in objects %}
                     <div class="product">
                         <div class="product__body">
-                            <div class="product__image" style="background-image: url('{{ object.get_main_or_first_image.url }}');"></div>
+                            {% thumbnail object.get_main_or_first_image "300x400" crop="center" format="PNG" as im %}
+                                <div class="product__image" style="background-image: url('{{ im.url }}');"></div>
+                            {% endthumbnail %}
                         </div>
                         <div class="product__footer">
                             <h2 class="product__title">{{ object.title }}</h2>

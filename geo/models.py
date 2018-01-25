@@ -6,6 +6,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.shortcuts import reverse
 from catalog.models import Product
 from ckeditor_uploader.fields import RichTextUploadingField
+from sorl.thumbnail import ImageField
 
 
 def set_region_image_name(instanse, filename):
@@ -28,7 +29,7 @@ class Region(BaseModel, MPTTModel):
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Title'))
     code = models.CharField(max_length=15, blank=True, null=True, default=None, unique=True)
-    image = models.ImageField(verbose_name=_('Image'), upload_to=set_region_image_name, blank=True, null=True)
+    image = ImageField(verbose_name=_('Image'), upload_to=set_region_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
@@ -81,7 +82,7 @@ class ObjectPPF(BaseModel):
 class ObjectImage(BaseModel):
     object_ppf = models.ForeignKey(ObjectPPF, verbose_name=_('Object'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
-    image = models.ImageField(verbose_name=_('Image'), upload_to=set_object_image_name, blank=True, null=True)
+    image = ImageField(verbose_name=_('Image'), upload_to=set_object_image_name, blank=True, null=True)
     weight = models.PositiveSmallIntegerField(verbose_name=_('Weight'), default=0)
     is_main = models.BooleanField(default=False)
 

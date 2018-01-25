@@ -1,11 +1,12 @@
 {% load i18n %}
+{% load thumbnail %}
 <div class="owl-carousel last-news">
     {% for object in objects %}
-        <div class="last-news__image" style="background-image: url('{{ object.get_main_or_first_image.url }}');">
-{#            <div class=""></div>#}
-            <h4 class="last-news__title-absolute">{{ object.title }}</h4>
-{#            <div class="last-news__content">{{ object.text | truncatewords_html:30 }}</div>#}
-            <a class="last-news__read-absolute" href="{{ object.get_absolute_url }}">{% trans 'Read more' %}</a>
-        </div>
+        {% thumbnail object.get_main_or_first_image "480x300" crop="center" format="PNG" as im %}
+            <div class="last-news__image" style="background-image: url('{{ im.url }}');">
+        {% endthumbnail %}
+                <h4 class="last-news__title-absolute">{{ object.title }}</h4>
+                <a class="last-news__read-absolute" href="{{ object.get_absolute_url }}">{% trans 'Read more' %}</a>
+            </div>
     {% endfor %}
 </div>

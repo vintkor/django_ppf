@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 from mptt.models import MPTTModel, TreeForeignKey
 from django.shortcuts import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from sorl.thumbnail import ImageField
 
 
 def set_image_name(instanse, filename):
@@ -26,7 +27,7 @@ class Category(BaseModel, MPTTModel):
         'self', verbose_name=_('Parent category'), null=True, blank=True,
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Category'))
-    image = models.ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
+    image = ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
@@ -48,7 +49,7 @@ class Category(BaseModel, MPTTModel):
 class Product(BaseModel):
     category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE)
     title = models.CharField(max_length=250, verbose_name=_('Product'))
-    image = models.ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
+    image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
     text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)

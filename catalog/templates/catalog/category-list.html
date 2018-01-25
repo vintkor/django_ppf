@@ -1,5 +1,6 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ category.title }}{% endblock %}
 {% block META_DESC %}{{ category.meta_description }}{% endblock %}
@@ -38,15 +39,19 @@
         <div class="row">
             <div class="products__grid">
                 {% for product in products %}
-                <div class="product">
-                    <div class="product__body">
-                        <div class="product__image" style="background-image: url('{{ product.image.url }}');"></div>
+                    <div class="product">
+                        <div class="product__body">
+                            {% if product.image %}
+                                {% thumbnail product.image "300x473" crop="center" format="PNG" as im %}
+                                    <div class="product__image" style="background-image: url('{{ im.url }}');"></div>
+                                {% endthumbnail %}
+                            {% endif %}
+                        </div>
+                        <div class="product__footer">
+                            <h2 class="product__title">{{ product.title }}</h2>
+                        </div>
+                        <a class="product__link" href="{{ product.get_absolute_url }}"></a>
                     </div>
-                    <div class="product__footer">
-                        <h2 class="product__title">{{ product.title }}</h2>
-                    </div>
-                    <a class="product__link" href="{{ product.get_absolute_url }}"></a>
-                </div>
                 {% endfor %}
             </div>
         </div>

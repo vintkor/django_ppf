@@ -48,6 +48,7 @@ except:
         'ckeditor',
         'ckeditor_uploader',
         'rangefilter',
+        'sorl.thumbnail',
 
         'profile',
         'catalog',

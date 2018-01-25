@@ -3,7 +3,7 @@
     {% for news in last_news %}
         <div class="last-news__wrapper">
             <h4 class="last-news__title">{{ news.title }}</h4>
-            <div class="last-news__content">{{ news.text | truncatewords_html:30 }}</div>
+            <div class="last-news__content">{{ news.text | truncatewords_html:30 | safe }}</div>
             <a class="last-news__read" href="{{ news.get_absolute_url }}">{% trans 'Read more' %}</a>
             <span class="last-news__creatad pull-right">{{ news.created }}</span>
         </div>
