@@ -42,6 +42,7 @@ except:
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.sitemaps',
 
         'debug_toolbar',
         'mptt',

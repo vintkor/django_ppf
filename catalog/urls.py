@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from .views import CategoryListView, ProductDetailView, CatalogRootView, ProductEditView
 
+
 urlpatterns = [
     url(r'^$', CatalogRootView.as_view(), name='catalog'),
     url(r'^category/(?P<pk>\d+)/$', CategoryListView.as_view(), name='catalog-category'),
