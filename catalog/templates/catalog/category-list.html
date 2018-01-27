@@ -42,8 +42,8 @@
                     <div class="product">
                         <div class="product__body">
                             {% if product.image %}
-                                {% thumbnail product.image "300x473" crop="center" format="PNG" as im %}
-                                    <div class="product__image" style="background-image: url('{{ im.url }}');"></div>
+                                {% thumbnail product.image "300x400" crop="center" format="PNG" as im %}
+                                    <img src="{{ im.url }}" alt="{{ product.title }}">
                                 {% endthumbnail %}
                             {% endif %}
                         </div>

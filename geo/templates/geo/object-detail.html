@@ -61,7 +61,11 @@
                     {% for product in object.products.all %}
                     <div class="product">
                         <div class="product__body">
-                            <div class="product__image" style="background-image: url('{{ product.image.url }}');"></div>
+                            {% if product.image %}
+                                {% thumbnail product.image "300x400" crop="center" format="PNG" as im %}
+                                    <img src="{{ im.url }}" alt="{{ product.title }}">
+                                {% endthumbnail %}
+                            {% endif %}
                         </div>
                         <div class="product__footer">
                             <h2 class="product__title">{{ product.title }}</h2>

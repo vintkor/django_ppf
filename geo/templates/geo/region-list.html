@@ -41,7 +41,7 @@
                     <div class="product">
                         <div class="product__body">
                             {% thumbnail object.get_main_or_first_image "300x400" crop="center" format="PNG" as im %}
-                                <div class="product__image" style="background-image: url('{{ im.url }}');"></div>
+                                <img src="{{ im.url }}" alt="{{ object.title }}">
                             {% endthumbnail %}
                         </div>
                         <div class="product__footer">
