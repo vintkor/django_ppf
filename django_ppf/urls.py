@@ -45,7 +45,6 @@ urlpatterns = [
 
 
 urlpatterns += i18n_patterns(
-    url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^catalog/', include('catalog.urls')),
     url(r'^our-objects/', include('geo.urls')),

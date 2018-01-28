@@ -23,17 +23,6 @@
 {#</form>#}
 
 
-{% for lang in LANGUAGES %}
-    <li><a href="#" onclick="document.setLang{{ lang.1 }}.submit(); return false;">{{ lang.1 }}</a>
-        <form name="setLang{{ lang.1}}" action="{% url 'set_language' %}" method="POST">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="/">
-            <input type="hidden" name="language" value="{{ lang.0 }}">
-        </form>
-    </li>
-{% endfor %}
-
-
 
 <!DOCTYPE html>
 <html lang="ru">

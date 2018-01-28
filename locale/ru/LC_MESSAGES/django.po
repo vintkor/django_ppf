@@ -1,0 +1,251 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-28 20:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: assistant/templates/all-products.html:20
+msgid "Products from assistant"
+msgstr ""
+
+#: catalog/models.py:27
+msgid "Parent category"
+msgstr "Родительская категория"
+
+#: catalog/models.py:29 catalog/models.py:39 catalog/models.py:50
+msgid "Category"
+msgstr "Категория"
+
+#: catalog/models.py:30 catalog/models.py:52 geo/models.py:32 geo/models.py:85
+#: geo/models.py:90 news/models.py:18
+msgid "Image"
+msgstr "Изображение"
+
+#: catalog/models.py:31 catalog/models.py:54 geo/models.py:33 geo/models.py:59
+#: news/models.py:20
+msgid "META Description"
+msgstr "META Описание"
+
+#: catalog/models.py:32 catalog/models.py:55 geo/models.py:34 geo/models.py:60
+#: news/models.py:21
+msgid "META Keywords"
+msgstr "META Ключевые слова"
+
+#: catalog/models.py:33 catalog/models.py:56 geo/models.py:35 geo/models.py:61
+#: news/models.py:22
+msgid "Description"
+msgstr "Описание"
+
+#: catalog/models.py:40
+msgid "Categories"
+msgstr "Категории"
+
+#: catalog/models.py:51 catalog/models.py:59
+msgid "Product"
+msgstr "Продукт"
+
+#: catalog/models.py:53 geo/models.py:58 news/models.py:19
+msgid "Text"
+msgstr "Текст"
+
+#: catalog/models.py:60 geo/models.py:62
+msgid "Products"
+msgstr "Продукты"
+
+#: catalog/templates/catalog/category-list.html:14
+#: catalog/templates/catalog/product-detail.html:15
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:8
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:17
+#: templates/theme_first_base.html:95
+msgid "Catalog"
+msgstr "Каталог"
+
+#: catalog/templates/catalog/partials/_breadcrumbs-news.html:8
+#: catalog/templates/catalog/partials/_catalog-list__breadcrumbs.html:8
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:14
+#: templates/theme_first_base.html:94
+msgid "Home"
+msgstr "Главная"
+
+#: catalog/templates/catalog/partials/_profile.html:13
+msgid "Admin panel"
+msgstr "Административная панель"
+
+#: catalog/templates/catalog/partials/_profile.html:15
+msgid "Logout"
+msgstr "Выйти"
+
+#: currency/models.py:7 geo/models.py:30 geo/models.py:57 geo/models.py:84
+#: news/models.py:17
+msgid "Title"
+msgstr "Заголовок"
+
+#: currency/models.py:8
+msgid "Code"
+msgstr "Код"
+
+#: currency/models.py:9
+msgid "Active"
+msgstr "Активный"
+
+#: currency/models.py:12
+msgid "Currency"
+msgstr "Валюта"
+
+#: currency/models.py:13
+msgid "Currencies"
+msgstr "Валюты"
+
+#: django_ppf/basemodel.py:9
+msgid "Created"
+msgstr "Дата создания"
+
+#: django_ppf/basemodel.py:10
+msgid "Updated"
+msgstr "Дата обновления"
+
+#: django_ppf/templates/django_ppf/contacts.html:6
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:26
+#: templates/theme_first_base.html:101
+msgid "Contact us"
+msgstr "Контакты"
+
+#: django_ppf/templates/django_ppf/partials/_favorite-objects-tag.html:9
+#: django_ppf/templates/django_ppf/partials/_last-news-tag.html:7
+msgid "Read more"
+msgstr "Читать больше"
+
+#: django_ppf/templates/django_ppf/partials/_footer.html:7
+#: templates/theme_first_base.html:44
+msgid "PPF Company"
+msgstr "Компания ППФ"
+
+#: django_ppf/templates/django_ppf/partials/_footer.html:7
+msgid "All rights reserved"
+msgstr "Все права защищены"
+
+#: django_ppf/templates/django_ppf/partials/_footer.html:12
+msgid "Development and support"
+msgstr "Разработка и поддержка"
+
+#: django_ppf/templates/django_ppf/partials/_info.html:8
+msgid "Last news"
+msgstr "Последние новости"
+
+#: django_ppf/templates/django_ppf/partials/_info.html:12
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:23
+#: geo/templates/geo/geo-root.html:4 geo/templates/geo/object-detail.html:15
+#: geo/templates/geo/region-list.html:14 templates/theme_first_base.html:97
+msgid "Our objects"
+msgstr "Наши объекты"
+
+#: django_ppf/templates/django_ppf/partials/_info.html:16
+msgid "Feedback"
+msgstr "Обратная связь"
+
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:11
+msgid "Navigate"
+msgstr "Навигация"
+
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:20
+#: news/models.py:25 news/models.py:26 news/templates/news/news-detail.html:12
+#: news/templates/news/news-list.html:13 news/templates/news/news-list.html:18
+#: templates/theme_first_base.html:96
+msgid "News"
+msgstr "Новости"
+
+#: geo/models.py:28
+msgid "Parent region"
+msgstr "Родительский регион"
+
+#: geo/models.py:41 geo/models.py:56
+msgid "Region"
+msgstr "Регион"
+
+#: geo/models.py:42
+msgid "Regions"
+msgstr "Регионы"
+
+#: geo/models.py:63
+msgid "Favorite objects"
+msgstr "Избранные объекты"
+
+#: geo/models.py:66 geo/models.py:83
+msgid "Object"
+msgstr "Объект"
+
+#: geo/models.py:67
+msgid "Objects"
+msgstr "Объекты"
+
+#: geo/models.py:86
+msgid "Weight"
+msgstr "Вес"
+
+#: geo/models.py:91
+msgid "Images"
+msgstr "Изображения"
+
+#: geo/templates/geo/geo-root.html:16
+msgid "Select region for looking our objects"
+msgstr "Выберите регион для просмотра наших объектов"
+
+#: geo/templates/geo/object-detail.html:52
+msgid "During construction was used"
+msgstr "Во время строительства были использовыны следующие товары"
+
+#: news/templates/news/news-list.html:5
+msgid "All news"
+msgstr "Все новости"
+
+#: partners/models.py:36
+msgid "Price"
+msgstr "Цена"
+
+#: partners/models.py:37
+msgid "Prices"
+msgstr "Цены"
+
+#: profile/forms.py:9
+msgid "Username"
+msgstr "Ник"
+
+#: profile/forms.py:12
+msgid "Password"
+msgstr "Пароль"
+
+#: profile/models.py:18
+msgid "Avatar"
+msgstr "Аватар"
+
+#: profile/models.py:20
+msgid "Birthday"
+msgstr "Дата рождения"
+
+#: profile/templates/profile/login.html:5
+#: profile/templates/profile/login.html:6
+#: profile/templates/profile/login.html:7
+#: profile/templates/profile/login.html:17
+#: profile/templates/profile/login.html:38 templates/theme_first_base.html:66
+msgid "Sign in"
+msgstr "Вход"
+
+#: templates/theme_first_base.html:99
+msgid "Assistant"
+msgstr "Ассистант"
