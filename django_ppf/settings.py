@@ -35,7 +35,7 @@ except:
     # Application definition
 
     INSTALLED_APPS = [
-        # 'jet',
+        'modeltranslation',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -69,6 +69,7 @@ except:
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
     ]
 
     ROOT_URLCONF = 'django_ppf.urls'
@@ -82,6 +83,7 @@ except:
                 'context_processors': [
                     'django.template.context_processors.debug',
                     'django.template.context_processors.request',
+                    'django.template.context_processors.i18n',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
                 ],
@@ -128,7 +130,17 @@ except:
     # Internationalization
     # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-    LANGUAGE_CODE = 'ru-Ru'
+    LANGUAGES = (
+        ('ru', 'Russian'),
+        ('uk', 'Ukrainian'),
+        ('en', 'English'),
+    )
+
+    LANGUAGE_CODE = 'ru'
+
+    MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+    MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ru'
+    MODELTRANSLATION_DEBUG = True
 
     TIME_ZONE = 'Europe/Kiev'
 
@@ -137,6 +149,10 @@ except:
     USE_L10N = True
 
     USE_TZ = True
+
+    LOCALE_PATHS = (
+        os.path.join(BASE_DIR, 'locale'),
+    )
 
 
     # Static files (CSS, JavaScript, Images)

@@ -2,6 +2,39 @@
 {% load i18n %}
 {% load ppf_tags %}
 
+{#<form action="{% url 'set_language' %}" method="post" role="form" class="form">#}
+{#    {% csrf_token %}#}
+{#    <input name="next" type="hidden" value="{{ redirect_to }}" />#}
+{#    <div class="input-group">#}
+{#        <select name="language" class="form-control">#}
+{#            {% get_current_language as LANGUAGE_CODE %}#}
+{#            {% get_available_languages as LANGUAGES %}#}
+{#            {% get_language_info_list for LANGUAGES as languages %}#}
+{#            {% for language in languages %}#}
+{#                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>#}
+{#                    {{ language.name_local }} ({{ language.code }})#}
+{#                </option>#}
+{#            {% endfor %}#}
+{#        </select>#}
+{#        <span class="input-group-btn">#}
+{#            <button class="btn btn-success" type="submit">Go</button>#}
+{#        </span>#}
+{#    </div>#}
+{#</form>#}
+
+
+{% for lang in LANGUAGES %}
+    <li><a href="#" onclick="document.setLang{{ lang.1 }}.submit(); return false;">{{ lang.1 }}</a>
+        <form name="setLang{{ lang.1}}" action="{% url 'set_language' %}" method="POST">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="/">
+            <input type="hidden" name="language" value="{{ lang.0 }}">
+        </form>
+    </li>
+{% endfor %}
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>

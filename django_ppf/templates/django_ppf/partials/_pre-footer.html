@@ -3,17 +3,32 @@
 <section class="pre-footer">
     <div class="container-fluid">
         <div class="row pre-footer__bg">
-            <div class="col-md-3">
-                <h4>{% trans 'Navigate' %}</h4>
-            </div>
+            <div class="col-md-3"></div>
             <div class="col-md-3">
                 <h4>{% trans 'Catalog' %}</h4>
             </div>
             <div class="col-md-3">
-                <h4>{% trans 'Pages' %}</h4>
+                <h4>{% trans 'Navigate' %}</h4>
+                <ul class="pre-footer__nav">
+                    <li class="pre-footer__nav__li">
+                        <a class="pre-footer__nav__link" href="{% url 'home' %}">{% trans 'Home' %}</a>
+                    </li>
+                    <li class="pre-footer__nav__li">
+                        <a class="pre-footer__nav__link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a>
+                    </li>
+                    <li class="pre-footer__nav__li">
+                        <a class="pre-footer__nav__link" href="{% url 'news-list' %}">{% trans 'News' %}</a>
+                    </li>
+                    <li class="pre-footer__nav__li">
+                        <a class="pre-footer__nav__link" href="{% url 'geo-root' %}">{% trans 'Our objects' %}</a>
+                    </li>
+                    <li class="pre-footer__nav__li">
+                        <a class="pre-footer__nav__link" href="{% url 'contacts' %}">{% trans 'Contact us' %}</a>
+                    </li>
+                </ul>
             </div>
             <div class="col-md-3">
-                contacts
+                <h4>Contacts</h4>
             </div>
         </div>
     </div>
