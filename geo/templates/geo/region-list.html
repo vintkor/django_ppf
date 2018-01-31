@@ -38,11 +38,13 @@
             <div class="row">
                 <div class="products__grid">
                     {% for object in objects %}
-                    <div class="product">
+                    <div class="product prod_hover">
                         <div class="product__body">
-                            {% thumbnail object.get_main_or_first_image "300x400" crop="center" format="PNG" as im %}
-                                <img src="{{ im.url }}" alt="{{ object.title }}">
-                            {% endthumbnail %}
+                            <div class="product__image-wrapper">
+                                {% thumbnail object.get_main_or_first_image "200x200" crop="center" format="PNG" as im %}
+                                    <img class="product__image" src="{{ im.url }}" alt="{{ product.title }}">
+                                {% endthumbnail %}
+                            </div>
                         </div>
                         <div class="product__footer">
                             <h2 class="product__title">{{ object.title }}</h2>

@@ -62,6 +62,10 @@ $('document').ready(function(){
     $(this).toggleClass('active');
   });
 
+  $('.prod_hover').hover(function(event) {
+    $(this).toggleClass('active');
+  });
+
   // ---------------------------------- Cloud parralax ----------------------------------
   var cloud = $('#cloud');
   $('body').mousemove(function(event) {

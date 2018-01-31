@@ -41,26 +41,39 @@
   }
 }
 
+.prod_hover.active {
+  img {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba($black-color, .2);
+  }
+}
+
 .product {
   width: 100%;
   min-width: 250px;
   max-width: 300px;
-  background: rgba($bg-color, .2);
   position: relative;
   transition: .2s;
-  &:hover {background: rgba($bg-color, .4);}
-  &__image {
-    background-size: cover;
-    background-position: center center;
-    height: 400px;
-    position: relative;
-    opacity: 0.7;
-    filter: grayscale(.5);
-    transition: .2s;
+  &:nth-child(5n) {background: #eaf4f9;}
+  &:nth-child(5n-1) {background: #e0eef7;}
+  &:nth-child(5n-2) {background: #e9f0fb;}
+  &:nth-child(5n-3) {background: #d2e6f4;}
+  &:nth-child(5n-4) {background: #deeff7;}
+  img {
+    transition: ease-in-out 1s;
+    border-radius: 50%;
   }
-  &:hover .product__image {
-    opacity: 1;
-    filter: grayscale(0);
+  &:hover {
+    background: rgba($bg-color, .3);
+  }
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+  }
+  &__image-wrapper {
+    transition: .2s;
   }
   &__footer {
     text-align: center;

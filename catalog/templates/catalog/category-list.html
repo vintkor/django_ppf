@@ -39,13 +39,15 @@
         <div class="row">
             <div class="products__grid">
                 {% for product in products %}
-                    <div class="product">
+                    <div class="product prod_hover">
                         <div class="product__body">
-                            {% if product.image %}
-                                {% thumbnail product.image "300x400" crop="center" format="PNG" as im %}
-                                    <img src="{{ im.url }}" alt="{{ product.title }}">
-                                {% endthumbnail %}
-                            {% endif %}
+                            <div class="product__image-wrapper">
+                                {% if product.image %}
+                                    {% thumbnail product.image "200x200" crop="center" format="PNG" as im %}
+                                        <img class="product__image" src="{{ im.url }}" alt="{{ product.title }}">
+                                    {% endthumbnail %}
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="product__footer">
                             <h2 class="product__title">{{ product.title }}</h2>
