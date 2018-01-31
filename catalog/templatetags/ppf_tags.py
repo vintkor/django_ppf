@@ -3,6 +3,7 @@ from news.models import News
 from geo.models import ObjectPPF
 from django.urls import reverse
 from django.contrib.auth.models import User
+from catalog.models import Category
 
 register = template.Library()
 
@@ -11,6 +12,11 @@ register = template.Library()
 def last_news():
     news = News.objects.all()[:5]
     return {'last_news': news}
+
+
+@register.simple_tag
+def get_categories():
+    return Category.objects.all()
 
 
 @register.inclusion_tag('django_ppf/partials/_favorite-objects-tag.html')
