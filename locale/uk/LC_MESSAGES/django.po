@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-28 20:47+0200\n"
+"POT-Creation-Date: 2018-02-02 22:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,62 +23,82 @@ msgstr ""
 msgid "Products from assistant"
 msgstr ""
 
-#: catalog/models.py:27
+#: catalog/admin.py:29 catalog/models.py:89 geo/models.py:62
+msgid "Products"
+msgstr "Продукти"
+
+#: catalog/models.py:34
 msgid "Parent category"
 msgstr ""
 
-#: catalog/models.py:29 catalog/models.py:39 catalog/models.py:50
-msgid "Category"
-msgstr "Категорія"
+#: catalog/models.py:36 catalog/models.py:57 catalog/models.py:80
+#: currency/models.py:7 geo/models.py:30 geo/models.py:57 geo/models.py:84
+#: news/models.py:17
+msgid "Title"
+msgstr "Заголовок"
 
-#: catalog/models.py:30 catalog/models.py:52 geo/models.py:32 geo/models.py:85
+#: catalog/models.py:37 catalog/models.py:81 geo/models.py:32 geo/models.py:85
 #: geo/models.py:90 news/models.py:18
 msgid "Image"
 msgstr "Зображення"
 
-#: catalog/models.py:31 catalog/models.py:54 geo/models.py:33 geo/models.py:59
-#: news/models.py:20
+#: catalog/models.py:38 catalog/models.py:59 catalog/models.py:83
+#: geo/models.py:33 geo/models.py:59 news/models.py:20
 msgid "META Description"
 msgstr "META Опис"
 
-#: catalog/models.py:32 catalog/models.py:55 geo/models.py:34 geo/models.py:60
-#: news/models.py:21
+#: catalog/models.py:39 catalog/models.py:60 catalog/models.py:84
+#: geo/models.py:34 geo/models.py:60 news/models.py:21
 msgid "META Keywords"
 msgstr "META Ключові слова"
 
-#: catalog/models.py:33 catalog/models.py:56 geo/models.py:35 geo/models.py:61
-#: news/models.py:22
+#: catalog/models.py:40 catalog/models.py:61 catalog/models.py:85
+#: geo/models.py:35 geo/models.py:61 news/models.py:22
 msgid "Description"
 msgstr "Опис"
 
-#: catalog/models.py:40
+#: catalog/models.py:46 catalog/models.py:78
+msgid "Category"
+msgstr "Категорія"
+
+#: catalog/models.py:47
 msgid "Categories"
 msgstr "Категорії"
 
-#: catalog/models.py:51 catalog/models.py:59
-msgid "Product"
-msgstr "Продукт"
+#: catalog/models.py:58
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "Вийти"
 
-#: catalog/models.py:53 geo/models.py:58 news/models.py:19
+#: catalog/models.py:64 catalog/models.py:79
+msgid "Manufacturer"
+msgstr "Виробник"
+
+#: catalog/models.py:65
+msgid "Manufacturers"
+msgstr "Виробники"
+
+#: catalog/models.py:82 geo/models.py:58 news/models.py:19
 msgid "Text"
 msgstr "Текст"
 
-#: catalog/models.py:60 geo/models.py:62
-msgid "Products"
-msgstr "Продукти"
+#: catalog/models.py:88
+msgid "Product"
+msgstr "Продукт"
 
 #: catalog/templates/catalog/category-list.html:14
 #: catalog/templates/catalog/product-detail.html:15
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:8
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:17
-#: templates/theme_first_base.html:95
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:22
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:43
+#: templates/theme_first_base.html:62
 msgid "Catalog"
 msgstr "Каталог"
 
 #: catalog/templates/catalog/partials/_breadcrumbs-news.html:8
 #: catalog/templates/catalog/partials/_catalog-list__breadcrumbs.html:8
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:14
-#: templates/theme_first_base.html:94
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:40
+#: templates/theme_first_base.html:61
 msgid "Home"
 msgstr "Головна"
 
@@ -89,11 +109,6 @@ msgstr "Адміністративна панель"
 #: catalog/templates/catalog/partials/_profile.html:15
 msgid "Logout"
 msgstr "Вийти"
-
-#: currency/models.py:7 geo/models.py:30 geo/models.py:57 geo/models.py:84
-#: news/models.py:17
-msgid "Title"
-msgstr "Заголовок"
 
 #: currency/models.py:8
 msgid "Code"
@@ -120,8 +135,8 @@ msgid "Updated"
 msgstr "Дата обновлення"
 
 #: django_ppf/templates/django_ppf/contacts.html:6
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:26
-#: templates/theme_first_base.html:101
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:52
+#: templates/theme_first_base.html:68
 msgid "Contact us"
 msgstr "Контакти"
 
@@ -131,7 +146,7 @@ msgid "Read more"
 msgstr "Читати далі"
 
 #: django_ppf/templates/django_ppf/partials/_footer.html:7
-#: templates/theme_first_base.html:44
+#: templates/theme_first_base.html:11
 msgid "PPF Company"
 msgstr "Компанія ППФ"
 
@@ -148,9 +163,9 @@ msgid "Last news"
 msgstr "Останні новини"
 
 #: django_ppf/templates/django_ppf/partials/_info.html:12
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:23
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:49
 #: geo/templates/geo/geo-root.html:4 geo/templates/geo/object-detail.html:15
-#: geo/templates/geo/region-list.html:14 templates/theme_first_base.html:97
+#: geo/templates/geo/region-list.html:14 templates/theme_first_base.html:64
 msgid "Our objects"
 msgstr "Наші об'єкти"
 
@@ -158,14 +173,18 @@ msgstr "Наші об'єкти"
 msgid "Feedback"
 msgstr "Зворотній зв'язок"
 
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:11
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:8
+msgid "Choice language"
+msgstr "Оберіть мову"
+
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:37
 msgid "Navigate"
 msgstr "Навігація"
 
-#: django_ppf/templates/django_ppf/partials/_pre-footer.html:20
+#: django_ppf/templates/django_ppf/partials/_pre-footer.html:46
 #: news/models.py:25 news/models.py:26 news/templates/news/news-detail.html:12
 #: news/templates/news/news-list.html:13 news/templates/news/news-list.html:18
-#: templates/theme_first_base.html:96
+#: templates/theme_first_base.html:63
 msgid "News"
 msgstr "Новини"
 
@@ -223,11 +242,11 @@ msgstr "Ціни"
 
 #: profile/forms.py:9
 msgid "Username"
-msgstr ""
+msgstr "Нік користувача"
 
 #: profile/forms.py:12
 msgid "Password"
-msgstr "Нік"
+msgstr "Пароль"
 
 #: profile/models.py:18
 msgid "Avatar"
@@ -241,10 +260,10 @@ msgstr "День народження"
 #: profile/templates/profile/login.html:6
 #: profile/templates/profile/login.html:7
 #: profile/templates/profile/login.html:17
-#: profile/templates/profile/login.html:38 templates/theme_first_base.html:66
+#: profile/templates/profile/login.html:38 templates/theme_first_base.html:31
 msgid "Sign in"
 msgstr "Увійти"
 
-#: templates/theme_first_base.html:99
+#: templates/theme_first_base.html:66
 msgid "Assistant"
 msgstr "Ассістант"

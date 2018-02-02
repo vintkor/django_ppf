@@ -1,5 +1,6 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ product.title }}{% endblock %}
 {% block META_DESC %}{{ product.meta_description }}{% endblock %}
@@ -12,12 +13,18 @@
 
 {% block content %}
 
-    {% catalog_breadcrumbs product.category product.title _('Catalog') 'catalog' %}
+{#    {% catalog_breadcrumbs product.category product.title _('Catalog') 'catalog' %}#}
 
     <section class="page-title">
         <div class="container-fluid">
             <div class="row">
-                <h1 class="page-title__title align-center">{{ product.title }}</h1>
+                <div class="page-title__title">
+                    {% thumbnail manufacturer.logo "200x200" crop="center" format="PNG" as im %}
+    {#                    <img src="{{ im.url }}" alt="{{ manufacturer.title }}">#}
+                        <div class="user__avatar" style="background-image: url({{ im.url }});" role="image"></div>
+                    {% endthumbnail %}
+                    <h1 class="page-title__title align-center">{{ manufacturer.title }}</h1>
+                </div>
             </div>
         </div>
     </section>
@@ -26,22 +33,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    {% if product.manufacturer %}
-                        <a href="{{ product.manufacturer.get_absolute_url }}">{{ product.manufacturer.title }}</a>
-                    {% endif %}
-                    {{ product.text | safe }}
+                    {{ manufacturer.description | safe }}
                 </div>
             </div>
         </div>
     </section>
 
     {% include 'django_ppf/partials/_info.html' %}
-
-    {% if user.is_staff %}
-        <a href="{% url 'catalog-product-edit' product.id %}" target="_blank" class="product__edit">
-            <i class="fa fa-2x fa-pencil" aria-hidden="true"></i>
-        </a>
-    {% endif %}
 
 {% endblock %}
 

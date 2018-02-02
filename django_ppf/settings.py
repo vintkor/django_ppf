@@ -50,6 +50,8 @@ except:
         'ckeditor_uploader',
         'rangefilter',
         'sorl.thumbnail',
+        'django_nose',
+        # 'django_coverage',
 
         'profile',
         'catalog',
@@ -133,7 +135,7 @@ except:
     LANGUAGES = (
         ('ru', 'Russian'),
         ('uk', 'Ukrainian'),
-        ('en', 'English'),
+        # ('en', 'English'),
     )
 
     LANGUAGE_CODE = 'ru'
@@ -141,6 +143,10 @@ except:
     MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
     MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ru'
     MODELTRANSLATION_DEBUG = True
+
+    MODELTRANSLATION_TRANSLATION_FILES = (
+        'catalog.translation',
+    )
 
     TIME_ZONE = 'Europe/Kiev'
 
@@ -170,6 +176,15 @@ except:
 
     CKEDITOR_UPLOAD_PATH = 'uploads/'
     MPTT_ADMIN_LEVEL_INDENT = 20
+
+    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+    NOSE_ARGS = [
+        '--cover-erase',
+        '--cover-package=assistant, news',
+        '--with-coverage',
+        '--cover-html',
+    ]
 
     CKEDITOR_CONFIGS = {
         'default': {

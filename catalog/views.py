@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Category, Product
+from .models import Category, Product, Manufacturer
 import json
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,3 +44,15 @@ class ProductEditView(LoginRequiredMixin, ProductDetailView):
         product.save(update_fields=('text',))
 
         return JsonResponse({'save': 'true'})
+
+
+class ManufacturerListView(ListView):
+    template_name = ''
+    context_object_name = 'manufacturers'
+    model = Manufacturer
+
+
+class ManufacturerDetailView(DetailView):
+    template_name = 'catalog/manufacturer-detail.html'
+    context_object_name = 'manufacturer'
+    model = Manufacturer

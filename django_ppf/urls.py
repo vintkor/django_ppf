@@ -39,7 +39,6 @@ sitemap_dict = {
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
-    url(r'^assistant/', include('assistant.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
@@ -47,6 +46,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^catalog/', include('catalog.urls')),
+    url(r'^assistant/', include('assistant.urls')),
     url(r'^our-objects/', include('geo.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^contacts/', ContactsView.as_view(), name='contacts'),
