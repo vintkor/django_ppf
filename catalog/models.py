@@ -47,10 +47,15 @@ class Category(BaseModel, MPTTModel):
         verbose_name_plural = _('Categories')
 
     def __str__(self):
-        return self.title
+        categories = ' > '.join([i.title for i in self.get_ancestors(include_self=True)])
+        return categories
 
     def get_absolute_url(self):
         return reverse('catalog-category', args=[str(self.id)])
+
+    def get_count_products(self):
+        categories = self.get_descendants(include_self=True)
+        return Product.objects.select_related('category').filter(category__in=categories).count()
 
 
 class Manufacturer(BaseModel):

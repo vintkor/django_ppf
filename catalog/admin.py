@@ -9,7 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 
 @admin.register(Category)
 class CategoryAdmin(AdminImageMixin, DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title',)
+    list_display = ('tree_actions',  'indented_title', 'get_count_products')
+
+    Category.get_count_products.short_description = _('Products')
 
 
 @admin.register(Product)
@@ -24,6 +26,4 @@ class ManufacturerAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_count_product')
     search_fields = ('title',)
 
-    def get_count_product(self, obj):
-        return obj.get_count_product()
-    get_count_product.short_description = _('Products')
+    Manufacturer.get_count_product.short_description = _('Products')
