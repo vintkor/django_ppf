@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Manufacturer
+from .models import Category, Product, Manufacturer, Order
 from mptt.admin import DraggableMPTTAdmin
 from sorl.thumbnail.admin import AdminImageMixin
 from django.utils.translation import ugettext_lazy as _
@@ -27,3 +27,8 @@ class ManufacturerAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
     Manufacturer.get_count_product.short_description = _('Products')
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('phone', 'product', 'created')

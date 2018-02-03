@@ -98,3 +98,15 @@ class Product(BaseModel):
 
     def get_absolute_url(self):
         return reverse('catalog-product', args=[str(self.id)])
+
+
+class Order(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    phone = models.CharField(max_length=13, verbose_name=_('Phone number'))
+
+    class Meta:
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
+
+    def __str__(self):
+        return self.phone
