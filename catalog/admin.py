@@ -1,10 +1,30 @@
 from django.contrib import admin
-from .models import Category, Product, Manufacturer, Order
+from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document
 from mptt.admin import DraggableMPTTAdmin
-from sorl.thumbnail.admin import AdminImageMixin
+from sorl.thumbnail.admin import AdminImageMixin, AdminInlineImageMixin
 from django.utils.translation import ugettext_lazy as _
 # import catalog.translation
 # from modeltranslation.admin import TranslationAdmin
+
+
+class FeatureInline(admin.TabularInline):
+    extra = 0
+    model = Feature
+
+
+class BenefitInline(AdminInlineImageMixin, admin.StackedInline):
+    extra = 0
+    model = Benefit
+
+
+class GalleryInline(AdminInlineImageMixin, admin.TabularInline):
+    extra = 0
+    model = Gallery
+
+
+class DocumentInline(admin.TabularInline):
+    extra = 0
+    model = Document
 
 
 @admin.register(Category)
@@ -19,6 +39,8 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ('title', 'category', 'manufacturer')
     list_filter = ('category',)
     search_fields = ('title',)
+    inlines = (FeatureInline, BenefitInline, GalleryInline, DocumentInline)
+    save_on_top = True
 
 
 @admin.register(Manufacturer)

@@ -29,6 +29,20 @@ def set_product_image_name(instanse, filename):
     return path
 
 
+def set_icons_name(instanse, filename):
+    name = get_random_string(40)
+    ext = filename.split('.')[-1]
+    path = 'images/catalog/icons/{}.{}'.format(name, ext)
+    return path
+
+
+def set_file_name(instanse, filename):
+    name = get_random_string(40)
+    ext = filename.split('.')[-1]
+    path = 'files/catalog/{}.{}'.format(name, ext)
+    return path
+
+
 class Category(BaseModel, MPTTModel):
     parent = TreeForeignKey(
         'self', verbose_name=_('Parent category'), null=True, blank=True,
@@ -84,10 +98,10 @@ class Product(BaseModel):
     manufacturer = models.ForeignKey(Manufacturer, verbose_name=_('Manufacturer'), on_delete=None, blank=True, null=True, default=None)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
-    text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
+    description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
+    use = RichTextUploadingField(verbose_name=_('Use'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Product')
@@ -110,3 +124,57 @@ class Order(BaseModel):
 
     def __str__(self):
         return self.phone
+
+
+class Feature(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    title = models.CharField(max_length=150, verbose_name=_('Title'))
+    value = models.CharField(max_length=150, verbose_name=_('Value'))
+
+    class Meta:
+        verbose_name = _('Feature')
+        verbose_name_plural = _('Features')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.title)
+
+
+class Benefit(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    image = ImageField(verbose_name=_('Image'), upload_to=set_icons_name, blank=True, null=True)
+    title = models.CharField(max_length=150, verbose_name=_('Title'))
+    subtitle = models.CharField(max_length=150, verbose_name=_('Subtitle'), blank=True, null=True)
+    text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Benefit')
+        verbose_name_plural = _('Benefits')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.title)
+
+
+class Gallery(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name)
+    alt = models.CharField(max_length=150, verbose_name=_('SEO alt'))
+
+    class Meta:
+        verbose_name = _('Gallery')
+        verbose_name_plural = _('Galleries')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.alt)
+
+
+class Document(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    title = models.CharField(max_length=150, verbose_name=_('Title'))
+    file = models.FileField(verbose_name=_('File'), upload_to=set_file_name)
+
+    class Meta:
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documents')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.title)
