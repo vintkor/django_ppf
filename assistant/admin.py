@@ -6,7 +6,7 @@ from .models import Category, Product, Feature, Delivery, Unit, Photo
 # from import_export import resources
 # from jet.admin import CompactInline
 # from jet.filters import DateRangeFilter
-from .forms import SetCourseForm, SetUnitForm, SetCategoryForm, SetCurrencyForm, SetPriceForm
+from .forms import SetCourseForm, SetUnitForm, SetCategoryForm, SetCurrencyForm, SetPriceForm, SetPricePercentForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from xlsxwriter import Workbook
@@ -283,6 +283,50 @@ def save_as_xlsx(modeladmin, request, queryset):
 save_as_xlsx.short_description = 'Сохранить в формате XLSX'
 
 
+def get_percent(price, percent, action):
+    price = float(price)
+    percent = float(percent)
+    if action == '+':
+        return price + (price * percent / 100)
+    if action == '-':
+        return price - (price * percent / 100)
+
+
+def set_percent_price(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Изменение цены на процент', 'action': 'set_percent_price'}
+
+    if 'apply' in request.POST:
+        form = SetPricePercentForm(request.POST)
+
+        if form.is_valid():
+            percent = form.cleaned_data['percent']
+            action_ = form.cleaned_data['action_']
+
+            count = 0
+            for item in queryset:
+                item.price = get_percent(item.price, percent, action_)
+                item.save(update_fields=('price',))
+                count += 1
+
+            modeladmin.message_user(
+                request,
+                "Цена изменена на {}% у {} товаров.".format(percent, count),
+                level=messages.SUCCESS
+            )
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetPricePercentForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        context['form'] = form
+
+    return render(request, template, context)
+
+
+set_percent_price.short_description = 'Изменить цену на процент'
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "code", "active", "price", "get_currency_code", "course",
                     "re_count", "get_price_UAH", "unit", "step", "get_images_count", "updated")
@@ -295,7 +339,10 @@ class ProductAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': FilteredSelectMultiple("Поставщики", is_stacked=False)},
     }
-    actions = (set_category, set_course, set_unit, re_count_off, re_count_on, save_as_xlsx, set_currency, set_price)
+    actions = (
+        set_percent_price, set_category, set_course, set_unit, re_count_off,
+        re_count_on, save_as_xlsx, set_currency, set_price,
+    )
     save_on_top = True
     save_as = True
 

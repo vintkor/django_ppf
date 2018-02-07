@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ValidationError
 from .models import Unit, Category, Currency
 
 
@@ -8,6 +9,23 @@ class SetCourseForm(forms.Form):
     course = forms.CharField(label='Новый курс', widget=forms.NumberInput(
         attrs={'placeholder': 'Новый курс', 'step': '0.00001'},
     ))
+
+
+class SetPricePercentForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+
+    percent = forms.CharField(label='Процент', widget=forms.NumberInput(
+        attrs={'placeholder': 'Процент', 'step': '0.01'},
+    ))
+    CHOICES = (('+', '+ (добавление)'),
+               ('-', '- (вычитание)'))
+    action_ = forms.ChoiceField(choices=CHOICES, widget=forms.Select())
+
+    # def clean_percent(self):
+    #     percent = self.cleaned_data.get('percent')
+    #     if float(percent) <= 0:
+    #         raise ValidationError('% не должен быть 0 и меньше')
+    #     return percent
 
 
 class SetUnitForm(forms.Form):
