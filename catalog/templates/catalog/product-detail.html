@@ -66,7 +66,7 @@
                                     <div class="col-md-3">
                                         <div class="product-detail__benefit__head">
                                             {% if benefit.image %}
-                                                {% thumbnail product.image "150x150" crop="center" format="PNG" as im %}
+                                                {% thumbnail benefit.image "150x150" crop="center" format="PNG" as im %}
                                                     <img class="product-detail__benefit__image" src="{{ im.url }}"
                                                          alt="{{ product.title }} - {{ benefit.title }} - {{ benefit.subtitle }}">
                                                 {% endthumbnail %}
