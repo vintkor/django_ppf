@@ -110,4 +110,5 @@ $('document').ready(function(){
     } catch(e){}
 }());
 
-// waterfall('.my-grid');
+$('#product-detail__image-wrap').photobox('a',{ time:0 });
+$('#product-detail__gallery').photobox('a',{ time:0 });

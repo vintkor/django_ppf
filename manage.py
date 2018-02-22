@@ -4,6 +4,15 @@ import sys
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_ppf.settings")
+    is_testing = 'test' in sys.argv
+
+    if is_testing:
+        import coverage
+
+        cov = coverage.coverage(source=['app'], omit=['*/tests/*'])
+        cov.set_option('report:show_missing', True)
+        cov.erase()
+        cov.start()
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
@@ -19,4 +28,10 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
+
     execute_from_command_line(sys.argv)
+
+    if is_testing:
+        cov.stop()
+        cov.save()
+        cov.report()

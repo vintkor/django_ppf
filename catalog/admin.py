@@ -36,11 +36,13 @@ class CategoryAdmin(AdminImageMixin, DraggableMPTTAdmin):
 
 @admin.register(Product)
 class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
-    list_display = ('title', 'category', 'manufacturer')
+    list_display = ('title', 'category', 'manufacturer', 'active')
     list_filter = ('category',)
     search_fields = ('title',)
     inlines = (FeatureInline, BenefitInline, GalleryInline, DocumentInline)
     save_on_top = True
+    list_editable = ('active',)
+    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(Manufacturer)

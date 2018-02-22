@@ -23,7 +23,10 @@ class CategoryListView(ListView):
         context = super().get_context_data()
         categories = (i.id for i in self.get_queryset().get_descendants(include_self=True))
         context['children'] = self.get_queryset().get_children()
-        context['products'] = Product.objects.select_related('category').filter(category_id__in=categories)
+        context['products'] = Product.objects.select_related('category').filter(
+            category_id__in=categories,
+            active=True,
+        )
         return context
 
 

@@ -33,7 +33,7 @@ gulp.task('scripts', function() {
             'app/libs/jquery/dist/jquery.min.js',
             'app/libs/bootstrap/dist/js/bootstrap.js',
             'app/libs/owl.carousel/dist/owl.carousel.min.js',
-            'app/libs/waterfall/src/waterfall.js'
+            'app/libs/photobox/jquery.photobox.js'
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())

@@ -1,5 +1,6 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ product.title }}{% endblock %}
 {% block META_DESC %}{{ product.meta_description }}{% endblock %}
@@ -24,35 +25,103 @@
 
     <section class="product-detail">
         <div class="container-fluid">
+
+            <div class="product-detail__image__wrapper" id="product-detail__image-wrap">
+                {% if product.image %}
+                    {% thumbnail product.image "300x300" crop="center" format="PNG" as im %}
+                        <a href="{{ product.image.url }}" class="product-detail__image__main">
+                            <img class="product-detail__image" src="{{ im.url }}" alt="{{ product.title }}">
+                        </a>
+                    {% endthumbnail %}
+                {% endif %}
+            </div>
+
             <div class="row">
-                <div class="col-md-12">
-                    {% if product.manufacturer %}
-                        <a href="{{ product.manufacturer.get_absolute_url }}">{{ product.manufacturer.title }}</a>
-                    {% endif %}
-                    {{ product.text | safe }}
+                <div class="col-md-10 col-md-offset-1">
+                    {{ product.description | safe }}
                 </div>
+            </div>
+
+            <div class="row product-detail__characteristics">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
+                    <table class="table">
+                        {% for feuture in product.feature_set.all %}
+                            <tr>
+                                <td>{{ feuture.title }}</td>
+                                <td>{{ feuture.value }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+            <div class="row product-detail__benefits">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="text-center mb-30">Выгоды и достоинства</h2>
+                    <div class="row">
+                        <div class="product-detail__benefit__wrapper">
+                            {% for benefit in product.benefit_set.all %}
+                                <div class="product-detail__benefit">
+                                    <div class="col-md-3">
+                                        <div class="product-detail__benefit__head">
+                                            {% if benefit.image %}
+                                                {% thumbnail product.image "150x150" crop="center" format="PNG" as im %}
+                                                    <img class="product-detail__benefit__image" src="{{ im.url }}"
+                                                         alt="{{ product.title }} - {{ benefit.title }} - {{ benefit.subtitle }}">
+                                                {% endthumbnail %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-detail__benefit__body">
+                                            <h3 class="product-detail__benefit__title">{{ benefit.title }}</h3>
+                                            <h4 class="product-detail__benefit__subtitle">{{ benefit.subtitle }}</h4>
+                                        </div>
+                                        <div class="product-detail__benefit__footer">
+                                            <div class="product-detail__benefit__text">{{ benefit.text }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row product-detail__gallery">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="text-center mb-30">Использование {{ product.title }}</h2>
+                    <div id="product-detail__gallery" class="product-detail__images__wrapper">
+                        {% for image in product.gallery_set.all %}
+                            {% thumbnail image.image "150x150" crop="center" format="PNG" as im %}
+                                <a class="product-detail__images" href="{{ image.image.url }}">
+                                    <img src="{{ im.url }}" alt="{{ image.alt }}">
+                                </a>
+                            {% endthumbnail %}
+                        {% endfor %}
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    {% include 'django_ppf/partials/_info.html' %}
+{#    <div>{{ product.use | safe }}</div>#}
 
-    {% if user.is_staff %}
-        <a href="{% url 'catalog-product-edit' product.id %}" target="_blank" class="product__edit">
-            <i class="fa fa-2x fa-pencil" aria-hidden="true"></i>
-        </a>
-    {% endif %}
+
+
+    {% include 'django_ppf/partials/_info.html' %}
 
 {% endblock %}
 
 
 {% block footer_scripts %}
-    <style>
-    .after {
-        margin-left: -15px;
-        margin-right: -15px;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    </style>
+{#    <style>#}
+{#    .after {#}
+{#        margin-left: -15px;#}
+{#        margin-right: -15px;#}
+{#        padding-left: 15px;#}
+{#        padding-right: 15px;#}
+{#    }#}
+{#    </style>#}
 {% endblock %}

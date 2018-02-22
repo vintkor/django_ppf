@@ -97,11 +97,13 @@ class Product(BaseModel):
     category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE)
     manufacturer = models.ForeignKey(Manufacturer, verbose_name=_('Manufacturer'), on_delete=None, blank=True, null=True, default=None)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
+    slug = models.SlugField(null=True)
     image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
     use = RichTextUploadingField(verbose_name=_('Use'), blank=True, null=True)
+    active = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Product')
@@ -111,7 +113,7 @@ class Product(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('catalog-product', args=[str(self.id)])
+        return reverse('catalog-product', args=[str(self.slug)])
 
 
 class Order(BaseModel):
