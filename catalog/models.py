@@ -48,7 +48,7 @@ class Category(BaseModel, MPTTModel):
         'self', verbose_name=_('Parent category'), null=True, blank=True,
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Title'))
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, max_length=170, unique=True)
     image = ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
@@ -98,7 +98,7 @@ class Product(BaseModel):
     category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE)
     manufacturer = models.ForeignKey(Manufacturer, verbose_name=_('Manufacturer'), on_delete=None, blank=True, null=True, default=None)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, max_length=170, unique=True)
     image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
