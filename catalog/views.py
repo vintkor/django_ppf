@@ -21,7 +21,10 @@ class ProductListView(ListView):
     def get_queryset(self):
         self.category = Category.objects.get(slug=self.kwargs.get('slug'))
         categories = (i.id for i in self.category.get_descendants(include_self=True))
-        return Product.objects.filter(category_id__in=categories)
+        return Product.objects.filter(
+            category_id__in=categories,
+            active=True,
+        )
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data()
