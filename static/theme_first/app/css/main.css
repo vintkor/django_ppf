@@ -113,6 +113,32 @@ h1, h2, h3, h4, h5, h6 {
   background: #fff;
 }
 
+.pagination li a {
+  background: #eaf5fc;
+  border: none;
+  padding: 12px 19px;
+}
+
+.pagination li a:hover {
+  background: #54a561;
+  color: #fff;
+}
+
+.pagination li:first-child a, .pagination li:last-child a {
+  -webkit-border-radius: 0;
+          border-radius: 0;
+}
+
+.pagination .active a {
+  background: #54a561;
+  border: none;
+}
+
+.pagination .active a:hover {
+  background: #54a561;
+  border: none;
+}
+
 body {
   background: #f6f6f6;
 }
@@ -788,13 +814,13 @@ body.catalog-root .header__pinned {
 }
 
 .product-detail__characteristics {
-  background: #f3f9fd;
+  background: #f8fbfe;
   padding: 30px 0;
 }
 
 .product-detail__benefits {
   padding: 30px 0;
-  background: #eaf5fc;
+  background: #eff7fd;
 }
 
 .product-detail__benefit {
@@ -803,7 +829,7 @@ body.catalog-root .header__pinned {
 
 .product-detail__gallery {
   padding: 30px 0;
-  background: #e1f0fb;
+  background: #e6f3fc;
 }
 
 .single-news__image {

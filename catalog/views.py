@@ -12,21 +12,21 @@ class CatalogRootView(ListView):
     queryset = Category.objects.filter(level=0)
 
 
-class CategoryListView(ListView):
+class ProductListView(ListView):
     template_name = 'catalog/category-list.html'
-    context_object_name = 'category'
+    context_object_name = 'products'
+    paginate_by = 24
+    category = None
 
     def get_queryset(self):
-        return Category.objects.get(pk=self.kwargs.get('pk'))
+        self.category = Category.objects.get(slug=self.kwargs.get('slug'))
+        categories = (i.id for i in self.category.get_descendants(include_self=True))
+        return Product.objects.filter(category_id__in=categories)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        categories = (i.id for i in self.get_queryset().get_descendants(include_self=True))
-        context['children'] = self.get_queryset().get_children()
-        context['products'] = Product.objects.select_related('category').filter(
-            category_id__in=categories,
-            active=True,
-        )
+        context = super(ProductListView, self).get_context_data()
+        context['category'] = self.category
+        context['children'] = self.category.get_children()
         return context
 
 

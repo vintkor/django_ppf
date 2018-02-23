@@ -18,5 +18,37 @@ h1, h2, h3, h4, h5, h6 {
     background: $white-color;
 }
 
+// PAGINATION
+
+.pagination {
+    li {
+        a {
+            background: lighten($bg-color, 16%);
+            border: none;
+            padding: 12px 19px;
+            &:hover {
+                background: $green-color;
+                color: $white-color;
+            }
+        }
+        &:first-child,
+        &:last-child {
+            a {
+                border-radius: 0;
+            }
+        }
+    }
+    .active {
+        a {
+            background: $green-color;
+            border: none;
+            &:hover {
+                background: $green-color;
+                border: none;
+            }
+        }
+    }
+}
+
 @import 'media';
 @import "fonts";

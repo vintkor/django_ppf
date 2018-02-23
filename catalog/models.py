@@ -48,6 +48,7 @@ class Category(BaseModel, MPTTModel):
         'self', verbose_name=_('Parent category'), null=True, blank=True,
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Title'))
+    slug = models.SlugField(null=True)
     image = ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
@@ -65,7 +66,7 @@ class Category(BaseModel, MPTTModel):
         return categories
 
     def get_absolute_url(self):
-        return reverse('catalog-category', args=[str(self.id)])
+        return reverse('catalog-category', args=[str(self.slug)])
 
     def get_count_products(self):
         categories = self.get_descendants(include_self=True)

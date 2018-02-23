@@ -44,8 +44,11 @@
 
             <div class="row product-detail__characteristics">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
+
                     <table class="table">
+                        <caption>
+                            <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
+                        </caption>
                         {% for feuture in product.feature_set.all %}
                             <tr>
                                 <td>{{ feuture.title }}</td>

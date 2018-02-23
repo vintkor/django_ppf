@@ -30,7 +30,7 @@ class DocumentInline(admin.TabularInline):
 @admin.register(Category)
 class CategoryAdmin(AdminImageMixin, DraggableMPTTAdmin):
     list_display = ('tree_actions',  'indented_title', 'get_count_products')
-
+    prepopulated_fields = {'slug': ('title',)}
     Category.get_count_products.short_description = _('Products')
 
 

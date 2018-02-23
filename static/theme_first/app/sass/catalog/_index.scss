@@ -167,12 +167,12 @@
     }
   }
   &__characteristics {
-    background: lighten($bg-color, 18%);
+    background: lighten($bg-color, 19%);
     padding: 30px 0;
   }
   &__benefits {
     padding: 30px 0;
-    background: lighten($bg-color, 16%);
+    background: lighten($bg-color, 17%);
   }
   &__benefit {
     text-align: center;
@@ -180,6 +180,6 @@
   }
   &__gallery {
     padding: 30px 0;
-    background: lighten($bg-color, 14%);
+    background: lighten($bg-color, 15%);
   }
 }
