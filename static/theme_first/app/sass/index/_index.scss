@@ -2,14 +2,18 @@ body {
     background: #f6f6f6;
 }
 
+
 .header {
     z-index: 2;
     position: relative;
     transition: .2s;
     &__pinned {
         background: $white-color;
-        box-shadow: 0 0 5px rgba($black-color, .2);
     }
+}
+
+body.home .header__pinned {
+    box-shadow: 0 0 5px rgba($black-color, .2);
 }
 
 .super {
@@ -304,8 +308,7 @@ body {
 
 }
 
-body.home,
-body.catalog-root {
+body.home {
     .super {
         display: none;
     }

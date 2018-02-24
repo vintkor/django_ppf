@@ -152,6 +152,9 @@ body {
 
 .header__pinned {
   background: #fff;
+}
+
+body.home .header__pinned {
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -492,13 +495,11 @@ body {
   height: 300px;
 }
 
-body.home .super,
-body.catalog-root .super {
+body.home .super {
   display: none;
 }
 
-body.home .header__wrap,
-body.catalog-root .header__wrap {
+body.home .header__wrap {
   background: none;
   position: fixed;
   width: 100%;
@@ -508,8 +509,7 @@ body.catalog-root .header__wrap {
   margin: 0;
 }
 
-body.home .header__pinned,
-body.catalog-root .header__pinned {
+body.home .header__pinned {
   background: #fff;
   z-index: 2000;
 }
