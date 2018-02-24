@@ -1,6 +1,7 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
 {% load thumbnail %}
+{% load i18n %}
 
 {% block title %}{{ product.title }}{% endblock %}
 {% block META_DESC %}{{ product.meta_description }}{% endblock %}
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
-{% block body %}product-detail{% endblock body %}
+{% block body %}product-detail product_{{ product.id }}{% endblock body %}
 
 {% block content %}
 
@@ -42,76 +43,114 @@
                 </div>
             </div>
 
-            <div class="row product-detail__characteristics">
-                <div class="col-md-10 col-md-offset-1">
-
-                    <table class="table">
-                        <caption>
-                            <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
-                        </caption>
-                        {% for feuture in product.feature_set.all %}
-                            <tr>
-                                <td>{{ feuture.title }}</td>
-                                <td>{{ feuture.value }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+            {% if product.is_features %}
+                <div class="row product-detail__characteristics">
+                    <div class="col-md-10 col-md-offset-1">
+                        <table class="table">
+                            <caption>
+                                <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
+                            </caption>
+                            {% for feuture in product.feature_set.all %}
+                                <tr>
+                                    <td>{{ feuture.title }}</td>
+                                    <td>{{ feuture.value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
 
-            <div class="row product-detail__benefits">
-                <div class="col-md-10 col-md-offset-1">
-                    <h2 class="text-center mb-30">Выгоды и достоинства</h2>
-                    <div class="row">
-                        <div class="product-detail__benefit__wrapper">
-                            {% for benefit in product.benefit_set.all %}
-                                <div class="product-detail__benefit">
-                                    <div class="col-md-3">
-                                        <div class="product-detail__benefit__head">
-                                            {% if benefit.image %}
-                                                {% thumbnail benefit.image "150x150" crop="center" format="PNG" as im %}
-                                                    <img class="product-detail__benefit__image" src="{{ im.url }}"
-                                                         alt="{{ product.title }} - {{ benefit.title }} - {{ benefit.subtitle }}">
-                                                {% endthumbnail %}
-                                            {% endif %}
-                                        </div>
-                                        <div class="product-detail__benefit__body">
-                                            <h3 class="product-detail__benefit__title">{{ benefit.title }}</h3>
-                                            <h4 class="product-detail__benefit__subtitle">{{ benefit.subtitle }}</h4>
-                                        </div>
-                                        <div class="product-detail__benefit__footer">
-                                            <div class="product-detail__benefit__text">{{ benefit.text }}</div>
+            {% if product.is_benefits %}
+                <div class="row product-detail__benefits">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">Выгоды и достоинства</h2>
+                        <div class="row">
+                            <div class="product-detail__benefit__wrapper">
+                                {% for benefit in product.benefit_set.all %}
+                                    <div class="product-detail__benefit">
+                                        <div class="col-md-3">
+                                            <div class="product-detail__benefit__head">
+                                                {% if benefit.image %}
+                                                    {% thumbnail benefit.image "128x128" crop="center" format="PNG" as im %}
+                                                        <img class="product-detail__benefit__image" src="{{ im.url }}"
+                                                             alt="{{ product.title }} - {{ benefit.title }} - {{ benefit.subtitle }}">
+                                                    {% endthumbnail %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-detail__benefit__body">
+                                                <h3 class="product-detail__benefit__title">{{ benefit.title }}</h3>
+                                                <h4 class="product-detail__benefit__subtitle">{{ benefit.subtitle }}</h4>
+                                            </div>
+                                            <div class="product-detail__benefit__footer">
+                                                <div class="product-detail__benefit__text">{{ benefit.text }}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
 
-            <div class="row product-detail__gallery">
-                <div class="col-md-10 col-md-offset-1">
-                    <h2 class="text-center mb-30">Использование {{ product.title }}</h2>
-                    <div id="product-detail__gallery" class="product-detail__images__wrapper">
-                        {% for image in product.gallery_set.all %}
-                            {% thumbnail image.image "150x150" crop="center" format="PNG" as im %}
-                                <a class="product-detail__images" href="{{ image.image.url }}">
-                                    <img src="{{ im.url }}" alt="{{ image.alt }}">
-                                </a>
-                            {% endthumbnail %}
-                        {% endfor %}
-                        </a>
+            {% if product.is_galleries %}
+                <div class="row product-detail__gallery">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">Использование {{ product.title }}</h2>
+                        <div id="product-detail__gallery" class="product-detail__images__wrapper">
+                            {% for image in product.gallery_set.all %}
+                                {% thumbnail image.image "150x150" crop="center" format="PNG" as im %}
+                                    <a class="product-detail__images" href="{{ image.image.url }}">
+                                        <img src="{{ im.url }}" alt="{% if image.alt %}{{ image.alt }}{% else %}{{ product.title }}{% endif %}">
+                                    </a>
+                                {% endthumbnail %}
+                            {% endfor %}
+                            </a>
+                        </div>
                     </div>
                 </div>
+            {% endif %}
 
+            {% if product.is_documents %}
+                <div class="row product-detail__docs__section">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">Полезная информация о товаре</h2>
+
+                        <ul class="list-group product-detail__docs">
+                            {% for file in product.document_set.all %}
+                                <a href="{{ file.file.url }}" download class="list-group-item" title="{{ file.title }}">
+                                    {{ file.get_file_type | safe }}
+                                    {{ file.title }}
+                                </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row product-detail__form__section">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="text-center mb-30">Бесплатная консультация!</h2>
+                    <h3 class="text-center mb-30">Оставьте Ваш номер телефона и наш менеджер обязательно свяжется с Вами</h3>
+                    <div class="col-md-4 col-md-offset-4">
+                        <form action="" class="product-detail__form" method="post">
+                            {% csrf_token %}
+                            {% for item in form %}
+                                <div class="form-group">
+                                    {{ item }}
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <button id="sendOrderForm" class="product-detail__form__button">Перезвоните мне</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+
         </div>
     </section>
-
-{#    <div>{{ product.use | safe }}</div>#}
-
-
 
     {% include 'django_ppf/partials/_info.html' %}
 
@@ -119,12 +158,4 @@
 
 
 {% block footer_scripts %}
-{#    <style>#}
-{#    .after {#}
-{#        margin-left: -15px;#}
-{#        margin-right: -15px;#}
-{#        padding-left: 15px;#}
-{#        padding-right: 15px;#}
-{#    }#}
-{#    </style>#}
 {% endblock %}

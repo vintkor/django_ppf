@@ -1,8 +1,8 @@
-from django.views.generic import ListView, DetailView
-from .models import Category, Product, Manufacturer
-import json
+from django.views.generic import ListView, DetailView, FormView
+from .models import Category, Product, Manufacturer, Order
+from .forms import OrderForm
+from django.shortcuts import redirect
 from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CatalogRootView(ListView):
@@ -33,23 +33,35 @@ class ProductListView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(FormView):
     template_name = 'catalog/product-detail.html'
     context_object_name = 'product'
-    model = Product
+    form_class = OrderForm
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data()
+        context['product'] = Product.objects.prefetch_related(
+            'gallery_set',
+            'benefit_set',
+            'feature_set',
+        ).get(slug=self.kwargs.get('slug'))
+        return context
 
-class ProductEditView(LoginRequiredMixin, ProductDetailView):
-    template_name = 'catalog/editor/editor.html'
+    def form_valid(self, form):
+        order = Order(
+            phone=form.cleaned_data.get('phone'),
+            product=Product.objects.get(slug=self.kwargs.get('slug')),
+        )
+        order.save()
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
-    def post(self, request, pk):
-        content = json.loads(str(self.request.body, 'UTF-8')).get('content')
-
-        product = Product.objects.get(id=pk)
-        product.text = content
-        product.save(update_fields=('text',))
-
-        return JsonResponse({'save': 'true'})
+    def post(self, request, slug):
+        order = Order(
+            phone=self.request.POST.get('phone'),
+            product=Product.objects.get(slug=self.kwargs.get('slug')),
+        )
+        order.save()
+        return JsonResponse({'status': 'true'})
 
 
 class ManufacturerListView(ListView):

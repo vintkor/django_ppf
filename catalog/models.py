@@ -6,6 +6,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.shortcuts import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from sorl.thumbnail import ImageField
+from phonenumber_field.modelfields import PhoneNumberField
+from .utils import FileUtil
 
 
 def set_image_name(instanse, filename):
@@ -116,17 +118,37 @@ class Product(BaseModel):
     def get_absolute_url(self):
         return reverse('catalog-product', args=[str(self.slug)])
 
+    def is_documents(self):
+        if Document.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
+    def is_features(self):
+        if Feature.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
+    def is_benefits(self):
+        if Benefit.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
+    def is_galleries(self):
+        if Gallery.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
 
 class Order(BaseModel):
     product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
-    phone = models.CharField(max_length=13, verbose_name=_('Phone number'))
+    phone = PhoneNumberField(verbose_name=_('Phone number'))
 
     class Meta:
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
 
     def __str__(self):
-        return self.phone
+        return str(self.phone)
 
 
 class Feature(BaseModel):
@@ -160,7 +182,7 @@ class Benefit(BaseModel):
 class Gallery(BaseModel):
     product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
     image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name)
-    alt = models.CharField(max_length=150, verbose_name=_('SEO alt'))
+    alt = models.CharField(max_length=150, verbose_name=_('SEO alt'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Gallery')
@@ -181,3 +203,6 @@ class Document(BaseModel):
 
     def __str__(self):
         return '{} - {}'.format(self.product, self.title)
+
+    def get_file_type(self):
+        return FileUtil(self).get_file_type()

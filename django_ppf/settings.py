@@ -52,6 +52,7 @@ except:
         'sorl.thumbnail',
         'django_nose',
         # 'django_coverage',
+        'phonenumber_field',
 
         'profile',
         'catalog',
