@@ -813,6 +813,10 @@ body.catalog-root .header__pinned {
   background: #fff;
 }
 
+.product-detail__desc__section {
+  padding: 30px 0;
+}
+
 .product-detail__characteristics {
   background: #f8fbfe;
   padding: 30px 0;
@@ -900,12 +904,45 @@ body.catalog-root .header__pinned {
 
 .product-detail__docs__section {
   padding: 30px 0;
+  background: #ddeefb;
 }
 
 .product-detail__docs .file-icon {
   width: 50px;
   height: auto;
   margin-right: 20px;
+}
+
+.product-detail__video {
+  min-width: 292px;
+  width: 100%;
+}
+
+.product-detail__video__section {
+  padding: 30px 0;
+  background: #d4eaf9;
+}
+
+.product-detail__video__wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
+.product-detail__video__wrapper .plyr {
+  width: 50%;
+}
+
+.product-detail__video__wrapper .plyr__play-large {
+  padding: 24px;
 }
 
 .single-news__image {

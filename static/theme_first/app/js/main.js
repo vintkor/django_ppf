@@ -164,3 +164,5 @@ $('#sendOrderForm').click(function (e) {
         });
     }
 });
+
+plyr.setup();

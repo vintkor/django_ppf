@@ -35,7 +35,8 @@ gulp.task('scripts', function() {
             'app/libs/owl.carousel/dist/owl.carousel.min.js',
             'app/libs/photobox/jquery.photobox.js',
             'app/libs/inputmask/dist/inputmask/inputmask.js',
-            'app/libs/sweetalert2/dist/sweetalert2.all.min.js'
+            'app/libs/sweetalert2/dist/sweetalert2.all.min.js',
+            'app/libs/plyr/dist/plyr.js'
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())

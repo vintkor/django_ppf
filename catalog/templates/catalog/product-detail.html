@@ -37,7 +37,7 @@
                 {% endif %}
             </div>
 
-            <div class="row">
+            <div class="row product-detail__desc__section">
                 <div class="col-md-10 col-md-offset-1">
                     {{ product.description | safe }}
                 </div>
@@ -125,6 +125,19 @@
                                 </a>
                             {% endfor %}
                         </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if product.is_videos %}
+                <div class="row product-detail__video__section">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">Полезное видео о товаре</h2>
+                        <div class="product-detail__video__wrapper">
+                            {% for video in product.video_set.all %}
+                                <div data-type="youtube" data-video-id="{{ video.get_video_id }}" class="product-detail__video"></div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             {% endif %}

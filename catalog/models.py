@@ -138,6 +138,11 @@ class Product(BaseModel):
             return True
         return False
 
+    def is_videos(self):
+        if Video.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
 
 class Order(BaseModel):
     product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
@@ -206,3 +211,19 @@ class Document(BaseModel):
 
     def get_file_type(self):
         return FileUtil(self).get_file_type()
+
+
+class Video(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    title = models.CharField(max_length=250, verbose_name=_('Title'))
+    link = models.URLField(verbose_name=_('Link to youtube video'))
+
+    class Meta:
+        verbose_name = _('Video')
+        verbose_name_plural = _('Videos')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.title)
+
+    def get_video_id(self):
+        return self.link.split('=')[1]
