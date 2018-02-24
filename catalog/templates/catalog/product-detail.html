@@ -119,7 +119,7 @@
 
                         <ul class="list-group product-detail__docs">
                             {% for file in product.document_set.all %}
-                                <a href="{{ file.file.url }}" class="list-group-item" title="{{ file.title }}">
+                                <a href="{{ file.file.url }}" target="_blank" class="list-group-item" title="{{ file.title }}">
                                     {{ file.get_file_type | safe }}
                                     {{ file.title }}
                                 </a>
