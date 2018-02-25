@@ -29,7 +29,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data()
         context['category'] = self.category
-        context['children'] = self.category.get_children()
+        context['children'] = [i for i in self.category.get_children() if len(i.product_set.filter(active=True)) > 0]
         return context
 
 
