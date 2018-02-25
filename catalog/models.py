@@ -72,7 +72,13 @@ class Category(BaseModel, MPTTModel):
 
     def get_count_products(self):
         categories = self.get_descendants(include_self=True)
-        return Product.objects.select_related('category').filter(category__in=categories).count()
+        return Product.objects.select_related('category').filter(
+            category__in=categories,
+            active=True,
+        ).count()
+
+    def get_children_with_products(self):
+        return (i for i in self.get_children() if i.get_count_products() > 0)
 
 
 class Manufacturer(BaseModel):
