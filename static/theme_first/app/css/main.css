@@ -914,8 +914,15 @@ body.home .header__pinned {
 }
 
 .product-detail__video {
-  min-width: 292px;
-  width: 100%;
+  width: -webkit-calc(50% - 20px);
+  width: calc(50% - 20px);
+  background: #a2d1f3;
+  padding: 10px;
+  margin: 5px;
+}
+
+.product-detail__video__title {
+  margin-bottom: 0;
 }
 
 .product-detail__video__section {
@@ -935,10 +942,6 @@ body.home .header__pinned {
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-}
-
-.product-detail__video__wrapper .plyr {
-  width: 50%;
 }
 
 .product-detail__video__wrapper .plyr__play-large {

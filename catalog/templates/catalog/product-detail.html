@@ -135,7 +135,10 @@
                         <h2 class="text-center mb-30">Полезное видео о товаре</h2>
                         <div class="product-detail__video__wrapper">
                             {% for video in product.video_set.all %}
-                                <div data-type="youtube" data-video-id="{{ video.get_video_id }}" class="product-detail__video"></div>
+                                <div class="product-detail__video">
+                                    <div data-type="youtube" data-video-id="{{ video.get_video_id }}"></div>
+                                    <h4 class="product-detail__video__title">{{ video.title }}</h4>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>

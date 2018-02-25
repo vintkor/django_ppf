@@ -245,8 +245,14 @@
     }
   }
   &__video {
-    min-width: 292px;
-    width: 100%;
+    width: calc(50% - 20px);
+    background: $bg-color;
+    padding: 10px;
+    margin: 5px;
+
+    &__title {
+      margin-bottom: 0;
+    }
     &__section {
       padding: 30px 0;
       background: lighten($bg-color, 11%);
@@ -255,9 +261,6 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      .plyr {
-        width: 50%;
-      }
       .plyr__play-large {
         padding: 24px;
       }
