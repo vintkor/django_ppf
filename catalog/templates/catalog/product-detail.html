@@ -14,7 +14,7 @@
 
 {% block content %}
 
-    {% catalog_breadcrumbs product.category product.title _('Catalog') 'catalog' %}
+    {% catalog_breadcrumbs product.category.first product.title _('Catalog') 'catalog' %}
 
     <section class="page-title">
         <div class="container-fluid">
