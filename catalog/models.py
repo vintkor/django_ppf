@@ -103,7 +103,7 @@ class Manufacturer(BaseModel):
 
 
 class Product(BaseModel):
-    category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category, verbose_name=_('Category'))
     manufacturer = models.ForeignKey(Manufacturer, verbose_name=_('Manufacturer'), on_delete=None, blank=True, null=True, default=None)
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     slug = models.SlugField(null=True, max_length=170, unique=True)
