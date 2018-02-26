@@ -145,15 +145,18 @@
                 </div>
             {% endif %}
 
-            <section class="geo">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="geo__map">
-                            {% include 'catalog/partials/_world.svg' %}
+            {% if product.countries.all.count > 0 %}
+                <section class="geo">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h2 class="text-center mb-30">{{ product.title }} в мире</h2>
+                            <div class="geo__map">
+                                {% include 'catalog/partials/_world.svg' %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% endif %}
 
             <div class="row product-detail__form__section">
                 <div class="col-md-10 col-md-offset-1">
