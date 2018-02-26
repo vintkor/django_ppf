@@ -145,6 +145,16 @@
                 </div>
             {% endif %}
 
+            <section class="geo">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="geo__map">
+                            {% include 'catalog/partials/_world.svg' %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <div class="row product-detail__form__section">
                 <div class="col-md-10 col-md-offset-1">
                     <h2 class="text-center mb-30">Бесплатная консультация!</h2>
@@ -174,4 +184,17 @@
 
 
 {% block footer_scripts %}
+<script>
+
+    var regions = [
+        {% for region in product.countries.all %}
+            "{{ region.code }}",
+        {% endfor %}
+    ];
+
+    regions.forEach(function (item) {
+        $('#' + item).addClass('is_objects')
+    });
+
+</script>
 {% endblock %}
