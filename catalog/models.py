@@ -112,6 +112,7 @@ class Product(BaseModel):
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
     use = RichTextUploadingField(verbose_name=_('Use'), blank=True, null=True)
+    countries = models.ManyToManyField('geo.Region', blank=True)
     active = models.BooleanField(default=False)
 
     class Meta:
@@ -233,3 +234,18 @@ class Video(BaseModel):
 
     def get_video_id(self):
         return self.link.split('=')[1]
+
+
+class Digits(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    digit = models.CharField(max_length=150, verbose_name=_('Digit'))
+    title = models.CharField(max_length=150, verbose_name=_('Title'))
+    subtitle = models.CharField(max_length=150, verbose_name=_('Subtitle'), blank=True, null=True)
+    text = models.TextField(verbose_name=_('Text'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Digit')
+        verbose_name_plural = _('Digits')
+
+    def __str__(self):
+        return '{} - {} - {}'.format(self.product, self.digit, self.title)

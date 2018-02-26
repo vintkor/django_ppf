@@ -1,10 +1,15 @@
 from django.contrib import admin
-from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document, Video
+from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document, Video, Digits
 from mptt.admin import DraggableMPTTAdmin
 from sorl.thumbnail.admin import AdminImageMixin, AdminInlineImageMixin
 from django.utils.translation import ugettext_lazy as _
 # import catalog.translation
 # from modeltranslation.admin import TranslationAdmin
+
+
+class DigitsInline(admin.StackedInline):
+    extra = 0
+    model = Digits
 
 
 class VideoInline(admin.TabularInline):
@@ -44,10 +49,11 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ('title', 'category', 'manufacturer', 'active')
     list_filter = ('category',)
     search_fields = ('title',)
-    inlines = (FeatureInline, BenefitInline, GalleryInline, DocumentInline, VideoInline)
+    inlines = (FeatureInline, BenefitInline, GalleryInline, DocumentInline, VideoInline, DigitsInline)
     save_on_top = True
     list_editable = ('active',)
     prepopulated_fields = {'slug': ('title',)}
+    filter_horizontal = ('countries',)
 
 
 @admin.register(Manufacturer)
@@ -66,3 +72,8 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('title', 'product', 'created')
+
+
+@admin.register(Digits)
+class DigitsAdmin(admin.ModelAdmin):
+    list_display = ('digit', 'title', 'product', 'created')
