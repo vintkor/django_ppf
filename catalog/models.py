@@ -113,6 +113,16 @@ class Product(BaseModel):
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
     use = RichTextUploadingField(verbose_name=_('Use'), blank=True, null=True)
     countries = models.ManyToManyField('geo.Region', blank=True)
+
+    title_use = models.CharField(max_length=250, verbose_name=_('Use block title'), blank=True, null=True)
+    title_features = models.CharField(max_length=250, verbose_name=_('Feature block title'), blank=True, null=True)
+    title_benefit = models.CharField(max_length=250, verbose_name=_('Benefit block title'), blank=True, null=True)
+    title_gallery = models.CharField(max_length=250, verbose_name=_('Gallery block title'), blank=True, null=True)
+    title_documents = models.CharField(max_length=250, verbose_name=_('Documents block title'), blank=True, null=True)
+    title_digits = models.CharField(max_length=250, verbose_name=_('Digits block title'), blank=True, null=True)
+    title_video = models.CharField(max_length=250, verbose_name=_('Video block title'), blank=True, null=True)
+    title_country = models.CharField(max_length=250, verbose_name=_('Map block title'), blank=True, null=True)
+
     active = models.BooleanField(default=False)
 
     class Meta:
@@ -147,6 +157,11 @@ class Product(BaseModel):
 
     def is_videos(self):
         if Video.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
+    def is_digits(self):
+        if Digits.objects.filter(product=self).count() > 0:
             return True
         return False
 

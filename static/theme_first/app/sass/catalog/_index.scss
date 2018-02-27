@@ -266,4 +266,17 @@
       }
     }
   }
+  &__digits {
+    padding: 30px 0;
+    background: lighten($bg-color, 17%);
+  }
+  &__digit {
+    text-align: center;
+    &__main {
+      font-size: 70px;
+      font-weight: 100;
+      font-family: "Open Sans Condensed", serif;
+    }
+    &__wrapper {}
+  }
 }

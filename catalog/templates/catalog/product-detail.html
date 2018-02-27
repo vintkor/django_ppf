@@ -48,7 +48,10 @@
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table">
                             <caption>
-                                <h2 class="text-center mb-30">Основные характеристики {{ product.title }}</h2>
+                                <h2 class="text-center mb-30">
+                                    {% if product.title_features %}{{ product.title_features }}{% else %}
+                                        Основные характеристики {{ product.title }}</h2>
+                                    {% endif %}
                             </caption>
                             {% for feuture in product.feature_set.all %}
                                 <tr>
@@ -64,7 +67,11 @@
             {% if product.is_benefits %}
                 <div class="row product-detail__benefits">
                     <div class="col-md-10 col-md-offset-1">
-                        <h2 class="text-center mb-30">Выгоды и достоинства</h2>
+                        <h2 class="text-center mb-30">
+                            {% if product.title_benefit %}{{ product.title_benefit }}{% else %}
+                                Выгоды и достоинства
+                            {% endif %}
+                        </h2>
                         <div class="row">
                             <div class="product-detail__benefit__wrapper">
                                 {% for benefit in product.benefit_set.all %}
@@ -80,7 +87,9 @@
                                             </div>
                                             <div class="product-detail__benefit__body">
                                                 <h3 class="product-detail__benefit__title">{{ benefit.title }}</h3>
+                                                {% if benefit.subtitle %}
                                                 <h4 class="product-detail__benefit__subtitle">{{ benefit.subtitle }}</h4>
+                                                {% endif %}
                                             </div>
                                             <div class="product-detail__benefit__footer">
                                                 <div class="product-detail__benefit__text">{{ benefit.text }}</div>
@@ -94,10 +103,25 @@
                 </div>
             {% endif %}
 
+            <div class="row product-detail__desc__section">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="text-center mb-30">
+                        {% if product.title_use %}{{ product.title_use }}{% else %}
+                            Использование {{ product.title }}
+                        {% endif %}
+                    </h2>
+                    {{ product.use | safe }}
+                </div>
+            </div>
+
             {% if product.is_galleries %}
                 <div class="row product-detail__gallery">
                     <div class="col-md-10 col-md-offset-1">
-                        <h2 class="text-center mb-30">Использование {{ product.title }}</h2>
+                        <h2 class="text-center mb-30">
+                            {% if product.title_gallery %}{{ product.title_gallery }}{% else %}
+                                Фотогалерея {{ product.title }}
+                            {% endif %}
+                        </h2>
                         <div id="product-detail__gallery" class="product-detail__images__wrapper">
                             {% for image in product.gallery_set.all %}
                                 {% thumbnail image.image "150x150" crop="center" format="PNG" as im %}
@@ -115,7 +139,11 @@
             {% if product.is_documents %}
                 <div class="row product-detail__docs__section">
                     <div class="col-md-10 col-md-offset-1">
-                        <h2 class="text-center mb-30">Полезная информация о товаре</h2>
+                        <h2 class="text-center mb-30">
+                            {% if product.title_documents %}{{ product.title_documents }}{% else %}
+                                Полезная информация о товаре
+                            {% endif %}
+                        </h2>
 
                         <ul class="list-group product-detail__docs">
                             {% for file in product.document_set.all %}
@@ -129,10 +157,48 @@
                 </div>
             {% endif %}
 
+            {% if product.is_digits %}
+                <div class="row product-detail__digits">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">
+                            {% if product.title_digits %}{{ product.title_digits }}{% else %}
+                                Интересные цыфры
+                            {% endif %}
+                        </h2>
+                        <div class="row">
+                            <div class="product-detail__digit__wrapper">
+                                {% for digit in product.digits_set.all %}
+                                    <div class="product-detail__digit">
+                                        <div class="col-md-3">
+                                            <div class="product-detail__digit__head">
+                                                <div class="product-detail__digit__main">{{ digit.digit }}</div>
+                                            </div>
+                                            <div class="product-detail__digit__body">
+                                                <h3 class="product-detail__digit__title">{{ digit.title }}</h3>
+                                                {% if digit.subtitle %}
+                                                    <h4 class="product-detail__digit__subtitle">{{ digit.subtitle }}</h4>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-detail__digit__footer">
+                                                <div class="product-detail__digit__text">{{ digit.text }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if product.is_videos %}
                 <div class="row product-detail__video__section">
                     <div class="col-md-10 col-md-offset-1">
-                        <h2 class="text-center mb-30">Полезное видео о товаре</h2>
+                        <h2 class="text-center mb-30">
+                            {% if product.title_video %}{{ product.title_video }}{% else %}
+                                Полезное видео о товаре
+                            {% endif %}
+                        </h2>
                         <div class="product-detail__video__wrapper">
                             {% for video in product.video_set.all %}
                                 <div class="product-detail__video">
@@ -149,7 +215,11 @@
                 <section class="geo">
                     <div class="container-fluid">
                         <div class="row">
-                            <h2 class="text-center mb-30">{{ product.title }} в мире</h2>
+                            <h2 class="text-center mb-30">
+                                {% if product.title_country %}{{ product.title_country }}{% else %}
+                                    {{ product.title }} в мире
+                                {% endif %}
+                            </h2>
                             <div class="geo__map">
                                 {% include 'catalog/partials/_world.svg' %}
                             </div>

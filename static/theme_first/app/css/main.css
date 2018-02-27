@@ -949,6 +949,21 @@ body.home .header__pinned {
   padding: 24px;
 }
 
+.product-detail__digits {
+  padding: 30px 0;
+  background: #eff7fd;
+}
+
+.product-detail__digit {
+  text-align: center;
+}
+
+.product-detail__digit__main {
+  font-size: 70px;
+  font-weight: 100;
+  font-family: "Open Sans Condensed", serif;
+}
+
 .single-news__image {
   float: left;
   margin-right: 15px;

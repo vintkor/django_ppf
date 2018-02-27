@@ -166,3 +166,7 @@ $('#sendOrderForm').click(function (e) {
 });
 
 plyr.setup();
+
+tippy('.land.is_objects', {
+    followCursor: true
+});
