@@ -1,10 +1,15 @@
 from django.contrib import admin
-from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document, Video, Digits
+from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document, Video, Digits, Color
 from mptt.admin import DraggableMPTTAdmin
 from sorl.thumbnail.admin import AdminImageMixin, AdminInlineImageMixin
 from django.utils.translation import ugettext_lazy as _
 # import catalog.translation
 # from modeltranslation.admin import TranslationAdmin
+
+
+class ColorInline(admin.TabularInline):
+    extra = 0
+    model = Color
 
 
 class DigitsInline(admin.StackedInline):
@@ -49,7 +54,7 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ('title', 'manufacturer', 'active')
     list_filter = ('category',)
     search_fields = ('title',)
-    inlines = (FeatureInline, BenefitInline, GalleryInline, DocumentInline, VideoInline, DigitsInline)
+    inlines = (FeatureInline, BenefitInline, GalleryInline, ColorInline, DocumentInline, VideoInline, DigitsInline)
     save_on_top = True
     list_editable = ('active',)
     prepopulated_fields = {'slug': ('title',)}
@@ -77,3 +82,14 @@ class VideoAdmin(admin.ModelAdmin):
 @admin.register(Digits)
 class DigitsAdmin(admin.ModelAdmin):
     list_display = ('digit', 'title', 'product', 'created')
+
+
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('alt', 'product', 'created')
+
+
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ('alt', 'product', 'created')
+

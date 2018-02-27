@@ -43,6 +43,28 @@
                 </div>
             </div>
 
+            {% if product.is_colors %}
+                <div class="row product-detail__gallery">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h2 class="text-center mb-30">
+                            {% if product.title_color %}{{ product.title_color }}{% else %}
+                                Цветовая гамма {{ product.title }}
+                            {% endif %}
+                        </h2>
+                        <div id="product-detail__color" class="product-detail__images__wrapper">
+                            {% for image in product.color_set.all %}
+                                {% thumbnail image.image "150x150" crop="center" format="PNG" as im %}
+                                    <a class="product-detail__images" href="{{ image.image.url }}">
+                                        <img src="{{ im.url }}" alt="{% if image.alt %}{{ image.alt }}{% else %}{{ product.title }}{% endif %}">
+                                    </a>
+                                {% endthumbnail %}
+                            {% endfor %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if product.is_features %}
                 <div class="row product-detail__characteristics">
                     <div class="col-md-10 col-md-offset-1">

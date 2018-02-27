@@ -121,6 +121,7 @@ $('document').ready(function () {
 
 $('#product-detail__image-wrap').photobox('a', {time: 0});
 $('#product-detail__gallery').photobox('a', {time: 0});
+$('#product-detail__color').photobox('a', {time: 0});
 
 
 (function () {

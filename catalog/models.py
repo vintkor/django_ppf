@@ -114,6 +114,7 @@ class Product(BaseModel):
     use = RichTextUploadingField(verbose_name=_('Use'), blank=True, null=True)
     countries = models.ManyToManyField('geo.Region', blank=True)
 
+    title_color = models.CharField(max_length=250, verbose_name=_('Color block title'), blank=True, null=True)
     title_use = models.CharField(max_length=250, verbose_name=_('Use block title'), blank=True, null=True)
     title_features = models.CharField(max_length=250, verbose_name=_('Feature block title'), blank=True, null=True)
     title_benefit = models.CharField(max_length=250, verbose_name=_('Benefit block title'), blank=True, null=True)
@@ -162,6 +163,11 @@ class Product(BaseModel):
 
     def is_digits(self):
         if Digits.objects.filter(product=self).count() > 0:
+            return True
+        return False
+
+    def is_colors(self):
+        if Color.objects.filter(product=self).count() > 0:
             return True
         return False
 
@@ -264,3 +270,16 @@ class Digits(BaseModel):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.product, self.digit, self.title)
+
+
+class Color(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    image = ImageField(verbose_name=_('Image'), upload_to=set_product_image_name)
+    alt = models.CharField(max_length=150, verbose_name=_('SEO alt'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Color')
+        verbose_name_plural = _('Colors')
+
+    def __str__(self):
+        return '{} - {}'.format(self.product, self.alt)
