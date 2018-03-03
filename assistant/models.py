@@ -7,6 +7,7 @@ from partners.models import Provider
 from django.urls import reverse
 from currency.models import Currency
 from django.utils.html import format_html
+from catalog.models import Manufacturer
 
 
 def set_image_name(instance, filename):
@@ -72,6 +73,7 @@ class Category(BaseModel, MPTTModel):
 
 class Product(BaseModel):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
+    manufacturer = models.ForeignKey(Manufacturer, blank=True, null=True, on_delete=None, related_name="catalog_manufacturer")
     category = TreeForeignKey(Category, blank=True, null=True, verbose_name='Категория', on_delete=models.CASCADE)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
     currency = models.ForeignKey(Currency, null=True, blank=True, default=None, on_delete=models.CASCADE)

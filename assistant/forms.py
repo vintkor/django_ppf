@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 from .models import Unit, Category, Currency
+from catalog.models import Manufacturer
 
 
 class SetCourseForm(forms.Form):
@@ -52,3 +53,9 @@ class SetPriceForm(forms.Form):
     price = forms.CharField(label='Новая цена', widget=forms.NumberInput(
         attrs={'placeholder': 'Новая цена', 'step': '0.01'},
     ))
+
+
+class SetManufacturerForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+
+    manufacturer = forms.ModelChoiceField(queryset=Manufacturer.objects.all(), widget=forms.Select(), required=True)

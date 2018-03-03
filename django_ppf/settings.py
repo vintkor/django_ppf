@@ -28,6 +28,8 @@ except:
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
+    SITE_URL = 'https://ppf-company.com.ua'
+
     ALLOWED_HOSTS = ['*']
     INTERNAL_IPS = '127.0.0.1'
 
@@ -61,6 +63,7 @@ except:
         'currency',
         'assistant',
         'partners',
+        'company',
     ]
 
     MIDDLEWARE = [
