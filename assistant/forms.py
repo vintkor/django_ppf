@@ -47,7 +47,6 @@ class SetRozetkaCategoryForm(forms.Form):
     category_rozetka = forms.ModelChoiceField(queryset=RozetkaCategory.objects.all(), widget=forms.Select(), required=True)
 
 
-
 class SetCurrencyForm(forms.Form):
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
 

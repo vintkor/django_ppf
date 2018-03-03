@@ -56,6 +56,18 @@ class PhotoAdmin(admin.ModelAdmin):
     list_display = ['product']
 
 
+def import_to_rozetka(modeladmin, request, queryset):
+    for item in queryset:
+        item.import_to_rozetka = True
+        item.save(update_fields=('import_to_rozetka',))
+
+
+def not_import_to_rozetka(modeladmin, request, queryset):
+    for item in queryset:
+        item.import_to_rozetka = False
+        item.save(update_fields=('import_to_rozetka',))
+
+
 def re_count_on(modeladmin, request, queryset):
     for item in queryset:
         item.re_count = True
@@ -417,6 +429,7 @@ class ProductAdmin(admin.ModelAdmin):
         "title",
         "category",
         "category_rozetka",
+        "import_to_rozetka",
         "manufacturer",
         "code",
         "active",
@@ -452,6 +465,8 @@ class ProductAdmin(admin.ModelAdmin):
         set_manufacturer,
         save_as_xml,
         set_category_rozetka,
+        import_to_rozetka,
+        not_import_to_rozetka,
     )
     save_on_top = True
     save_as = True
