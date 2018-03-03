@@ -141,12 +141,6 @@ def make_xml(products=None):
             param1.setAttribute('name', 'Артикул')
             offer.appendChild(param1)
 
-            param = doc.createElement('param')
-            param_text = doc.createTextNode('XL')
-            param.appendChild(param_text)
-            param.setAttribute('name', 'Размер')
-            offer.appendChild(param)
-
     file_handle = open("rozetka.xml", "w")
     doc.writexml(file_handle, encoding='UTF-8')
     file_handle.close()
