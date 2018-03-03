@@ -71,10 +71,35 @@ class Category(BaseModel, MPTTModel):
         return ''
 
 
+class RozetkaCategory(BaseModel, MPTTModel):
+    title = models.CharField(verbose_name='Категория розетка', max_length=255)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True, on_delete=None)
+    active = models.BooleanField(default=True, verbose_name="Вкл/Выкл")
+
+    class Meta:
+        verbose_name = "Категория розетка"
+        verbose_name_plural = "Категории розетки"
+
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
+    def __str__(self):
+        return "{}".format(self.title)
+
+    def get_absolute_url(self):
+        return reverse('category', args=[self.id])
+
+    def get_id(self):
+        if self.parent:
+            return self.parent.id
+        return ''
+
+
 class Product(BaseModel):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     manufacturer = models.ForeignKey(Manufacturer, blank=True, null=True, on_delete=None, related_name="catalog_manufacturer")
     category = TreeForeignKey(Category, blank=True, null=True, verbose_name='Категория', on_delete=models.CASCADE)
+    category_rozetka = TreeForeignKey(RozetkaCategory, blank=True, null=True, verbose_name='Категория розетка', on_delete=None)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
     currency = models.ForeignKey(Currency, null=True, blank=True, default=None, on_delete=models.CASCADE)
     course = models.DecimalField(verbose_name='Курс', max_digits=12, decimal_places=5, blank=True, null=True, default=1)

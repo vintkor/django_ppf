@@ -2,7 +2,7 @@ from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import models
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Feature, Delivery, Unit, Photo
+from .models import Category, Product, Feature, Delivery, Unit, Photo, RozetkaCategory
 # from import_export import resources
 # from jet.admin import CompactInline
 # from jet.filters import DateRangeFilter
@@ -14,6 +14,7 @@ from .forms import (
     SetPriceForm,
     SetPricePercentForm,
     SetManufacturerForm,
+    SetRozetkaCategoryForm,
 )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -163,6 +164,37 @@ def set_category(modeladmin, request, queryset):
 
 
 set_category.short_description = 'Установить категорию'
+
+
+def set_category_rozetka(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Установить категорию Rozetka', 'action': 'set_category_rozetka'}
+
+    if 'apply' in request.POST:
+        form = SetRozetkaCategoryForm(request.POST)
+
+        if form.is_valid():
+            category_rozetka = form.cleaned_data['category_rozetka']
+
+            count = 0
+            for item in queryset:
+                item.category_rozetka = category_rozetka
+                item.save()
+                count += 1
+
+            modeladmin.message_user(request, "Категория для розетки '{}' установлена у {} товаров.".format(category_rozetka, count),
+                                    level=messages.SUCCESS)
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetRozetkaCategoryForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        context['form'] = form
+
+    return render(request, template, context)
+
+
+set_category_rozetka.short_description = 'Установить категорию Rozetka'
 
 
 def set_manufacturer(modeladmin, request, queryset):
@@ -381,8 +413,23 @@ def save_as_xml(modeladmin, request, queryset):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "manufacturer", "code", "active", "price", "get_currency_code", "course",
-                    "re_count", "get_price_UAH", "unit", "step", "get_images_count", "updated")
+    list_display = (
+        "title",
+        "category",
+        "category_rozetka",
+        "manufacturer",
+        "code",
+        "active",
+        "price",
+        "get_currency_code",
+        "course",
+        "re_count",
+        "get_price_UAH",
+        "unit",
+        "step",
+        "get_images_count",
+        "updated"
+    )
     list_filter = ('currency', 're_count')
     list_editable = ('price', 're_count', 'course')
     readonly_fields = ["code"]
@@ -404,6 +451,7 @@ class ProductAdmin(admin.ModelAdmin):
         set_price,
         set_manufacturer,
         save_as_xml,
+        set_category_rozetka,
     )
     save_on_top = True
     save_as = True
@@ -412,6 +460,14 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(
     Category,
+    DraggableMPTTAdmin,
+    list_display=('tree_actions', 'indented_title', 'active'),
+    list_display_links=('indented_title',),
+)
+
+
+admin.site.register(
+    RozetkaCategory,
     DraggableMPTTAdmin,
     list_display=('tree_actions', 'indented_title', 'active'),
     list_display_links=('indented_title',),

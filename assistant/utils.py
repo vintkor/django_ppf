@@ -10,6 +10,11 @@ def make_xml(products=None):
     else:
         products = Product.objects.all()
 
+    for product in products:
+        category_list = [i for i in product.category_rozetka.get_ancestors(include_self=True, ascending=False)]
+
+    categories_list = [i for i in category_list]
+
     imp = minidom.DOMImplementation()
     doctype = imp.createDocumentType(
         qualifiedName="yml_catalog",
@@ -53,18 +58,14 @@ def make_xml(products=None):
     categories = doc.createElement('categories')
     shop.appendChild(categories)
 
-    category = doc.createElement('category')
-    category_text = doc.createTextNode('Женская одежда')
-    category.setAttribute('id', '2')
-    category.appendChild(category_text)
-    categories.appendChild(category)
-
-    category2 = doc.createElement('category')
-    category2_text = doc.createTextNode('Платья')
-    category2.setAttribute('id', '22')
-    category2.setAttribute('parentId', '2')
-    category2.appendChild(category2_text)
-    categories.appendChild(category2)
+    for cat in categories_list:
+        category = doc.createElement('category')
+        category_text = doc.createTextNode(cat.title)
+        if cat.parent:
+            category.setAttribute('parentId', str(cat.parent.id))
+        category.setAttribute('id', str(cat.id))
+        category.appendChild(category_text)
+        categories.appendChild(category)
 
     offers = doc.createElement('offers')
     shop.appendChild(offers)
@@ -91,7 +92,7 @@ def make_xml(products=None):
         offer.appendChild(currencyId)
 
         categoryId = doc.createElement('categoryId')
-        categoryId_text = doc.createTextNode('2')
+        categoryId_text = doc.createTextNode(str(product.category_rozetka.id))  # <--
         categoryId.appendChild(categoryId_text)
         offer.appendChild(categoryId)
 
