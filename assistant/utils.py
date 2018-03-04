@@ -8,7 +8,7 @@ def make_xml(products=None):
     if products:
         products = products
     else:
-        products = Product.objects.all()
+        products = Product.objects.filter(import_to_rozetka=True)
 
     category_list = []
     for product in products:

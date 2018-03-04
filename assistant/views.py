@@ -5,6 +5,8 @@ from assistant.models import Product, Feature, Category, Delivery
 from partners.models import Provider
 from xlsxwriter import Workbook
 from django.http import HttpResponse
+import datetime
+from assistant.utils import make_xml
 
 
 def index(request):
@@ -139,5 +141,20 @@ class CatalogForPromXLSX(View):
             worksheet_2.write(row + 1, 2, item.id)
             worksheet_2.write(row + 1, 3, item.get_id())
             worksheet_2.write(row + 1, 4, item.get_id())
+
+        return response
+
+
+class CatalogForRozetkaXML(View):
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/xml')
+        response['Content-Disposition'] = 'attachment; filename="catalog-rozetka.xml"'
+
+        make_xml()
+
+        with open('rozetka.xml', 'r') as f:
+            file = f.read()
+            response.content = file
 
         return response
