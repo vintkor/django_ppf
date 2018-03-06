@@ -5,18 +5,18 @@
     <div class="container-fluid">
         <div class="row pre-footer__bg">
             <div class="col-md-3">
-                <h4>{% trans 'Choice language' %}</h4>
-                <ul>
-                    {% for lang in LANGUAGES %}
-                        <li><a href="#" onclick="document.setLang{{ lang.1 }}.submit(); return false;">{{ lang.1 }}</a>
-                            <form name="setLang{{ lang.1}}" action="{% url 'set_language' %}" method="POST">
-                                {% csrf_token %}
-                                <input name="next" type="hidden" value="/">
-                                <input type="hidden" name="language" value="{{ lang.0 }}">
-                            </form>
-                        </li>
-                    {% endfor %}
-                </ul>
+{#                <h4>{% trans 'Choice language' %}</h4>#}
+{#                <ul>#}
+{#                    {% for lang in LANGUAGES %}#}
+{#                        <li><a href="#" onclick="document.setLang{{ lang.1 }}.submit(); return false;">{{ lang.1 }}</a>#}
+{#                            <form name="setLang{{ lang.1}}" action="{% url 'set_language' %}" method="POST">#}
+{#                                {% csrf_token %}#}
+{#                                <input name="next" type="hidden" value="/">#}
+{#                                <input type="hidden" name="language" value="{{ lang.0 }}">#}
+{#                            </form>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
             </div>
             <div class="col-md-3">
                 <h4>{% trans 'Catalog' %}</h4>
@@ -54,7 +54,7 @@
                 </ul>
             </div>
             <div class="col-md-3">
-                <h4>Contacts</h4>
+{#                <h4>Contacts</h4>#}
             </div>
         </div>
     </div>
