@@ -6,7 +6,7 @@ from django.shortcuts import render
 class HomeView(View):
 
     def get(self, request):
-        categories = Category.objects.all()
+        categories = Category.objects.filter(level=0)
         context = {'categories': categories}
         return render(request, 'django_ppf/home.html', context)
 

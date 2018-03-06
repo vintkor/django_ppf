@@ -16,7 +16,7 @@ def last_news():
 
 @register.simple_tag
 def get_categories():
-    return Category.objects.filter(level=1)
+    return Category.objects.filter(level=0)
 
 
 @register.inclusion_tag('django_ppf/partials/_favorite-objects-tag.html')
