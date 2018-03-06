@@ -1098,4 +1098,14 @@ body.home .header__pinned {
   height: 500px;
 }
 
+@media (max-width: 1200px) {
+  .square__logo {
+    width: 80%;
+    max-width: 501px;
+  }
+  .square__title {
+    font-size: 24px;
+  }
+}
+
 /*# sourceMappingURL=../css/main.css.map */

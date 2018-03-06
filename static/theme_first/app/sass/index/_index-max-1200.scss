@@ -1,0 +1,352 @@
+//body {
+//    background: #f6f6f6;
+//}
+//
+//
+//.header {
+//    z-index: 2;
+//    position: relative;
+//    transition: .2s;
+//    &__pinned {
+//        background: $white-color;
+//    }
+//}
+//
+//body.home .header__pinned {
+//    box-shadow: 0 0 5px rgba($black-color, .2);
+//}
+//
+//.super {
+//    background: $white-color;
+//    margin-left: -15px;
+//    margin-right: -15px;
+//    padding: 15px;
+//    .flex {
+//        display: flex;
+//        align-items: center;
+//    }
+//    &__logo {
+//        width: 100%;
+//        max-width: 350px;
+//        position: relative;
+//        display: block;
+//        margin: 0 auto;
+//    }
+//    &__phones {
+//        justify-content: flex-end;
+//        display: flex;
+//        flex-wrap: wrap;
+//        font-size: 18px;
+//        font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+//        &__wrapper {
+//            margin-left: 15px;
+//        }
+//        span {
+//            color: lighten($black-color, 45%);
+//            font-size: 14px;
+//        }
+//    }
+//}
+//
+//.header__wrap {
+//    background: lighten($main-color, 10%);
+//    margin-left: -15px;
+//    margin-right: -15px;
+//    padding: 0 15px;
+//}
+//
+//.heeader-nav {
+//    &__ul {
+//        margin: 0;
+//        padding: 0;
+//        text-align: center;
+//    }
+//    &__li {
+//        list-style: none;
+//        display: inline-block;
+//        position: relative;
+//    }
+//    &__link {
+//        display: inline-block;
+//        position: relative;
+//        padding: 20px 30px;
+//        color: $black-color;
+//        transition: .2s;
+//        &:hover {
+//            text-decoration: none;
+//            color: $green-color;
+//        }
+//    }
+//}
+//
+.square {
+    //&__center {
+    //    background: #e5f5ff;
+    //    height: 100vh;
+    //    max-height: 1000px;
+    //    min-height: 800px;
+    //    position: relative;
+    //    overflow: hidden;
+    //    &:after,
+    //    &:before {
+    //        left: 0;
+    //        content: '';
+    //        display: block;
+    //        position: absolute;
+    //        width: 100%;
+    //        background-repeat: repeat-x;
+    //        background-position: center bottom;
+    //    }
+    //    &:before {
+    //        bottom: -1px;
+    //        background-image: url('../img/gress.png');
+    //        height: 200px;
+    //    }
+    //}
+    &__logo {
+        //position: absolute;
+        //left: 50%;
+        //transform: translateX(-50%);
+        //top: 20%;
+        width: 80%;
+        max-width: 501px;
+    }
+    //&__info {
+    //    position: absolute;
+    //    left: 20%;
+    //    top: 70%;
+    //}
+    //&__not-center {
+    //    height: 50vh;
+    //    max-height: 500px;
+    //    background: $white-color;
+    //    min-height: 400px;
+    //    position: relative;
+    //    display: block;
+    //    overflow: hidden;
+    //    &.active {
+    //        .square__image {
+    //            transform: scale(1.1);
+    //            box-shadow: 0 0 20px rgba($black-color, .2);
+    //        }
+    //    }
+    //}
+    //&__image {
+    //    background-repeat: no-repeat;
+    //    background-size: cover;
+    //    background-position: center bottom;
+    //    position: absolute;
+    //    top: 40%;
+    //    margin-top: -100px;
+    //    left: 50%;
+    //    margin-left: -100px;
+    //    height: 200px;
+    //    width: 200px;
+    //    border-radius: 50%;
+    //    transition: 1.5s;
+    //}
+    &__title {
+        //display: block;
+        //position: absolute;
+        //bottom: 0;
+        //height: 70px;
+        //left: 0;
+        //right: 0;
+        //text-align: center;
+        font-size: 24px;
+    }
+    //&__1 { background: #f3f8ff; }
+    //&__2 { background: #d2e6f4; }
+    //&__3 { background: #d7f3ff; }
+    //&__4 { background: #f0ffff; }
+    //&__link {
+    //    display: block;
+    //    position: absolute;
+    //    top: 0;
+    //    left: 0;
+    //    bottom: 0;
+    //    right: 0;
+    //}
+}
+//
+//#typed {
+//    font-size: 30px;
+//    font-family: 'Open Sans Condensed', sans-serif;
+//}
+//
+//.typed-cursor {
+//    color: $black-color;
+//    font-size: 30px;
+//    font-weight: 700;
+//    font-family: 'Open Sans Condensed', sans-serif;
+//}
+//
+//.accent {
+//    color: $green-color;
+//}
+//
+//#cloud {
+//    left: 0;
+//    display: block;
+//    position: absolute;
+//    width: 100%;
+//    background-repeat: repeat-x;
+//    background-position: center bottom;
+//    top: 0;
+//    height: 250px;
+//    background-image: url('../img/cloud.png');
+//    background-size: cover;
+//    transition: .05s;
+//}
+//
+//.info {
+//    //background: $bg-color;
+//    overflow: hidden;
+//    position: relative;
+//    //&:before {
+//    //    display: block;
+//    //    position: absolute;
+//    //    content: '';
+//    //    top: 0;
+//    //    bottom: 0;
+//    //    left: 50%;
+//    //    right: -2000px;
+//    //    background: darken($bg-color, 16%);
+//    //}
+//    &__wrapper {
+//        padding: 30px 15px;
+//    }
+//    &__news {
+//        background: darken($bg-color, 4%);
+//        min-height: 300px;
+//        position: relative;
+//    }
+//    &__objects {
+//        background: darken($bg-color, 8%);
+//        min-height: 300px;
+//    }
+//    &__callbac {
+//        background: darken($bg-color, 12%);
+//        min-height: 300px;
+//    }
+//    &__title {
+//        margin-top: 0;
+//        &__absolute {
+//            position: absolute;
+//            display: block;
+//            top: 0;
+//            left: 0;
+//            //z-index: 2;
+//            padding: 5px 15px;
+//        }
+//    }
+//    .owl-next,
+//    .owl-prev {
+//        display: block;
+//        position: absolute;
+//        top: -33px;
+//        color: darken($white-color, 8%);
+//    }
+//    .owl-next {
+//        right: 10px;
+//    }
+//    .owl-prev {
+//        right: 50px;
+//    }
+//}
+//
+//.last-news {
+//    &__content {
+//        margin-bottom: 20px;
+//    }
+//    &__image {
+//        background-size: cover;
+//        background-position: center;
+//        position: absolute;
+//        top: 0;
+//        left: -1px;
+//        height: 300px;
+//        width: 100%;
+//        //filter: grayscale(.5);
+//        &:after {
+//            content: '';
+//            display: block;
+//            position: absolute;
+//            top: 0;
+//            left: 0;
+//            right: 0;
+//            bottom: 0;
+//            background: rgba($main-color, .5);
+//        }
+//    }
+//    &__title-absolute {
+//        position: absolute;
+//        top: 60px;
+//        z-index: 2;
+//        left: 15px;
+//    }
+//    &__read-absolute {
+//        position: absolute;
+//        z-index: 2;
+//        top: 250px;
+//        right: 0;
+//        padding: 5px 15px;
+//        background: darken($bg-color, 8%);
+//        color: $white-color;
+//        text-decoration: none;
+//        &:hover {
+//            background: $green-color;
+//            color: $white-color;
+//            text-decoration: none;
+//        }
+//    }
+//}
+//.info__objects {
+//    height: 300px;
+//    padding: 0;
+//    .owl-carousel .owl-stage-outer,
+//    .owl-carousel {
+//        height: 300px;
+//    }
+//
+//}
+//
+//body.home {
+//    .super {
+//        display: none;
+//    }
+//    .header__wrap {
+//        background: none;
+//        position: fixed;
+//        width: 100%;
+//        left: 0;
+//        right: 0;
+//        top: 0;
+//        margin: 0;
+//    }
+//    .header__pinned {
+//        background: $white-color;
+//        z-index: 2000;
+//    }
+//}
+//
+//.breadcrumbs {
+//    .breadcrumb {
+//        margin-bottom: 0;
+//        background: lighten($main-color, 15%);
+//        a {
+//            &:hover {
+//                color: $green-color;
+//            }
+//        }
+//    }
+//}
+//
+//.about-us {
+//    .row {
+//        background: lighten($main-color, 19%);
+//    }
+//    &__text {
+//        padding: 20px 0;
+//    }
+//}
