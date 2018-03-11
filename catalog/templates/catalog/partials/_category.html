@@ -1,6 +1,6 @@
 {% load thumbnail %}
 
-<div class="col-md-12">
+<div class="col-xs-12">
     <div class="square square__not-center square__{{ category.id }}">
         {% if category.image %}
             {% thumbnail category.image "200x200" crop="center" format="PNG" as im %}

@@ -26,7 +26,9 @@
                 {% for news in news_list %}
                     <div class="news-item">
                         <div class="news-item__header">
-                            <a class="news-item__link" href="{{ news.get_absolute_url }}"><h2 class="news-item__link__title">{{ news.title }}</h2></a>
+                            <a class="news-item__link" href="{{ news.get_absolute_url }}">
+                                <h2 class="news-item__link__title">{{ news.title }}</h2>
+                            </a>
                         </div>
                         <div class="news-item__body">{{ news.text | truncatewords_html:30 | safe }}</div>
                         <div class="news-item__footer">{{ news.created }}</div>
@@ -35,7 +37,7 @@
             </div>
             <div class="row geo__products">
                 {% for category in categories %}
-                    <div class="col-md-3 without-padding">
+                    <div class="col-md-3 col-sm-6 without-padding">
                         <div class="row">{% include 'catalog/partials/_category.html' %}</div>
                     </div>
                 {% endfor %}

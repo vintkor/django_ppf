@@ -4,7 +4,7 @@
 <section class="pre-footer">
     <div class="container-fluid">
         <div class="row pre-footer__bg">
-            <div class="col-md-3">
+{#            <div class="col-md-3">#}
 {#                <h4>{% trans 'Choice language' %}</h4>#}
 {#                <ul>#}
 {#                    {% for lang in LANGUAGES %}#}
@@ -17,23 +17,27 @@
 {#                        </li>#}
 {#                    {% endfor %}#}
 {#                </ul>#}
-            </div>
-            <div class="col-md-3">
+{#            </div>#}
+            <div class="col-sm-6">
                 <h4>{% trans 'Catalog' %}</h4>
-                <ul>
+                <ul class="pre-footer__nav">
                     {% if categories %}
                         {% for category in categories %}
-                            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                            <li class="pre-footer__nav__li">
+                                <a class="pre-footer__nav__link" href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+                            </li>
                         {% endfor %}
                     {% else %}
                         {% get_categories as categories %}
                         {% for category in categories %}
-                            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                            <li class="pre-footer__nav__li">
+                                <a class="pre-footer__nav__link" href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+                            </li>
                         {% endfor %}
                     {% endif %}
                 </ul>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-6 align-right">
                 <h4>{% trans 'Navigate' %}</h4>
                 <ul class="pre-footer__nav">
                     <li class="pre-footer__nav__li">
@@ -53,9 +57,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-3">
+{#            <div class="col-md-3">#}
 {#                <h4>Contacts</h4>#}
-            </div>
+{#            </div>#}
         </div>
     </div>
 </section>
