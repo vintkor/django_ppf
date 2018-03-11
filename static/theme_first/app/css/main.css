@@ -565,7 +565,15 @@ body.home .header__pinned {
 .pre-footer__bg {
   background: #dceef8;
   padding: 30px 0;
-  height: 300px;
+}
+
+.pre-footer__nav {
+  margin: 0;
+  padding: 0;
+}
+
+.pre-footer__nav__li {
+  list-style: none;
 }
 
 .footer__bg {
@@ -1099,6 +1107,25 @@ body.home .header__pinned {
 }
 
 @media (max-width: 1200px) {
+  .square__logo {
+    width: 80%;
+    max-width: 501px;
+  }
+  .square__title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 991px) {
+  .heeader-nav__link {
+    padding: 20px;
+  }
+  .square__center {
+    background: #e5f5ff;
+    height: auto;
+    max-height: none;
+    min-height: 600px;
+  }
   .square__logo {
     width: 80%;
     max-width: 501px;
