@@ -1198,6 +1198,10 @@ body.home .header__pinned {
   .product-detail__video {
     width: 100%;
   }
+  .filter__link {
+    padding: 12px 8px;
+    font-size: 15px;
+  }
 }
 
 /*# sourceMappingURL=../css/main.css.map */
