@@ -1,0 +1,31 @@
+.geo {
+  &__map {
+    //background: lighten($main-color, 23%);
+    padding: 0;
+    //.is_objects {
+    //  fill: $main-color;
+    //  transition: .2s;
+    //  &:hover {
+    //    fill: $green-color;
+    //    cursor: pointer;
+    //  }
+    //}
+  }
+  //&__products {
+  //  .without-padding {
+  //    padding-left: 0;
+  //    padding-right: 0;
+  //  }
+  //}
+}
+
+.object-detail {
+  &__image {
+//    background-position: center;
+//    background-size: cover;
+//    width: 100%;
+    height: 350px;
+//    position: relative;
+//    margin: 0 auto;
+  }
+}

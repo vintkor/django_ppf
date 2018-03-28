@@ -605,6 +605,14 @@ body.home .header__pinned {
       -ms-flex-pack: center;
           justify-content: center;
   background: #fff;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
+.filter h4 {
+  margin: 0;
+  margin-top: 10px;
 }
 
 .filter__link {
@@ -1132,6 +1140,15 @@ body.home .header__pinned {
   }
   .square__title {
     font-size: 24px;
+  }
+  .geo__map {
+    padding: 0;
+  }
+  .object-detail__image {
+    height: 350px;
+  }
+  .news-item {
+    width: 50%;
   }
 }
 

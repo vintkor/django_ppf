@@ -98,7 +98,7 @@
                             <div class="product-detail__benefit__wrapper">
                                 {% for benefit in product.benefit_set.all %}
                                     <div class="product-detail__benefit">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="product-detail__benefit__head">
                                                 {% if benefit.image %}
                                                     {% thumbnail benefit.image "128x128" crop="center" format="PNG" as im %}
@@ -191,7 +191,7 @@
                             <div class="product-detail__digit__wrapper">
                                 {% for digit in product.digits_set.all %}
                                     <div class="product-detail__digit">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="product-detail__digit__head">
                                                 <div class="product-detail__digit__main">{{ digit.digit }}</div>
                                             </div>

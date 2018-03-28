@@ -30,6 +30,7 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="mb-10"></div>
         </div>
     </section>
 
@@ -56,7 +57,7 @@
             </div>
             <div class="row geo__products">
                 {% for category in categories %}
-                    <div class="col-md-3 without-padding">
+                    <div class="col-md-3 col-sm-6 without-padding">
                         <div class="row">{% include 'catalog/partials/_category.html' %}</div>
                     </div>
                 {% endfor %}
