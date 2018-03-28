@@ -1,0 +1,14 @@
+.product {
+    max-width: calc(100vw / 2);
+    min-width: auto;
+  &__image {
+    max-width: 160px;
+  }
+  &__body {
+    height: 200px;
+  }
+}
+
+.product-detail__video {
+    width: 100%;
+}

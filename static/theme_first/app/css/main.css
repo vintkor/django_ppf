@@ -1181,6 +1181,20 @@ body.home .header__pinned {
     height: 150px;
     width: 150px;
   }
+  .product {
+    max-width: -webkit-calc(100vw / 2);
+    max-width: calc(100vw / 2);
+    min-width: auto;
+  }
+  .product__image {
+    max-width: 160px;
+  }
+  .product__body {
+    height: 200px;
+  }
+  .product-detail__video {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=../css/main.css.map */
