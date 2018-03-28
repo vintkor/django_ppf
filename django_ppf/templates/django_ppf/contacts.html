@@ -14,8 +14,33 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Contacts</h1>
+                    <h1 class="page-title__title align-center">Contacts</h1>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-offices">
+        <div class="container-fluid">
+            <div class="row">
+                {% for office in company.office_set.all %}
+                    <div class="col-xs-6">
+                        <div class="contact-offices__header">
+                            <h3 class="text-center">{{ office.region }}, {{ office.address }}</h3>
+                        </div>
+                        <div class="contact-offices__body">
+                            <ul>
+                                {% for info in office.info_set.all %}
+                                    <li>
+                                        <i class="fa {{ info.fa_icon_class }}"></i>
+                                        {{ info.field }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="contact-offices__footer"></div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -53,25 +78,25 @@
                 origin: new google.maps.Point(0, 0), // origin
                 anchor: new google.maps.Point(32, 64) // anchor
             };
-            var bazar = {lat: 50.951608, lng: 28.633815};
-            var pashini = {lat: 50.966683, lng: 28.660048};
+
             var center = {lat: 49.416054, lng: 31.897697};
             var style = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
+
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 6,
                 center: center,
                 styles: style
             });
-            var marker = new google.maps.Marker({
-                position: bazar,
-                map: map,
-                icon: markerImage
-            });
-            var marker2 = new google.maps.Marker({
-                position: pashini,
-                map: map,
-                icon: markerImage
-            });
+
+            {% for office in company.office_set.all %}
+                var office_{{ forloop.counter }} = {{ office.coordinates }};
+                var marker{{ forloop.counter }} = new google.maps.Marker({
+                    position: office_{{ forloop.counter }},
+                    map: map,
+                    icon: markerImage
+                });
+            {% endfor %}
+
         }
     </script>
     <script async defer
