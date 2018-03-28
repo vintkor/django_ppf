@@ -1192,6 +1192,9 @@ body.home .header__pinned {
   .product__body {
     height: 200px;
   }
+  .product__title {
+    font-size: 18px;
+  }
   .product-detail__video {
     width: 100%;
   }
