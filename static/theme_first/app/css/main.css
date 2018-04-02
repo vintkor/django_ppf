@@ -762,6 +762,15 @@ body.home .header__pinned {
   text-decoration: none;
 }
 
+.product-detail .img-responsive {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.product-detail .img-center {
+  margin: 0 auto;
+}
+
 .product-detail .container-fluid {
   background: #fff;
 }

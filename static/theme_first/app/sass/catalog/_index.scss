@@ -117,6 +117,13 @@
 }
 
 .product-detail {
+  .img-responsive {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  .img-center {
+    margin: 0 auto;
+  }
   .container-fluid {
     background: $white-color;
   }
