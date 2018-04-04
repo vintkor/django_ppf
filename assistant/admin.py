@@ -66,6 +66,12 @@ def import_to_prom(modeladmin, request, queryset):
         item.save(update_fields=('import_to_prom',))
 
 
+def not_import_to_prom(modeladmin, request, queryset):
+    for item in queryset:
+        item.import_to_prom = False
+        item.save(update_fields=('import_to_prom',))
+
+
 def not_import_to_rozetka(modeladmin, request, queryset):
     for item in queryset:
         item.import_to_rozetka = False
@@ -434,7 +440,7 @@ def save_as_xml(modeladmin, request, queryset):
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "get_title",
+        "category",
         "category_rozetka",
         "import_to_rozetka",
         "import_to_prom",
@@ -451,8 +457,7 @@ class ProductAdmin(admin.ModelAdmin):
         "get_images_count",
         "updated"
     )
-    autocomplete_fields = ('category',)
-    list_filter = ('currency', 're_count')
+    list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka')
     list_editable = ('price', 're_count', 'course')
     readonly_fields = ["code"]
     search_fields = ('title', 'code', 'category__title')
@@ -476,6 +481,7 @@ class ProductAdmin(admin.ModelAdmin):
         set_category_rozetka,
         import_to_rozetka,
         import_to_prom,
+        not_import_to_prom,
         not_import_to_rozetka,
     )
     save_on_top = True
@@ -485,10 +491,8 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(
     Category,
     DraggableMPTTAdmin,
-    list_display=('tree_actions', '__str__', 'active'),
-    list_display_links=('__str__',),
-    search_fields=('title',),
-    autocomplete_fields=('parent',)
+    list_display=('tree_actions', 'indented_title', 'active'),
+    list_display_links=('indented_title',),
 )
 
 
