@@ -39,7 +39,8 @@
                         <th>Артикул</th>
                         <th>Категория</th>
                         <th>Категория Rozetka</th>
-                        <th>Импорт в Rozetka</th>
+                        <th>Rozetka</th>
+                        <th>Prom</th>
                         <th>Название</th>
                         <th>Цена</th>
                         <th>Курс</th>
@@ -56,6 +57,7 @@
                         <td>{% if product.category %}<a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a> {% endif %}</td>
                         <td>{% if product.category_rozetka %}{{ product.category_rozetka }}{% endif %}</td>
                         <td>{% if product.import_to_rozetka %}<span class="label label-success">Rozetka</span>{% endif %}</td>
+                        <td>{% if product.import_to_prom %}<span class="label label-success" style="background: linear-gradient(135deg,#4854a2,#772088);">Prom</span>{% endif %}</td>
                         <td><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></td>
                         <td>{% if product.price %}{{ product.price }} <span class="label label-info pull-right">{{ product.currency.code }}</span>{% endif %}</td>
                         <td>{{ product.course }}</td>

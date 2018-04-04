@@ -62,6 +62,12 @@ def import_to_rozetka(modeladmin, request, queryset):
         item.save(update_fields=('import_to_rozetka',))
 
 
+def import_to_prom(modeladmin, request, queryset):
+    for item in queryset:
+        item.import_to_prom = True
+        item.save(update_fields=('import_to_prom',))
+
+
 def not_import_to_rozetka(modeladmin, request, queryset):
     for item in queryset:
         item.import_to_rozetka = False
@@ -326,7 +332,12 @@ def save_as_xlsx(modeladmin, request, queryset):
 
     [worksheet.write(0, col, i) for col, i in enumerate(header)]
 
-    for row, item in enumerate(queryset):
+    products = [product for product in queryset if product.import_to_prom]
+
+    print('-'*90)
+    print(products)
+
+    for row, item in enumerate(products):
         worksheet.write(row + 1, 0, item.title)
         worksheet.write(row + 1, 1, item.category.title)
         worksheet.write(row + 1, 2, item.text.replace(chr(13), '').replace(chr(10), '').replace(
@@ -430,6 +441,7 @@ class ProductAdmin(admin.ModelAdmin):
         "category",
         "category_rozetka",
         "import_to_rozetka",
+        "import_to_prom",
         "manufacturer",
         "code",
         "active",
@@ -466,6 +478,7 @@ class ProductAdmin(admin.ModelAdmin):
         save_as_xml,
         set_category_rozetka,
         import_to_rozetka,
+        import_to_prom,
         not_import_to_rozetka,
     )
     save_on_top = True

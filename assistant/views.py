@@ -23,7 +23,11 @@ class CatalogList(LoginRequiredMixin, ListView):
 
     def get_queryset(self, **kwargs):
         queryset = Product.objects.prefetch_related('delivery_set', 'photo_set').select_related(
-            'category', 'currency', 'unit').filter(active=True)
+            'category',
+            'currency',
+            'unit',
+            'category_rozetka',
+        ).filter(active=True)
 
         return queryset
 
@@ -81,7 +85,7 @@ class CatalogSearch(CatalogList):
 class CatalogForPromXLSX(View):
 
     def get(self, request):
-        queryset = Product.objects.select_related('category', 'unit').filter(active=True)
+        queryset = Product.objects.select_related('category', 'unit').filter(active=True, import_to_prom=True)
         response = HttpResponse(content_type='text/xlsx')
         response['Content-Disposition'] = 'attachment; filename="prom.xlsx"'
 
