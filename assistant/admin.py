@@ -3,8 +3,6 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import models
 from mptt.admin import DraggableMPTTAdmin
 from .models import Category, Product, Feature, Delivery, Unit, Photo, RozetkaCategory
-# from import_export import resources
-# from jet.admin import CompactInline
 # from jet.filters import DateRangeFilter
 from .forms import (
     SetCourseForm,
@@ -334,9 +332,6 @@ def save_as_xlsx(modeladmin, request, queryset):
 
     products = [product for product in queryset if product.import_to_prom]
 
-    print('-'*90)
-    print(products)
-
     for row, item in enumerate(products):
         worksheet.write(row + 1, 0, item.title)
         worksheet.write(row + 1, 1, item.category.title)
@@ -435,10 +430,11 @@ def save_as_xml(modeladmin, request, queryset):
     return response
 
 
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "category",
+        "get_title",
         "category_rozetka",
         "import_to_rozetka",
         "import_to_prom",
@@ -455,6 +451,7 @@ class ProductAdmin(admin.ModelAdmin):
         "get_images_count",
         "updated"
     )
+    autocomplete_fields = ('category',)
     list_filter = ('currency', 're_count')
     list_editable = ('price', 're_count', 'course')
     readonly_fields = ["code"]
@@ -485,12 +482,13 @@ class ProductAdmin(admin.ModelAdmin):
     save_as = True
 
 
-admin.site.register(Product, ProductAdmin)
 admin.site.register(
     Category,
     DraggableMPTTAdmin,
-    list_display=('tree_actions', 'indented_title', 'active'),
-    list_display_links=('indented_title',),
+    list_display=('tree_actions', '__str__', 'active'),
+    list_display_links=('__str__',),
+    search_fields=('title',),
+    autocomplete_fields=('parent',)
 )
 
 

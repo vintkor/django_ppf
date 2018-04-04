@@ -60,7 +60,8 @@ class Category(BaseModel, MPTTModel):
         order_insertion_by = ['title']
 
     def __str__(self):
-        return "{}".format(self.title)
+        tree = self.get_ancestors()
+        return '{}{}'.format('.   . '*len(tree), self.title)
 
     def get_absolute_url(self):
         return reverse('category', args=[self.id])
@@ -168,6 +169,11 @@ class Product(BaseModel):
 
     def get_images(self):
         return Photo.objects.filter(product=self)
+
+    def get_title(self):
+        if self.category:
+            return self.category.title
+        return 'Категория не указана'
 
 
 class Feature(BaseModel):
