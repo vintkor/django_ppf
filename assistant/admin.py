@@ -2,7 +2,7 @@ from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import models
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Feature, Delivery, Unit, Photo, RozetkaCategory
+from .models import Category, Product, Feature, Delivery, Unit, Photo, RozetkaCategory, Parameter
 # from jet.filters import DateRangeFilter
 from .forms import (
     SetCourseForm,
@@ -20,6 +20,16 @@ from xlsxwriter import Workbook
 from django.http import HttpResponse
 import datetime
 from assistant.utils import make_xml
+
+
+class ParameterInline(admin.TabularInline):
+    extra = 0
+    model = Parameter
+
+
+@admin.register(Parameter)
+class ParameterAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Unit)
@@ -462,7 +472,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ["code"]
     search_fields = ('title', 'code', 'category__title')
     resource_class = ProductResource
-    inlines = (FeatureInline, DeliveryInline, PhotoInline)
+    inlines = (FeatureInline, DeliveryInline, PhotoInline, ParameterInline)
     formfield_overrides = {
         models.ManyToManyField: {'widget': FilteredSelectMultiple("Поставщики", is_stacked=False)},
     }

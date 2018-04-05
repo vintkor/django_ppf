@@ -229,3 +229,12 @@ class Photo(BaseModel):
 
     get_img_tag.short_description = 'Preview'
     get_img_tag.allow_tags = True
+
+
+class Parameter(BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    parameter = models.CharField(max_length=200)
+    value = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.parameter
