@@ -82,10 +82,10 @@
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="fiture_prom">
 
-                        <table class="table">
+                        <table class="table table-striped table-bordered">
                             <tr>
-                                <td>Характеристика</td>
-                                <td>Значение</td>
+                                <th>Характеристика</th>
+                                <th>Значение</th>
                             </tr>
                             {% for param in product.parameter_set.all %}
                                 <tr>
