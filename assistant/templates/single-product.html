@@ -50,6 +50,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">Описание</a></li>
                     <li role="presentation"><a href="#fiture" aria-controls="fiture" role="tab" data-toggle="tab">Характеристики</a></li>
+                    <li role="presentation"><a href="#fiture_prom" aria-controls="fiture" role="tab" data-toggle="tab">Характеристики c прома</a></li>
                     <li role="presentation"><a href="#delivery" aria-controls="delivery" role="tab" data-toggle="tab">Дополнительная информация</a></li>
                 </ul>
 
@@ -77,6 +78,22 @@
                                 </div>
                             {% endfor %}
                         </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="fiture_prom">
+
+                        <table class="table">
+                            <tr>
+                                <td>Характеристика</td>
+                                <td>Значение</td>
+                            </tr>
+                            {% for param in product.parameter_set.all %}
+                                <tr>
+                                    <td>{{ param.parameter }}</td>
+                                    <td>{{ param.value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
 
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="delivery">
