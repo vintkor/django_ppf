@@ -1,0 +1,27 @@
+{% extends 'theme_first_base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans '404 Page not found!' %}{% endblock %}
+{% block body %}page-404{% endblock body %}
+
+{% block content %}
+
+<section class="page-title">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-title__title align-center">404 Страница не найдена</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <img src="{% static 'theme_first/app/img/404.png' %}" alt="404 Страница не найдена" class="img-responsive" style="margin: 0 auto;">
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
