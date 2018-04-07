@@ -1,7 +1,5 @@
 User-agent: *
 Disallow: /admin/
-
-User-agent: *
 Allow: /
 
 Sitemap: https://ppf-company.com.ua/sitemap.xml
