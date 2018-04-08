@@ -21,3 +21,17 @@ class Telegram:
         )
         # TODO сделать проверку на ответ запроса
         return True
+
+    def send_location(self, user_id, latitude, longitude):
+        data = {
+            "chat_id": user_id,
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+
+        r = requests.post(
+            url='{}bot{}/sendLocation'.format(self.url, self.token),
+            json=data,
+        )
+        # TODO сделать проверку на ответ запроса
+        return True

@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.http import JsonResponse
 from telegram_bot.utils import Telegram
 from django_ppf.settings import SITE_URL
+import requests
 
 
 class CatalogRootView(ListView):
@@ -69,19 +70,34 @@ class ProductDetailView(FormView):
         )
         order.save()
 
+        api_ip_url = 'http://ip-api.com/json/{ip}'.format(
+            ip=request.META.get('REMOTE_ADDR')
+        )
+
+        r = requests.get(api_ip_url)
+        ip_data = r.json()
+
         bot = TelegramBot.objects.first()
         users = TelegramUser.objects.filter(send_message=True)
 
-        text = '📢 Заказ консультации по товару 👉 {} \n\n📱 Телефон: {} \n🔗 Ссылка на товар {}{}'.format(
-            product.title,
-            phone,
-            SITE_URL,
-            product.get_absolute_url(),
-        )
+        text = '''
+            📢 Заказ консультации по товару 👉 {product} \n\n
+            📱 Телефон: {phone} \n
+            🔗 Ссылка на товар {site_url}{address} \n\n
+            🌍 {country} -> {city}
+        '''.format(
+                product=product.title,
+                phone=phone,
+                site_url=SITE_URL,
+                address=product.get_absolute_url(),
+                city=ip_data.get('city'),
+                country=ip_data.get('country'),
+            )
 
         telegram = Telegram(bot.token)
         for user in users:
             telegram.send_message(user.user_id, text)
+            telegram.send_location(user.user_id, ip_data.get('lat'), ip_data.get('lon'))
 
         return JsonResponse({'status': 'true'})
 
