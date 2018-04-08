@@ -26,16 +26,13 @@ class WebHookUpdate(View):
             new_user.save()
 
     def post(self, request, token):
-        print('-'*90)
 
         try:
             bot = TelegramBot.objects.get(token=token)
         except TelegramBot.DoesNotExist:
             return HttpResponseForbidden()
 
-        self.data_info = json.loads(request.body)
+        self.data_info = json.loads(request.body.decode('utf-8'))
         self.save_user()
-
-        print(json.loads(request.body))
 
         return HttpResponse()
