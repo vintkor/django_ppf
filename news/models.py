@@ -4,6 +4,10 @@ from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
 from django.shortcuts import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from django_ppf.settings import SITE_URL
+
+from telegram_bot.models import TelegramBot, TelegramUser
+from telegram_bot.utils import Telegram
 
 
 def set_news_image_name(instanse, filename):
@@ -31,3 +35,24 @@ class News(BaseModel):
 
     def get_absolute_url(self):
         return reverse('news-detail', args=[str(self.id)])
+
+    def save(self, *args, **kwargs):
+        new_news = False
+        if not self.pk:
+            new_news = True
+
+        super(News, self).save(args, kwargs)
+
+        if new_news:
+            bot = TelegramBot.objects.first()
+            users = TelegramUser.objects.all()
+
+            text = '📢 {} \n\n 🔗 Читать новость {}{}'.format(
+                self.title,
+                SITE_URL,
+                self.get_absolute_url(),
+            )
+
+            telegram = Telegram(bot.token)
+            for user in users:
+                telegram.send_message(user.user_id, text)

@@ -63,6 +63,7 @@ except:
         'assistant',
         'partners',
         'company',
+        'telegram_bot',
     ]
 
     MIDDLEWARE = [
@@ -75,9 +76,13 @@ except:
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'debug_toolbar.middleware.DebugToolbarMiddleware',
         'django.middleware.locale.LocaleMiddleware',
+        'htmlmin.middleware.HtmlMinifyMiddleware',
+        'htmlmin.middleware.MarkRequestMiddleware',
     ]
 
     ROOT_URLCONF = 'django_ppf.urls'
+
+    TELEGRAM_API_URL = 'https://api.telegram.org/'
 
     TEMPLATES = [
         {

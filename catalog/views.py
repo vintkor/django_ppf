@@ -1,8 +1,11 @@
 from django.views.generic import ListView, DetailView, FormView
+from telegram_bot.models import TelegramBot, TelegramUser
 from .models import Category, Product, Manufacturer, Order
 from .forms import OrderForm
 from django.shortcuts import redirect
 from django.http import JsonResponse
+from telegram_bot.utils import Telegram
+from django_ppf.settings import SITE_URL
 
 
 class CatalogRootView(ListView):
@@ -58,11 +61,28 @@ class ProductDetailView(FormView):
         return redirect(self.request.META.get('HTTP_REFERER'))
 
     def post(self, request, slug):
+        product = Product.objects.get(slug=self.kwargs.get('slug'))
+        phone = self.request.POST.get('phone')
         order = Order(
-            phone=self.request.POST.get('phone'),
-            product=Product.objects.get(slug=self.kwargs.get('slug')),
+            phone=phone,
+            product=product,
         )
         order.save()
+
+        bot = TelegramBot.objects.first()
+        users = TelegramUser.objects.filter(send_message=True)
+
+        text = '📢 Заказ консультации по товару 👉 {} \n\n📱 Телефон: {} \n🔗 Ссылка на товар {}{}'.format(
+            product.title,
+            phone,
+            SITE_URL,
+            product.get_absolute_url(),
+        )
+
+        telegram = Telegram(bot.token)
+        for user in users:
+            telegram.send_message(user.user_id, text)
+
         return JsonResponse({'status': 'true'})
 
 

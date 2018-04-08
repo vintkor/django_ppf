@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^telegram/', include('telegram_bot.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 
