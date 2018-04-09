@@ -55,6 +55,7 @@ class Category(BaseModel, MPTTModel):
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
+    sort = models.PositiveSmallIntegerField(verbose_name='Сортировка', default=10)
 
     class MPTTMeta:
         order_insertion_by = ['title']
@@ -62,6 +63,7 @@ class Category(BaseModel, MPTTModel):
     class Meta:
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
+        ordering = ('sort',)
 
     def __str__(self):
         categories = ' > '.join([i.title for i in self.get_ancestors(include_self=True)])

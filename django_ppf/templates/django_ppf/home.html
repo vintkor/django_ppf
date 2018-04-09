@@ -1,59 +1,74 @@
 {% extends 'theme_first_base.html' %}
 {% load static %}
+{% load thumbnail %}
 
 {% block content %}
 
-<section class="squares">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6 col-md-push-3 padding-left-right-0">
-        <div class="square square__center">
-          <div id="cloud"></div>
-          <img src="{% static '/theme_first/app/' %}img/logo-500px.png" class="square__logo" alt="Компания ППФ логотип">
-          <div class="square__info">
-            <div id="typed-strings">
-              <p class="demo"><span class="accent">Самый большой</span> выбор кровельных и <br>фасадных материалов</p>
-              <p class="demo"><span class="accent">Огромный ассортимент</span> материалов <br>для внутренних работ</p>
-              <p class="demo"><span class="accent">10 лет</span> на строительном рынке</p>
-              <p class="demo">Более <span class="accent">2000</span> выполненых объектов <br>по всей Украине</p>
-              <p class="demo"><span class="accent">Бесплатный</span> расчёт и <br>грамотная консультация</p>
+    <section class="squares">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-push-3 padding-left-right-0">
+                    <div class="square square__center">
+                        <div id="cloud"></div>
+                        <img src="{% static '/theme_first/app/' %}img/logo-500px.png" class="square__logo"
+                             alt="Компания ППФ логотип">
+                        <div class="square__info">
+                            <div id="typed-strings">
+                                <p class="demo"><span class="accent">Самый большой</span> выбор кровельных и <br>фасадных
+                                    материалов</p>
+                                <p class="demo"><span class="accent">Огромный ассортимент</span> материалов <br>для
+                                    внутренних работ</p>
+                                <p class="demo"><span class="accent">10 лет</span> на строительном рынке</p>
+                                <p class="demo">Более <span class="accent">2000</span> выполненых объектов <br>по всей
+                                    Украине</p>
+                                <p class="demo"><span class="accent">Бесплатный</span> расчёт и <br>грамотная
+                                    консультация</p>
+                            </div>
+                            <span id="typed" style="white-space:pre;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6 col-md-pull-6 padding-left-right-0">
+                    <div class="row">
+                        {% for category in categories %}
+                            {% if category.sort == 10 or category.sort == 30 %}
+                                {% include 'catalog/partials/_category.html' %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6 padding-left-right-0">
+                    <div class="row">
+                        {% for category in categories %}
+                            {% if category.sort == 20 or category.sort == 40 %}
+                                {% include 'catalog/partials/_category.html' %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            <span id="typed" style="white-space:pre;"></span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-xs-6 col-md-pull-6 padding-left-right-0">
-        <div class="row">
-            {% for category in categories %}
-                {% if forloop.counter == 1 or forloop.counter == 3 %}
-                    {% include 'catalog/partials/_category.html' %}
-                {% endif %}
-            {% endfor %}
-        </div>
-      </div>
-      <div class="col-md-3 col-xs-6 padding-left-right-0">
-        <div class="row">
-            {% for category in categories %}
-                {% if forloop.counter == 2 or forloop.counter == 4 %}
-                    {% include 'catalog/partials/_category.html' %}
-                {% endif %}
-            {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-{% include 'django_ppf/partials/_info.html' %}
-
-<section class="about-us">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8 col-sm-12 col-md-offset-0 col-lg-offset-2">
-                <div class="about-us__text">{{ company.description | safe }}</div>
+            <div class="row">
+                {% for category in categories %}
+                    {% if category.sort == 50 or category.sort == 60 %}
+                        <div class="col-xs-6 padding-left-right-0">
+                            {% include 'catalog/partials/_category.html' %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
+    <section class="about-us">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12 col-md-offset-0 col-lg-offset-2">
+                    <div class="about-us__text">{{ company.description | safe }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock content %}
