@@ -344,6 +344,14 @@ body.home .header__pinned {
   background: #f0ffff;
 }
 
+.square__20 {
+  background: #e3fffd;
+}
+
+.square__21 {
+  background: #ebfaff;
+}
+
 .square__link {
   display: block;
   position: absolute;
