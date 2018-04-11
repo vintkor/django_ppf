@@ -15,7 +15,12 @@ class WebHookUpdate(View):
         return self.data_info['message']['from']['id']
 
     def get_username(self):
-        return self.data_info['message']['from']['username']
+        if self.data_info['message']['from'].get('username'):
+            return self.data_info['message']['from']['username']
+        return '{} {}'.format(
+            self.data_info['message']['from'].get('first_name'),
+            self.data_info['message']['from'].get('last_name'),
+        )
 
     def save_user(self):
         user_id = int(self.get_user_id())
