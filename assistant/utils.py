@@ -14,6 +14,9 @@ def clear_content(content):
     for a in soup('a'):
         a.decompose()
 
+    for iframe in soup('iframe'):
+        iframe.decompose()
+
     return str(soup)
 
 
