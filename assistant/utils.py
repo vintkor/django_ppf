@@ -2,6 +2,19 @@ from assistant.models import Product
 from datetime import datetime
 from xml.dom import minidom
 from django.conf import settings
+from bs4 import BeautifulSoup
+
+
+def clear_content(content):
+    soup = BeautifulSoup(content, "html.parser")
+
+    for img in soup('img'):
+        img.decompose()
+
+    for a in soup('a'):
+        a.decompose()
+
+    return str(soup)
 
 
 def make_xml(products=None):
@@ -131,7 +144,7 @@ def make_xml(products=None):
             offer.appendChild(name)
 
             description = doc.createElement('description')
-            cdata = doc.createCDATASection(product.text)
+            cdata = doc.createCDATASection(clear_content(product.text))
             description.appendChild(cdata)
             offer.appendChild(description)
 
@@ -140,6 +153,13 @@ def make_xml(products=None):
             param1.appendChild(param1_text)
             param1.setAttribute('name', 'Артикул')
             offer.appendChild(param1)
+
+            for feature in product.parameter_set.all():
+                param2 = doc.createElement('param')
+                param2_text = doc.createTextNode(feature.value)
+                param2.appendChild(param2_text)
+                param2.setAttribute('name', feature.parameter)
+                offer.appendChild(param2)
 
     file_handle = open("rozetka.xml", "w")
     doc.writexml(file_handle, encoding='UTF-8')
