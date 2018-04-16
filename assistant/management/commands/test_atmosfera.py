@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **option):
         print('-'*150)
 
-        with open('atmosfera.csv', 'r') as file:
+        with open('atmosfera.csv', 'r', encoding='utf-8') as file:
             reader = csv.DictReader(file, delimiter=';')
             index = 0
             for row in reader:
