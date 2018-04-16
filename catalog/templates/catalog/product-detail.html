@@ -125,6 +125,7 @@
                 </div>
             {% endif %}
 
+            {% if product.use %}
             <div class="row product-detail__desc__section">
                 <div class="col-lg-10 col-lg-offset-1 col-md-12 col-md-offset-0">
                     <h2 class="text-center mb-30">
@@ -135,6 +136,7 @@
                     {{ product.use | safe }}
                 </div>
             </div>
+            {% endif %}
 
             {% if product.is_galleries %}
                 <div class="row product-detail__gallery">

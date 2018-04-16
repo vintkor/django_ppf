@@ -187,7 +187,7 @@ class Order(BaseModel):
 
 
 class Feature(BaseModel):
-    product = models.ForeignKey(Product, on_delete=None, verbose_name=_('Product'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
     title = models.CharField(max_length=150, verbose_name=_('Title'))
     value = models.CharField(max_length=150, verbose_name=_('Value'))
 
