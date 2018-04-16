@@ -107,11 +107,10 @@
                                          href="#collapse-info"
                                          aria-expanded="true"
                                          aria-controls="collapse-info">
-                                        <h4 class="panel-title"><a>Информация о филлиале</a>
-                                        </h4>
+                                        <h4 class="panel-title"><a>Информация о филлиале</a></h4>
                                     </div>
                                     <div id="collapse-info" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="info-head">
-                                        <div class="panel-body">{{ del.info | safe }}</div>
+                                        <div class="panel-body">{{ del.provider.about | safe }}</div>
                                     </div>
                                 </div>
 

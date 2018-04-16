@@ -72,7 +72,7 @@ class CatalogDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(CatalogDetail, self).get_context_data(**kwargs)
         context['features'] = Feature.objects.filter(product=self.object)
-        context['delivery'] = Delivery.objects.filter(product=self.object)
+        context['delivery'] = Delivery.objects.select_related('provider').filter(product=self.object)
         return context
 
 
