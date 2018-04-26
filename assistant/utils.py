@@ -72,7 +72,7 @@ def make_xml(products=None):
     currencies = doc.createElement('currencies')
     shop.appendChild(currencies)
 
-    currency = doc.createElement('url')
+    currency = doc.createElement('currency')
     currency.setAttribute('id', 'UAH')
     currency.setAttribute('rate', '1')
     currencies.appendChild(currency)
@@ -95,7 +95,7 @@ def make_xml(products=None):
     for product in products:
         if product.import_to_rozetka:
             offer = doc.createElement('offer')
-            offer.setAttribute('id', '2322')
+            offer.setAttribute('id', '{}'.format(product.id))
             offer.setAttribute('available', 'true')
             offers.appendChild(offer)
 
@@ -142,7 +142,10 @@ def make_xml(products=None):
             offer.appendChild(stock_quantity)
 
             name = doc.createElement('name')
-            name_text = doc.createTextNode(product.title)
+            name_text = doc.createTextNode('{title} ({code})'.format(
+                title=product.title,
+                code=product.code,
+            ))
             name.appendChild(name_text)
             offer.appendChild(name)
 
@@ -151,11 +154,11 @@ def make_xml(products=None):
             description.appendChild(cdata)
             offer.appendChild(description)
 
-            param1 = doc.createElement('param')
-            param1_text = doc.createTextNode(product.code)
-            param1.appendChild(param1_text)
-            param1.setAttribute('name', 'Артикул')
-            offer.appendChild(param1)
+            # param1 = doc.createElement('param')
+            # param1_text = doc.createTextNode(product.code)
+            # param1.appendChild(param1_text)
+            # param1.setAttribute('name', 'Артикул')
+            # offer.appendChild(param1)
 
             for feature in product.parameter_set.all():
                 param2 = doc.createElement('param')
