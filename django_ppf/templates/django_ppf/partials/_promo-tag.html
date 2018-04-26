@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load thumbnail %}
+
+<div class="owl-carousel last-promo">
+    {% for promo in promos %}
+        <div class="promo__image" style="background-image: url('{{ promo.image.url }}');">
+            <a class="last-promo__title" href="{{ promo.get_absolute_url }}">
+                {{ promo.title }}
+            </a>
+        </div>
+    {% endfor %}
+</div>

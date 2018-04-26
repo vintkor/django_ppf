@@ -86,6 +86,14 @@ $('document').ready(function () {
         navText: ['&larr;', '&rarr;'],
     });
 
+    $(".last-promo").owlCarousel({
+        items: 1,
+        loop: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+    });
+
     $(".object-detail__carousel").owlCarousel({
         items: 1,
         loop: true,
@@ -136,7 +144,12 @@ $('#product-detail__color').photobox('a', {time: 0});
 
 var phoneOrder = document.getElementById("id_phone");
 var im = new Inputmask("+38 (999) 999-99-99");
-var phoneOrderIsComplete = im.mask(phoneOrder);
+try {
+    var phoneOrderIsComplete = im.mask(phoneOrder);
+} catch (e) {
+
+}
+
 
 
 // ----------------------------------------------------------------------------
@@ -171,3 +184,22 @@ plyr.setup();
 tippy('.land.is_objects', {
     followCursor: true
 });
+
+// ----------------------------------------------------------------------------
+//                Подсветка активного пункта меню
+// ----------------------------------------------------------------------------
+
+// (function () {
+//     var path = window.location.pathname;
+//     var nav = $('.heeader-nav__link');
+//     path = path.split('/')
+//     nav.each(function () {
+//         var nav_path = $(this).attr('href').split('/');
+//         // if (nav_path[2] == 'promo') {
+//         //     $(this).addClass('active');
+//         // } else
+//             if (nav_path[1] == path[1]) {
+//             $(this).addClass('active');
+//         }
+//     });
+// })();

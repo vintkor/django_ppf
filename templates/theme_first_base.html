@@ -78,22 +78,29 @@
                 <div class="col-md-12">
                     <nav class="heeader-nav">
                         <ul class="heeader-nav__ul">
-                            <li class="heeader-nav__li"><a class="heeader-nav__link" href="/">{% trans 'Home' %}</a>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="/">{% trans 'Home' %}</a>
                             </li>
-                            <li class="heeader-nav__li"><a class="heeader-nav__link"
-                                                           href="{% url 'catalog' %}">{% trans 'Catalog' %}</a></li>
-                            <li class="heeader-nav__li"><a class="heeader-nav__link"
-                                                           href="{% url 'news-list' %}">{% trans 'News' %}</a></li>
-                            <li class="heeader-nav__li"><a class="heeader-nav__link"
-                                                           href="{% url 'geo-root' %}">{% trans 'Our objects' %}</a>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a>
+                            </li>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'news-list' %}">{% trans 'News' %}</a>
+                            </li>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'promo-list' %}">{% trans 'Promo' %}</a>
+                            </li>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'geo-root' %}">{% trans 'Our objects' %}</a>
                             </li>
                             {% if user.is_active %}
-                                <li class="heeader-nav__li"><a class="heeader-nav__link"
-                                                               href="{% url 'all-catalog' %}">{% trans 'Assistant' %}</a>
+                                <li class="heeader-nav__li">
+                                    <a class="heeader-nav__link" href="{% url 'all-catalog' %}">{% trans 'Assistant' %}</a>
                                 </li>
                             {% endif %}
-                            <li class="heeader-nav__li"><a class="heeader-nav__link"
-                                                           href="{% url 'contacts' %}">{% trans 'Contact us' %}</a></li>
+                            <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'contacts' %}">{% trans 'Contact us' %}</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

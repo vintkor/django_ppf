@@ -1,0 +1,52 @@
+{% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
+
+{% block title %}{{ news.title }}{% endblock %}
+{% block META_DESC %}{{ news.meta_description }}{% endblock %}
+{% block META_KEY %}{{ news.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+{% block body %}promo-detail{% endblock body %}
+
+{% block content %}
+
+    {% news_breadcrumbs _('Promo') 'promo-list' promo.title %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{{ promo.title }}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="single-news">
+        <div class="container-fluid">
+            <div class="row">
+                {% if promo.image %}
+                    <div class="single-news__promo-image__wrapper">
+                        <img class="single-news__promo-image img-responsive" style="margin: 0 auto;" src="{{ promo.image.url }}" alt="{{ promo.title }}">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="single-news__text">
+                    {{ promo.text | safe }}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-xs-6 col-sm-4 padding-left-right-0">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
+
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

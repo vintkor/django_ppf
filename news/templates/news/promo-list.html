@@ -1,0 +1,59 @@
+{% extends 'theme_first_base.html' %}
+{% load i18n %}
+{% load ppf_tags %}
+
+{% block title %}{% trans 'All promo' %}{% endblock %}
+{% block META_DESC %}{% endblock %}
+{% block META_KEY %}{% endblock %}
+{% block header_scripts %}{% endblock %}
+{% block body %}promo-list-page{% endblock body %}
+
+{% block content %}
+
+    {% news_breadcrumbs False False _('Promo') %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{% trans 'Promo' %}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-list">
+        <div class="container-fluid">
+            <div class="row news-list__wrapper">
+                {% for promo in promos %}
+                    <div class="news-item news-item__promo">
+                        <div class="news-item__header">
+                            <a class="news-item__link" href="{{ promo.get_absolute_url }}">
+                                <h2 class="news-item__link__title">{{ promo.title }}</h2>
+                            </a>
+                        </div>
+                        <div class="news-item__body">
+                            <div
+                                    class="news-item__body__image"
+                                    style="background-image: url('{{ promo.image.url }}');"
+                                    role="img"
+                            ></div>
+                            {{ promo.text | truncatewords_html:30 | safe }}
+                        </div>
+{#                        <div class="news-item__footer">{{ promo.created }}</div>#}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-xs-6 col-sm-4 padding-left-right-0">
+                        {% include 'catalog/partials/_category.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

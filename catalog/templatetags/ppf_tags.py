@@ -1,5 +1,5 @@
 from django import template
-from news.models import News
+from news.models import News, Promo
 from geo.models import ObjectPPF
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -58,3 +58,9 @@ def news_breadcrumbs(nav_item=False, nav_item_rout=False, page=False):
 @register.inclusion_tag('catalog/partials/_profile.html')
 def profile(user):
     return {'user': User.objects.select_related('profile').get(id=user.id)}
+
+
+@register.inclusion_tag('django_ppf/partials/_promo-tag.html')
+def promos():
+    promos = Promo.objects.all()[:5]
+    return {'promos': promos}

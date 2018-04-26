@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import News
+from .models import News, Promo
 from catalog.models import Category
 
 
@@ -23,3 +23,15 @@ class NewsDetailView(DetailView):
         context = super().get_context_data()
         context['categories'] = Category.objects.filter(level=0)
         return context
+
+
+class PromoListView(ListView):
+    template_name = 'news/promo-list.html'
+    context_object_name = 'promos'
+    model = Promo
+
+
+class PromoDetailView(DetailView):
+    template_name = 'news/promo-detail.html'
+    context_object_name = 'promo'
+    model = Promo

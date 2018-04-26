@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib import sitemaps
 from catalog.sitemap import ProductSitemap, CategorySitemap
 from geo.sitemap import RegionSitemap, ObjectPPFSitemap
-from news.sitemap import NewsSitemap
+from news.sitemap import NewsSitemap, PromoSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, reverse
 
@@ -33,6 +33,7 @@ sitemap_dict = {
     'regions': RegionSitemap,
     'objects': ObjectPPFSitemap,
     'news': NewsSitemap,
+    'promo': PromoSitemap,
 }
 
 

@@ -76,6 +76,9 @@ body.home .header__pinned {
             text-decoration: none;
             color: $green-color;
         }
+        &.active {
+            background: $main-color;
+        }
     }
 }
 

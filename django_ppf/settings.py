@@ -31,7 +31,7 @@ except:
     SITE_URL = 'https://ppf-company.com.ua'
 
     ALLOWED_HOSTS = ['*']
-    INTERNAL_IPS = '127.0.0.1'
+    INTERNAL_IPS = '127.0.0.2'
 
 
     # Application definition
