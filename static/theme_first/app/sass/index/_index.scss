@@ -353,3 +353,32 @@ body.home {
         padding: 20px 0;
     }
 }
+
+.scrollTop {
+    width: 64px;
+    height: 64px;
+    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwIDM2My4wMjUgMzYzLjAyNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzYzLjAyNSAzNjMuMDI0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTM2My4wMjUsMTgxLjUxM0MzNjMuMDI1LDgxLjQzLDI4MS41OTUsMCwxODEuNTEyLDBDODEuNDIyLDAsMCw4MS40MywwLDE4MS41MTMgICBjMCwxMDAuMDg4LDgxLjQyMiwxODEuNTEyLDE4MS41MTIsMTgxLjUxMkMyODEuNTk1LDM2My4wMjQsMzYzLjAyNSwyODEuNjAxLDM2My4wMjUsMTgxLjUxM3ogTTExLjcxLDE4MS41MTMgICBDMTEuNzEsODcuODgsODcuODg2LDExLjcxLDE4MS41MTIsMTEuNzFjOTMuNjMzLDAsMTY5LjgwMyw3Ni4xNywxNjkuODAzLDE2OS44MDNjMCw5MS42NTktNzMuMDIsMTY2LjU0My0xNjMuOTM2LDE2OS42NTMgICBsMC4zNjYtMTg5Ljk0MWwzMi45NTgsMzIuOTU5bDguMjgtOC4yOGwtNDcuMDYyLTQ3LjA2NGwtNDcuODgzLDQ3Ljg4OWw4LjI4LDguMjc5bDMzLjcyNS0zMy43MjVsLTAuMzc1LDE4OS44OTUgICBDODQuNzQ0LDM0OC4wNjYsMTEuNzEsMjczLjE4NCwxMS43MSwxODEuNTEzeiIgZmlsbD0iI0ZGRkZGRiIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    &__wrapper {
+        display: none;
+        position: fixed;
+        background: rgba($black-color, 0.05);
+        bottom: 20px;
+        left: 50%;
+        margin-left: -35px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        padding: 3px;
+        transition: all .2s ease-in-out;
+        z-index: 20;
+        &:hover {
+            background: $green-color;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+        }
+    }
+}
+
