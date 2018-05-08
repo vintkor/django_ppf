@@ -3,10 +3,12 @@
 
 <div class="owl-carousel last-promo">
     {% for promo in promos %}
-        <div class="promo__image" style="background-image: url('{{ promo.image.url }}');">
-            <a class="last-promo__title" href="{{ promo.get_absolute_url }}">
-                {{ promo.title }}
-            </a>
-        </div>
+        {% if promo.small_image %}
+            <div class="promo__image" style="background-image: url('{{ promo.small_image.url }}');">
+                <a class="last-promo__title" href="{{ promo.get_absolute_url }}">
+                    {{ promo.title }}
+                </a>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>

@@ -62,6 +62,7 @@ class Promo(BaseModel):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     slug = models.SlugField(null=True, max_length=170, unique=True)
     image = models.ImageField(verbose_name=_('Image'), upload_to=set_news_image_name, blank=True, null=True)
+    small_image = models.ImageField(verbose_name=_('Small image'), upload_to=set_news_image_name, blank=True, null=True)
     text = RichTextUploadingField(verbose_name=_('Text'))
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
