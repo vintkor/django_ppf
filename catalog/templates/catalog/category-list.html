@@ -59,6 +59,13 @@
             </div>
         {% include '_paginate.html' %}
         </div>
+        {% if category.description %}
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="products__cat_desc" style="padding: 30px 0;">{{ category.description | safe }}</div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 </section>
 
