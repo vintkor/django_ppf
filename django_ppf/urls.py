@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from .views import HomeView, ContactsView
 from django.conf import settings
 from django.contrib import sitemaps
-from catalog.sitemap import ProductSitemap, CategorySitemap
+from catalog.sitemap import ProductSitemap, CategorySitemap, AuxPageSitemap
 from geo.sitemap import RegionSitemap, ObjectPPFSitemap
 from news.sitemap import NewsSitemap, PromoSitemap
 from django.contrib.sitemaps.views import sitemap
@@ -28,6 +28,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
 
 sitemap_dict = {
     'pages': StaticViewSitemap,
+    'aux_page': AuxPageSitemap,
     'categories': CategorySitemap,
     'products': ProductSitemap,
     'regions': RegionSitemap,

@@ -2,7 +2,7 @@
 {% load ppf_tags %}
 {% load thumbnail %}
 
-{% block title %}{{ category.title }}{% endblock %}
+{% block title %}{% if region %}{{ region }} 👉 {% endif %}{{ category.title }}{% endblock %}
 {% block META_DESC %}{{ category.meta_description }}{% endblock %}
 {% block META_KEY %}{{ category.meta_keywords }}{% endblock %}
 {% block header_scripts %}{% endblock %}
@@ -16,7 +16,10 @@
 <section class="page-title">
     <div class="container-fluid">
         <div class="row">
-            <h1 class="page-title__title align-center">{{ category.title }}</h1>
+            <h1 class="page-title__title align-center">
+                {% if region %}{{ region }} 👉 {% endif %}
+                {{ category.title }}
+            </h1>
         </div>
     </div>
 </section>
@@ -59,12 +62,23 @@
             </div>
         {% include '_paginate.html' %}
         </div>
-        {% if category.description %}
+        {% if region %}
+            {# --------------- AuxPage --------------- #}
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="products__cat_desc" style="padding: 30px 0;">{{ category.description | safe }}</div>
+                    <h2 class="text-center">{{ category.title }} {{ region }}</h2>
+                    <div class="products__cat_desc" style="padding: 30px 0;">{{ description_aux | safe }}</div>
                 </div>
             </div>
+            {# --------------- End AuxPage --------------- #}
+        {% else %}
+            {% if category.description %}
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="products__cat_desc" style="padding: 30px 0;">{{ category.description | safe }}</div>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </section>

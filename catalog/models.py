@@ -56,6 +56,8 @@ class Category(BaseModel, MPTTModel):
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
     sort = models.PositiveSmallIntegerField(verbose_name='Сортировка', default=10)
+    is_auxpage = models.BooleanField(default=False)
+    description_aux = RichTextUploadingField(verbose_name=_('Description aux'), blank=True, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['title']

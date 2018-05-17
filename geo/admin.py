@@ -12,9 +12,9 @@ class ObjectImageInline(AdminImageMixin, admin.TabularInline):
 
 @admin.register(Region)
 class RegionAdmin(AdminImageMixin, DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title', 'title', 'code', 'count_objects')
+    list_display = ('tree_actions', 'indented_title', 'title', 'title_many', 'title_eng', 'code', 'count_objects', 'is_auxpage')
     readonly_fields = ('code',)
-    list_editable = ('title',)
+    list_editable = ('title', 'title_eng', 'title_many')
 
 
 @admin.register(ObjectPPF)

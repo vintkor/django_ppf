@@ -28,11 +28,14 @@ class Region(BaseModel, MPTTModel):
         'self', verbose_name=_('Parent region'), null=True, blank=True,
         related_name='children', db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=_('Title'))
+    title_many = models.CharField(max_length=200, verbose_name=_('Title many'), blank=True, null=True)
+    title_eng = models.CharField(max_length=200, verbose_name=_('Title eng'), blank=True, null=True)
     code = models.CharField(max_length=15, blank=True, null=True, default=None, unique=True)
     image = ImageField(verbose_name=_('Image'), upload_to=set_region_image_name, blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = RichTextUploadingField(verbose_name=_('Description'), blank=True, null=True)
+    is_auxpage = models.BooleanField(default=False)
 
     class MPTTMeta:
         order_insertion_by = ['title']

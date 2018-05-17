@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from telegram_bot.utils import Telegram
 from django_ppf.settings import SITE_URL
 import requests
+from geo.models import Region
 
 
 class CatalogRootView(ListView):
@@ -34,6 +35,16 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data()
+        if self.kwargs.get('region'):
+            try:
+                region = Region.objects.get(title_eng=self.kwargs.get('region'))
+                context['region'] = region
+                context['description_aux'] = self.category.description_aux.replace(
+                    '#_one_#', region.title
+                ).replace('#_many_#', region.title_many)
+            except Region.DoesNotExist:
+                pass
+
         context['category'] = self.category
         context['children'] = self.category.get_children_with_products()
         return context
