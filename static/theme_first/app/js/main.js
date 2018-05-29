@@ -179,11 +179,14 @@ $('#sendOrderForm').click(function (e) {
     }
 });
 
-plyr.setup();
-
-tippy('.land.is_objects', {
-    followCursor: true
+// plyr.setup();
+var players = Array.from(document.querySelectorAll('.js-player')).map(function (p) {
+     new Plyr(p);
 });
+
+// tippy('.land.is_objects', {
+//     followCursor: true
+// });
 
 // ----------------------------------------------------------------------------
 //                Кнопка скрола на верх

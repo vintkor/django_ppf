@@ -24,6 +24,7 @@
     "waterfall": "^1.1.0",
     "photobox": "^1.9.9",
     "sweetalert2": "^7.21.1",
-    "plyr": "^3.3.9"
+    "plyr": "^3.3.9",
+    "inputmask": "^4.0.0"
   }
 }

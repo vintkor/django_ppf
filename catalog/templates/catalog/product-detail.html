@@ -226,7 +226,7 @@
                         <div class="product-detail__video__wrapper">
                             {% for video in product.video_set.all %}
                                 <div class="product-detail__video">
-                                    <div data-type="youtube" data-video-id="{{ video.get_video_id }}"></div>
+                                    <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="{{ video.get_video_id }}"></div>
                                     <h4 class="product-detail__video__title">{{ video.title }}</h4>
                                 </div>
                             {% endfor %}
