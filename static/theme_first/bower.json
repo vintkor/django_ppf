@@ -21,6 +21,9 @@
     "jquery": "^3",
     "typed.js": "^2.0.6",
     "owl.carousel": "owl-carousel2#^2.2.1",
-    "waterfall": "^1.1.0"
+    "waterfall": "^1.1.0",
+    "photobox": "^1.9.9",
+    "sweetalert2": "^7.21.1",
+    "plyr": "^3.3.9"
   }
 }

@@ -24,3 +24,4 @@ class ObjectPPFAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     inlines = (ObjectImageInline,)
     list_editable = ('favorite',)
+    filter_horizontal = ('products',)

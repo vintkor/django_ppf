@@ -46,10 +46,22 @@
         </div>
     </section>
 
+    <section class="about-us">
+        <div class="container-fluid">
+            <div class="row" style="background: #fff;">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="about-us__text">
+                        {{ object.text | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="page-title">
         <div class="container-fluid">
             <div class="row">
-                <h2 class="page-title__secondary-title align-center">{% trans 'During construction was used' %}</h2>
+                <h2 class="page-title-__secondary-title align-center mb-40">{% trans 'During construction was used' %}</h2>
             </div>
         </div>
     </section>
@@ -75,13 +87,13 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="row geo__products">
-                {% for category in categories %}
-                    <div class="col-xs-6 col-sm-4 padding-left-right-0">
-                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
-                    </div>
-                {% endfor %}
-            </div>
+{#            <div class="row geo__products">#}
+{#                {% for category in categories %}#}
+{#                    <div class="col-xs-6 col-sm-4 padding-left-right-0">#}
+{#                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
         </div>
     </section>
 

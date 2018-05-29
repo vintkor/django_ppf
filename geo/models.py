@@ -61,7 +61,6 @@ class ObjectPPF(BaseModel):
     text = RichTextUploadingField(verbose_name=_('Text'), blank=True, null=True)
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     products = models.ManyToManyField(Product, verbose_name=_('Products'))
     favorite = models.BooleanField(verbose_name=_('Favorite objects'), default=False)
 

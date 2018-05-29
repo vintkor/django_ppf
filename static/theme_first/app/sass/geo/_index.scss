@@ -38,4 +38,30 @@
     position: relative;
     margin: 0 auto;
   }
+  &__carousel {
+    position: relative;
+    .owl {
+      &-next,
+      &-prev {
+        position: absolute;
+        top: 50%;
+        width: 60px;
+        height: 60px;
+        background: rgba($white-color, .5) !important;
+        margin-top: -30px;
+        outline: none;
+        border-radius: 50%;
+        transition: all .2s ease-in-out;
+        &:hover {
+          background: $white-color !important;
+        }
+      }
+      &-prev {
+        left: 20px;
+      }
+      &-next {
+        right: 20px;
+      }
+    }
+  }
 }
