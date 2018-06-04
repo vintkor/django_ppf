@@ -13,7 +13,7 @@ class Command(BaseCommand):
         product_postfix = ' - Rainway 90'
         links = [
             '{}/rainway-90'.format(site_url),
-            '{}/rainway-130/page/2'.format(site_url),
+            '{}/rainway-90/page/2'.format(site_url),
         ]
 
         product_links = []
