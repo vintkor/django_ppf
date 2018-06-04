@@ -10,10 +10,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **option):
         site_url = 'http://rainway-shop.com.ua'
-        product_postfix = ' - Rainway 130'
+        product_postfix = ''
         links = [
-            '{}/rainway-130'.format(site_url),
-            '{}/rainway-130/page/2'.format(site_url),
+            '{}/accessory'.format(site_url),
         ]
 
         product_links = []
