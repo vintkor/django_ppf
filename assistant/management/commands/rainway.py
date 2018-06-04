@@ -12,7 +12,7 @@ class Command(BaseCommand):
         site_url = 'http://rainway-shop.com.ua'
         product_postfix = ''
         links = [
-            '{}/accessory'.format(site_url),
+            '{}/podshivka_kryshi'.format(site_url),
         ]
 
         product_links = []
