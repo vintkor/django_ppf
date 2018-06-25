@@ -3,6 +3,7 @@ from datetime import datetime
 from xml.dom import minidom
 from django.conf import settings
 from bs4 import BeautifulSoup
+import requests
 
 
 def clear_content(content):
@@ -137,7 +138,7 @@ def make_xml(products=None):
             offer.appendChild(vendor)
 
             stock_quantity = doc.createElement('stock_quantity')
-            stock_quantity_text = doc.createTextNode('100')
+            stock_quantity_text = doc.createTextNode('0')
             stock_quantity.appendChild(stock_quantity_text)
             offer.appendChild(stock_quantity)
 
@@ -170,3 +171,44 @@ def make_xml(products=None):
     file_handle = open("rozetka.xml", "w")
     doc.writexml(file_handle, encoding='UTF-8')
     file_handle.close()
+
+
+def parse_atmosfera():
+    file_path = 'http://www.atmosfera.ua/xport2shop/AtmosferaProds2exportUA.xml'
+    r = requests.get(file_path)
+    soup = BeautifulSoup(r.content, 'xml')
+
+    categories = dict()
+    for link in soup.find_all('category'):
+        categories[link.get('id')] = {
+            'parent_id': link.get('parentId'),
+            'title': link.text,
+        }
+
+    products = list()
+    for product in soup.find_all('item'):
+        products.append({
+            'id': product.find('Код_товара').text if product.find('Код_товара') else False,
+            'price': product.find('Цена').text if product.find('Цена') else False,
+            'category': product.find('parentId').text if product.find('parentId') else False,
+            'currency': product.find('Валюта').text if product.find('Валюта') else False,
+            'unit': product.find('Единица_измерения').text if product.find('Единица_измерения') else False,
+            'images': product.find('Ссылка_изображения').text if product.find('Ссылка_изображения') else False,
+            'title': product.find('Название_позиции').text if product.find('Название_позиции') else False,
+            'vendor': product.find('Производитель').text if product.find('Производитель') else False,
+            'country': product.find('Страна_производитель').text if product.find('Страна_производитель') else False,
+            'desc': product.find('Описание').text if product.find('Описание') else False,
+            'keywords': product.find('Ключевые_слова').text if product.find('Ключевые_слова') else False,
+            'params': [{
+                'name': p.get('name'),
+                'value': p.text,
+            } for p in product.find_all('param')],
+        })
+
+    print('-------------- CATEGORIES --------------')
+    for k, v in categories.items():
+        print(k, v)
+
+    print('-------------- PRODUCTS --------------')
+    for p in products:
+        print(p)
