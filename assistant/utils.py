@@ -138,7 +138,7 @@ def make_xml(products=None):
             offer.appendChild(vendor)
 
             stock_quantity = doc.createElement('stock_quantity')
-            stock_quantity_text = doc.createTextNode('0')
+            stock_quantity_text = doc.createTextNode('100')
             stock_quantity.appendChild(stock_quantity_text)
             offer.appendChild(stock_quantity)
 
