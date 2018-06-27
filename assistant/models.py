@@ -103,6 +103,7 @@ class Product(BaseModel):
     import_to_rozetka = models.BooleanField(verbose_name='На розетку', default=False)
     import_to_prom = models.BooleanField(verbose_name='На PROM', default=False)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
+    stock_quantity = models.PositiveSmallIntegerField(default=100, verbose_name='Остаток')
     currency = models.ForeignKey(Currency, null=True, blank=True, default=None, on_delete=models.CASCADE)
     course = models.DecimalField(verbose_name='Курс', max_digits=12, decimal_places=5, blank=True, null=True, default=1)
     re_count = models.BooleanField(verbose_name="Пересчитывать в грн?", default=True)

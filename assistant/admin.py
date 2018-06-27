@@ -459,6 +459,7 @@ class ProductAdmin(admin.ModelAdmin):
         "active",
         "price",
         "get_currency_code",
+        "stock_quantity",
         "course",
         "re_count",
         "get_price_UAH",
