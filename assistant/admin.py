@@ -475,6 +475,9 @@ def set_available_from_prom(modeladmin, request, queryset):
     return render(request, template, context)
 
 
+set_available_from_prom.short_description = 'Установить наличие товаров для прома'
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -524,6 +527,7 @@ class ProductAdmin(admin.ModelAdmin):
         import_to_prom,
         not_import_to_prom,
         not_import_to_rozetka,
+        set_available_from_prom,
     )
     save_on_top = True
     save_as = True
