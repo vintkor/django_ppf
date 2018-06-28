@@ -95,6 +95,18 @@ class RozetkaCategory(BaseModel, MPTTModel):
         return ''
 
 
+availability_prom_help_text = """
+Наличие товара на складе
+"+" — есть в наличии
+"!" — гарантия наличия (для сертифицированных компаний)
+"-" — нет в наличии
+"&" — ожидается
+"@" — услуга
+цифра, например, "9" — кол-во дней на доставку, если товар под заказ
+Важно! При пустом поле статус вашего товара станет «Нет в наличии».
+"""
+
+
 class Product(BaseModel):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     manufacturer = models.ForeignKey(Manufacturer, blank=True, null=True, on_delete=None, related_name="catalog_manufacturer")
@@ -104,6 +116,11 @@ class Product(BaseModel):
     import_to_prom = models.BooleanField(verbose_name='На PROM', default=False)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
     stock_quantity = models.PositiveSmallIntegerField(default=100, verbose_name='Остаток')
+    availability_prom = models.CharField(
+        verbose_name='Наличие товара для прома', max_length=3,
+        help_text=availability_prom_help_text,
+        default='+',
+    )
     currency = models.ForeignKey(Currency, null=True, blank=True, default=None, on_delete=models.CASCADE)
     course = models.DecimalField(verbose_name='Курс', max_digits=12, decimal_places=5, blank=True, null=True, default=1)
     re_count = models.BooleanField(verbose_name="Пересчитывать в грн?", default=True)

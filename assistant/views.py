@@ -123,7 +123,7 @@ class CatalogForPromXLSX(View):
             worksheet.write_string(row + 1, 7, ''.join(
                 ['http://{}{}, '.format(request.META.get('HTTP_HOST'), img) for img in item.get_all_photo()]
             ))
-            worksheet.write(row + 1, 8, '+')
+            worksheet.write(row + 1, 8, item.availability_prom)
             worksheet.write(row + 1, 9, item.code)
             worksheet.write(row + 1, 10, item.category.id)
             worksheet.write(row + 1, 11, item.code)
