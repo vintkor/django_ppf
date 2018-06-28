@@ -13,6 +13,7 @@ from .forms import (
     SetPricePercentForm,
     SetManufacturerForm,
     SetRozetkaCategoryForm,
+    SetAvailableFromPromForm,
 )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -444,6 +445,34 @@ def save_as_xml(modeladmin, request, queryset):
         response.content = file
 
     return response
+
+
+def set_available_from_prom(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Установить наличие товара для прома', 'action': 'set_available_from_prom'}
+
+    if 'apply' in request.POST:
+        form = SetAvailableFromPromForm(request.POST)
+
+        if form.is_valid():
+            available = form.cleaned_data['available']
+
+            count = 0
+            for item in queryset:
+                item.availability_prom = available
+                item.save()
+                count += 1
+
+            modeladmin.message_user(
+                request, "Наличие {} установлено у {} товаров.".format(available, count), level=messages.SUCCESS)
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetAvailableFromPromForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        context['form'] = form
+
+    return render(request, template, context)
 
 
 @admin.register(Product)
