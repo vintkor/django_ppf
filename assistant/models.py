@@ -119,7 +119,7 @@ class Product(BaseModel):
     availability_prom = models.CharField(
         verbose_name='Наличие товара для прома', max_length=3,
         help_text=availability_prom_help_text,
-        default='+',
+        default='+', blank=True,
     )
     currency = models.ForeignKey(Currency, null=True, blank=True, default=None, on_delete=models.CASCADE)
     course = models.DecimalField(verbose_name='Курс', max_digits=12, decimal_places=5, blank=True, null=True, default=1)
