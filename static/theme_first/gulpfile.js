@@ -38,7 +38,7 @@ gulp.task('scripts', function() {
             'app/libs/sweetalert2/dist/sweetalert2.all.min.js',
             'app/libs/plyr/dist/plyr.min.js',
             'app/libs/tippyjs/dist/tippy.all.js',
-            'app/libs/typed.min.js'
+            'app/libs/typed.js/lib/typed.min.js'
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())

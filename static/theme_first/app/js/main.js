@@ -100,7 +100,7 @@ $('document').ready(function () {
         nav: true,
         autoplay: true,
         autoplayTimeout: 3000,
-        navText: ['&larr;', '&rarr;'],
+        navText: ['&larr;', '&rarr;']
     });
 
 });
@@ -120,6 +120,7 @@ $('document').ready(function () {
             loop: true
         });
     } catch (e) {
+        console.log(e);
     }
 }());
 
