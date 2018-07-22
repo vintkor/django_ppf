@@ -131,6 +131,9 @@ class Product(BaseModel):
     active = models.BooleanField(default=True, verbose_name="Вкл/Выкл")
     code = models.CharField(verbose_name="Артикул", max_length=20, default=set_code, unique=True, blank=True, null=True)
 
+    vendor_id = models.PositiveSmallIntegerField(blank=True, null=True)
+    vendor_name = models.CharField(blank=True, null=True, max_length=200)
+
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"

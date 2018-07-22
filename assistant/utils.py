@@ -1,9 +1,11 @@
-from assistant.models import Product
+from assistant.models import Product, Parameter
 from datetime import datetime
 from xml.dom import minidom
 from django.conf import settings
 from bs4 import BeautifulSoup
 import requests
+from django.utils.crypto import get_random_string
+import decimal
 
 
 def clear_content(content):
@@ -212,3 +214,103 @@ def parse_atmosfera():
     print('-------------- PRODUCTS --------------')
     for p in products:
         print(p)
+
+
+def get_and_save_image(url, filename):
+    r = requests.get(url)
+    if r.status_code == 200:
+        with open('media/' + filename, 'wb') as file:
+            file.write(r.content)
+
+
+def make_filename(pk, ext):
+    name = get_random_string(25)
+    return 'images/{}__{}'.format(pk, name)
+
+
+def get_file_ext(url):
+    return url.split('.')[-1]
+
+
+def parse_mizol():
+    file_path = 'http://api.mizol.ua/?modelName=Mizol_Characteristics&calledMethod=getProductCharacteristic&methodProperties[price]=RRC&apiKey=52542&hash=5398382aa014f0a06312ff751c5949c4cbb52f61ba02341dbf67ecedfab68bcf'
+    r = requests.get(file_path)
+    soup = BeautifulSoup(r.content, 'xml')
+    vendor_name = 'Mizol'
+
+    products_id_in_db = [
+        product['vendor_id'] for product in Product.objects.filter(vendor_name=vendor_name).values('vendor_id')
+    ]
+
+    new_products = list()
+    products_for_update = list()
+
+    for ind, product in enumerate(soup.find_all('offer')):
+        print('----> найдено', ind, 'товаров')
+
+        if int(product['id']) in products_id_in_db:
+            products_for_update.append({
+                'vendor_id': int(product['id']),
+                'price': decimal.Decimal(product.find('price').text) if product.find('price').text else 0,
+            })
+        else:
+            new_products.append({
+                'vendor_id': int(product['id']),
+                'vendor_name': vendor_name,
+                'title': product.find('name').text,
+                'manufacturer': product.find('vendor').text if product.find('vendor').text else None,
+                'country': product.find('country').text if product.find('country').text else None,
+                'description': product.find('description').text,
+                'active': True if product.find('available') == 'true' else False,
+                'picture': product.find('picture').text if product.find('picture').text else None,
+                'price': decimal.Decimal(product.find('price').text) if product.find('price').text else 0,
+            })
+
+    # for i in new_products:
+    #     print(i)
+
+    len_products_for_update = len(products_for_update)
+    len_new_products = len(new_products)
+
+    for ind, i in enumerate(new_products):
+        product = Product()
+        product.vendor_id = i['vendor_id']
+        product.vendor_name = i['vendor_name']
+        product.title = i['title']
+        product.text = i['description']
+        product.active = True
+        product.save()
+
+        if i['manufacturer']:
+            parameter = Parameter()
+            parameter.product = product
+            parameter.parameter = 'Произвадитель'
+            parameter.value = i['vendor_name']
+            parameter.save()
+
+        if i['country']:
+            parameter2 = Parameter()
+            parameter2.product = product
+            parameter2.parameter = 'Страна'
+            parameter2.value = i['country']
+            parameter2.save()
+
+        if i['picture']:
+            url = i['picture']
+
+            ext = get_file_ext(url)
+            filename = make_filename(product.pk, ext)
+            get_and_save_image(url, filename)
+
+            product.image = filename
+            product.save(update_fields=('image',))
+
+        print('----> добавлено', ind, 'товаров из', len_new_products)
+
+    for ind, i in enumerate(products_for_update):
+        product = Product.objects.get(vendor_name=vendor_name, vendor_id=i['vendor_id'])
+        if product.price != i['price']:
+            product.price = i['price']
+            product.save(update_fields=('price',))
+
+            print('----> обновлено', ind, 'товаров из', len_products_for_update)
