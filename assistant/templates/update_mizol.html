@@ -1,0 +1,51 @@
+{% extends 'theme_first_base.html' %}
+{% load my_tags %}
+{% load i18n %}
+
+{% block title %}ППФ - все товары{% endblock title %}
+{% block body %}assistant-all-products{% endblock body %}
+
+{% block content %}
+
+    {% include '_assistant-dop-nav.html' %}
+
+    {% if category %}
+        {% breadcrumbs category %}
+    {% endif %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row page-title__title">
+                <h1 class="page-title__title align-center">
+                    Обновление каталога продукции по компании Mizol
+                </h1>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4" style="padding: 50px 0">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <br>
+                    <button class="btn btn-success btn-lg btn-block">Обработать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .product-image {
+            width: 60px;
+            height: 40px;
+            background-size: cover;
+            background-position: center center;
+        }
+        td {
+            vertical-align: middle !important;
+        }
+    </style>
+{% endblock content %}

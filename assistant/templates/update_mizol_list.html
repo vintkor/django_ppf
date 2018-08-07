@@ -1,0 +1,53 @@
+{% extends 'theme_first_base.html' %}
+
+{% block title %}ППФ - все товары{% endblock title %}
+{% block body %}assistant-all-products{% endblock body %}
+
+{% block content %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row page-title__title">
+                <h1 class="page-title__title align-center">
+                    Были обновлены слудующие товары ({{ count }} шт)
+                </h1>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="padding: 50px 0">
+                <table class="table">
+                    <tr>
+                        <td>Код</td>
+                        <td>Товар</td>
+                        <td>Цена</td>
+                        <td>Наличие</td>
+                    </tr>
+                    {% for product in products %}
+                        <tr>
+                            <td><code>{{ product.code }}</code></td>
+                            <td><a href="{{ product.get_absolute_url }}" target="_blank">{{ product.title }}</a></td>
+                            <td>{% if product.price %}{{ product.price }} <span class="label label-info pull-right">{{ product.currency.code }}</span>{% endif %}</td>
+                            <td>{{ product.availability_prom }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .product-image {
+            width: 60px;
+            height: 40px;
+            background-size: cover;
+            background-position: center center;
+        }
+        td {
+            vertical-align: middle !important;
+        }
+    </style>
+{% endblock content %}

@@ -490,6 +490,7 @@ class ProductAdmin(admin.ModelAdmin):
         "code",
         "active",
         "price",
+        "discont",
         "get_currency_code",
         "stock_quantity",
         "availability_prom",
@@ -502,7 +503,7 @@ class ProductAdmin(admin.ModelAdmin):
         "updated"
     )
     list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka')
-    list_editable = ('price', 're_count', 'course')
+    list_editable = ('price', 're_count', 'course', 'discont')
     readonly_fields = ["code"]
     search_fields = ('title', 'code', 'category__title')
     resource_class = ProductResource

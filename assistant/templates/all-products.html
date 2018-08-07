@@ -6,6 +6,9 @@
 {% block body %}assistant-all-products{% endblock body %}
 
 {% block content %}
+
+    {% include '_assistant-dop-nav.html' %}
+
     {% if category %}
         {% breadcrumbs category %}
     {% endif %}
@@ -61,7 +64,7 @@
                         <td><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></td>
                         <td>{% if product.price %}{{ product.price }} <span class="label label-info pull-right">{{ product.currency.code }}</span>{% endif %}</td>
                         <td>{{ product.course }}</td>
-                        <td>{% if product.price %}{{ product.get_price_UAH }}{% endif %}</td>
+                        <td>{{ product.get_price_UAH }}</td>
                         <td>{{ product.unit.short_title }}</td>
                         <td><span class="label {% if product.get_delivery_count == 0 %}label-danger{% else %}label-info{%endif%}">{{ product.get_delivery_count }}</span></td>
                         <td><span class="label

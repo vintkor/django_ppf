@@ -106,6 +106,12 @@ availability_prom_help_text = """
 Важно! При пустом поле статус вашего товара станет «Нет в наличии».
 """
 
+# availability_prom:
+# НЕТ -
+# Заканчивается +
+# Львов (4 дня) +
+# ЕСТЬ +
+
 
 class Product(BaseModel):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
@@ -115,6 +121,7 @@ class Product(BaseModel):
     import_to_rozetka = models.BooleanField(verbose_name='На розетку', default=False)
     import_to_prom = models.BooleanField(verbose_name='На PROM', default=False)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
+    discont = models.DecimalField(verbose_name='Скидка', decimal_places=2, max_digits=4, blank=True, null=True)
     stock_quantity = models.PositiveSmallIntegerField(default=100, verbose_name='Остаток')
     availability_prom = models.CharField(
         verbose_name='Наличие товара для прома', max_length=3,
@@ -131,13 +138,16 @@ class Product(BaseModel):
     active = models.BooleanField(default=True, verbose_name="Вкл/Выкл")
     code = models.CharField(verbose_name="Артикул", max_length=20, default=set_code, unique=True, blank=True, null=True)
 
-    vendor_id = models.PositiveSmallIntegerField(blank=True, null=True)
+    vendor_id = models.CharField(blank=True, null=True, max_length=50)
     vendor_name = models.CharField(blank=True, null=True, max_length=200)
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         ordering = ('-code',)
+        permissions = (
+            ('Can update mizol prices', 'can_update_mizol_prices'),
+        )
 
     def __str__(self):
         return "{}".format(self.title)
@@ -153,12 +163,20 @@ class Product(BaseModel):
         return None
     get_currency_code.short_description = 'Валюта'
 
+    def get_price(self):
+        if not self.price:
+            return None
+        if self.discont:
+            return self.price - (self.price * self.discont) / 100
+        return self.price
+
     def get_price_UAH(self):
-        if self.price:
+        price = self.get_price()
+        if price:
             if self.re_count:
-                return round(self.price * self.course, 3)
+                return round(price * self.course, 3)
             else:
-                return round(self.price, 3)
+                return round(price, 3)
         return False
     get_price_UAH.short_description = 'Цена в валюте'
 

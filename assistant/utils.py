@@ -1,4 +1,4 @@
-from assistant.models import Product, Parameter
+from assistant.models import Product, Parameter, Category
 from datetime import datetime
 from xml.dom import minidom
 from django.conf import settings
@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import requests
 from django.utils.crypto import get_random_string
 import decimal
+
+from currency.models import Currency
 
 
 def clear_content(content):
@@ -238,6 +240,12 @@ def parse_mizol():
     soup = BeautifulSoup(r.content, 'xml')
     vendor_name = 'Mizol'
 
+    try:
+        test_category = Category.objects.get(title='TEST CATEGORY')
+    except Category.DoesNotExist:
+        test_category = Category(title='TEST CATEGORY')
+        test_category.save()
+
     products_id_in_db = [
         product['vendor_id'] for product in Product.objects.filter(vendor_name=vendor_name).values('vendor_id')
     ]
@@ -266,19 +274,20 @@ def parse_mizol():
                 'price': decimal.Decimal(product.find('price').text) if product.find('price').text else 0,
             })
 
-    # for i in new_products:
-    #     print(i)
-
     len_products_for_update = len(products_for_update)
     len_new_products = len(new_products)
 
+    currency = Currency.objects.get(code='UAH')
+
     for ind, i in enumerate(new_products):
         product = Product()
+        product.category = test_category
         product.vendor_id = i['vendor_id']
         product.vendor_name = i['vendor_name']
         product.title = i['title']
         product.text = i['description']
         product.active = True
+        product.currency = currency
         product.save()
 
         if i['manufacturer']:

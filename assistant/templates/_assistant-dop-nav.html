@@ -1,0 +1,14 @@
+
+<section class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+
+            {% if perms.assistant.can_update_mizol_prices %}
+                <ul class="breadcrumb" style="background: #d3e9f5;">
+                    <li><a href="{% url 'update-mizol-prices' %}">Mizol обновление</a></li>
+                </ul>
+            {% endif %}
+
+        </div>
+    </div>
+</section>

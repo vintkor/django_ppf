@@ -71,3 +71,7 @@ class SetManufacturerForm(forms.Form):
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
 
     manufacturer = forms.ModelChoiceField(queryset=Manufacturer.objects.all(), widget=forms.Select(), required=True)
+
+
+class UpdateMizolPriceForm(forms.Form):
+    file = forms.FileField(label='Файл')

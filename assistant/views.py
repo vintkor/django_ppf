@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, View
+import decimal
+
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, View, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from assistant.models import Product, Feature, Category, Delivery
 from partners.models import Provider
@@ -7,6 +9,10 @@ from xlsxwriter import Workbook
 from django.http import HttpResponse
 import datetime
 from assistant.utils import make_xml
+from .forms import UpdateMizolPriceForm
+from django.urls import reverse_lazy
+from openpyxl import load_workbook
+from django.db.transaction import atomic
 
 
 def index(request):
@@ -18,7 +24,7 @@ class CatalogList(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'products'
     template_name = 'all-products.html'
-    paginate_by = 50
+    paginate_by = 100
     login_url = 'home'
 
     def get_queryset(self, **kwargs):
@@ -162,3 +168,46 @@ class CatalogForRozetkaXML(View):
             response.content = file
 
         return response
+
+
+class UpdateMizolPriceView(LoginRequiredMixin, FormView):
+    form_class = UpdateMizolPriceForm
+    template_name = 'update_mizol.html'
+    login_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        print('-' * 80)
+        file = form.cleaned_data['file']
+        wb = load_workbook(file)
+        sheet_name = wb.sheetnames[0]
+        sheet = wb[sheet_name]
+
+        data_list = []
+
+        for row in sheet.rows:
+            data_list.append({
+                'id': row[1].value,
+                'available': '-' if row[6].value == '-' else '+',
+                'price': row[8].value,
+            })
+
+        data_update = []
+
+        with atomic():
+            for i in data_list:
+                try:
+                    product = Product.objects.get(vendor_id=i['id'], vendor_name='Mizol')
+                except Product.DoesNotExist:
+                    continue
+
+                product.price = decimal.Decimal(i['price'])
+                product.availability_prom = i['available']
+                product.save(update_fields=('price', 'availability_prom',))
+
+                data_update.append(product)
+
+        context = {
+            'products': data_update,
+            'count': sum([1 for i in data_update]),
+        }
+        return render(self.request, 'update_mizol_list.html', context)
