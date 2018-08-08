@@ -254,7 +254,7 @@ def parse_mizol():
     products_for_update = list()
 
     for ind, product in enumerate(soup.find_all('offer')):
-        print('----> найдено', ind, 'товаров')
+        print('----> finded', ind, 'products')
 
         if int(product['id']) in products_id_in_db:
             products_for_update.append({
@@ -314,7 +314,7 @@ def parse_mizol():
             product.image = filename
             product.save(update_fields=('image',))
 
-        print('----> добавлено', ind, 'товаров из', len_new_products)
+        print('----> added', ind, 'items from', len_new_products)
 
     for ind, i in enumerate(products_for_update):
         product = Product.objects.get(vendor_name=vendor_name, vendor_id=i['vendor_id'])
@@ -322,4 +322,4 @@ def parse_mizol():
             product.price = i['price']
             product.save(update_fields=('price',))
 
-            print('----> обновлено', ind, 'товаров из', len_products_for_update)
+            print('----> updated', ind, 'items from', len_products_for_update)
