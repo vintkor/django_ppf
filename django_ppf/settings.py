@@ -78,7 +78,13 @@ except:
         'django.middleware.locale.LocaleMiddleware',
         'htmlmin.middleware.HtmlMinifyMiddleware',
         'htmlmin.middleware.MarkRequestMiddleware',
+        'assistant.middleware.CurrentUserMiddleware',
+        
     ]
+
+    MIDDLEWARE_CLASSES = (
+        'assistant.middleware.CurrentUserMiddleware',
+    )
 
     ROOT_URLCONF = 'django_ppf.urls'
 

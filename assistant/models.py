@@ -8,6 +8,8 @@ from django.urls import reverse
 from currency.models import Currency
 from django.utils.html import format_html
 from catalog.models import Manufacturer
+from django.contrib.auth.models import User
+from assistant.middleware import get_current_user
 
 
 def set_image_name(instance, filename):
@@ -141,16 +143,26 @@ class Product(BaseModel):
     vendor_id = models.CharField(blank=True, null=True, max_length=50)
     vendor_name = models.CharField(blank=True, null=True, max_length=200)
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    is_checked = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         ordering = ('-code',)
         permissions = (
             ('Can update mizol prices', 'can_update_mizol_prices'),
+            ('Freelanser', 'freelanser'),
         )
 
     def __str__(self):
         return "{}".format(self.title)
+
+    def save(self, *args, **kwargs):
+        user = get_current_user()
+        if not self.author:
+            self.author = user
+        return super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('single-product', args=[str(self.id)])

@@ -504,7 +504,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
     list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka')
     list_editable = ('price', 're_count', 'course', 'discont')
-    readonly_fields = ["code"]
+    readonly_fields = ('code', 'author')
     search_fields = ('title', 'code', 'category__title')
     resource_class = ProductResource
     inlines = (FeatureInline, DeliveryInline, PhotoInline, ParameterInline)
@@ -532,6 +532,16 @@ class ProductAdmin(admin.ModelAdmin):
     )
     save_on_top = True
     save_as = True
+
+    def get_queryset(self, request):
+        user = request.user
+        qs = super(ProductAdmin, self).get_queryset(request)
+        if user.is_superuser:
+            return qs
+        elif user.has_perm('assistant.Freelanser'):
+            return qs.filter(author=user, is_checked=False)
+        else:
+            return qs
 
 
 admin.site.register(
