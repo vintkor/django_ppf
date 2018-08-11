@@ -30,7 +30,25 @@ class ParameterInline(admin.TabularInline):
 
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
-    pass
+    
+    def get_queryset(self, request):
+        user = request.user
+        qs = super(ParameterAdmin, self).get_queryset(request)
+        if user.is_superuser:
+            return qs
+        elif user.has_perm('assistant.Freelanser'):
+            return qs.filter(product__author=user, product__is_checked=False)
+        else:
+            return qs
+
+    def get_readonly_fields(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return self.readonly_fields
+        elif user.has_perm('assistant.Freelanser'):
+            return ['product']
+        else:
+            return self.readonly_fields
 
 
 @admin.register(Unit)
@@ -63,6 +81,25 @@ class PhotoInline(admin.TabularInline):
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ['product']
+
+    def get_queryset(self, request):
+        user = request.user
+        qs = super(PhotoAdmin, self).get_queryset(request)
+        if user.is_superuser:
+            return qs
+        elif user.has_perm('assistant.Freelanser'):
+            return qs.filter(product__author=user, product__is_checked=False)
+        else:
+            return qs
+
+    def get_readonly_fields(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return self.readonly_fields
+        elif user.has_perm('assistant.Freelanser'):
+            return ['product']
+        else:
+            return self.readonly_fields
 
 
 def import_to_rozetka(modeladmin, request, queryset):
