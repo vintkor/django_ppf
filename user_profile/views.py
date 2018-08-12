@@ -15,7 +15,7 @@ def user_logout(request):
 
 class AuthView(FormView):
     form_class = AuthForm
-    template_name = 'profile/login.html'
+    template_name = 'user_profile/login.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -40,5 +40,5 @@ class AuthView(FormView):
 
 class ProfileDetailView(LoginRequiredMixin, View):
     def get(self, request):
-        user = User.objects.select_related('profile').get(id=self.request.user.id)
-        return render(request, 'profile/profile.html', {'user': user})
+        user = User.objects.get(id=self.request.user.id)
+        return render(request, 'user_profile/profile.html', {'user': user})

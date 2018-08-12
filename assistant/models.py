@@ -159,9 +159,13 @@ class Product(BaseModel):
         return "{}".format(self.title)
 
     def save(self, *args, **kwargs):
-        user = get_current_user()
         if not self.author:
-            self.author = user
+            try:
+                user = get_current_user()
+                self.author = user
+            except:
+                user = None
+
         return super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

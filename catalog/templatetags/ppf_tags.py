@@ -57,7 +57,7 @@ def news_breadcrumbs(nav_item=False, nav_item_rout=False, page=False):
 
 @register.inclusion_tag('catalog/partials/_profile.html')
 def profile(user):
-    return {'user': User.objects.select_related('profile').get(id=user.id)}
+    return {'user': User.objects.get(id=user.id)}
 
 
 @register.inclusion_tag('django_ppf/partials/_promo-tag.html')

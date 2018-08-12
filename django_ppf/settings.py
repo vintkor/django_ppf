@@ -54,8 +54,9 @@ except:
         'sorl.thumbnail',
         'django_nose',
         'phonenumber_field',
+        'django_celery_results',
 
-        'profile',
+        'user_profile',
         'catalog',
         'geo',
         'news',
@@ -257,3 +258,5 @@ except:
             ]),
         }
     }
+
+    CELERY_BROKER_URL = 'amqp://localhost'

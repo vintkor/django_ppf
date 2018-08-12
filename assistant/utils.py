@@ -6,8 +6,9 @@ from bs4 import BeautifulSoup
 import requests
 from django.utils.crypto import get_random_string
 import decimal
-
 from currency.models import Currency
+from openpyxl import load_workbook
+from django.db.transaction import atomic
 
 
 def clear_content(content):
@@ -323,3 +324,35 @@ def parse_mizol():
             product.save(update_fields=('price',))
 
             print('----> updated', ind, 'items from', len_products_for_update)
+
+
+def update_mizol_prices(filename):
+    print('-'*80)
+    wb = load_workbook(settings.MEDIA_ROOT + '/' +filename)
+    sheet_name = wb.sheetnames[0]
+    sheet = wb[sheet_name]
+
+    data_list = []
+
+    for row in sheet.rows:
+        data_list.append({
+            'id': row[1].value,
+            'available': '-' if row[6].value == '-' else '+',
+            'price': row[8].value,
+        })
+
+    data_update = []
+
+    with atomic():
+        for i in data_list:
+            try:
+                product = Product.objects.get(
+                    vendor_id=i['id'], vendor_name='Mizol')
+            except Product.DoesNotExist:
+                continue
+
+            product.price = decimal.Decimal(i['price'])
+            product.availability_prom = i['available']
+            product.save(update_fields=('price', 'availability_prom',))
+
+            data_update.append(product)

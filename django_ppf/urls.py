@@ -11,6 +11,7 @@ from geo.sitemap import RegionSitemap, ObjectPPFSitemap
 from news.sitemap import NewsSitemap, PromoSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, reverse
+import sys
 
 
 class StaticViewSitemap(sitemaps.Sitemap):
@@ -53,7 +54,7 @@ urlpatterns += i18n_patterns(
     url(r'^our-objects/', include('geo.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^contacts/', ContactsView.as_view(), name='contacts'),
-    url(r'^accounts/', include('profile.urls')),
+    url(r'^accounts/', include('user_profile.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemap_dict}, name='django.contrib.sitemaps.views.sitemap'),
     prefix_default_language=False
 )
