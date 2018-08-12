@@ -346,9 +346,8 @@ def update_mizol_prices(filename):
     with atomic():
         for i in data_list:
             try:
-                product = Product.objects.get(
-                    vendor_id=i['id'], vendor_name='Mizol')
-            except Product.DoesNotExist:
+                product = Product.objects.get(vendor_id=i['id'], vendor_name='Mizol')
+            except:
                 continue
 
             product.price = decimal.Decimal(i['price'])
