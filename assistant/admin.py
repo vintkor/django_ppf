@@ -14,6 +14,7 @@ from .forms import (
     SetManufacturerForm,
     SetRozetkaCategoryForm,
     SetAvailableFromPromForm,
+    SetAuthorForm,
 )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -172,6 +173,36 @@ def set_course(modeladmin, request, queryset):
 
 
 set_course.short_description = 'Установить новый курс'
+
+
+def set_author(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Установыть нового автора', 'action': 'set_author'}
+
+    if 'apply' in request.POST:
+        form = SetAuthorForm(request.POST)
+
+        if form.is_valid():
+            author = form.cleaned_data['author']
+
+            count = 0
+            for item in queryset:
+                item.author = author
+                item.save()
+                count += 1
+
+            modeladmin.message_user(request, "Автор {} установлен у {} товаров.".format(author, count), level=messages.SUCCESS)
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetAuthorForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        context['form'] = form
+
+    return render(request, template, context)
+
+
+set_author.short_description = 'Установить нового автора'
 
 
 def set_unit(modeladmin, request, queryset):
@@ -566,6 +597,7 @@ class ProductAdmin(admin.ModelAdmin):
         not_import_to_prom,
         not_import_to_rozetka,
         set_available_from_prom,
+        set_author,
     )
     save_on_top = True
     save_as = True

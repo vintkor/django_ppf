@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ValidationError
 from .models import Unit, Category, Currency, RozetkaCategory, availability_prom_help_text
 from catalog.models import Manufacturer
+from django.contrib.auth.models import User
 
 
 class SetCourseForm(forms.Form):
@@ -39,6 +40,11 @@ class SetCategoryForm(forms.Form):
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
 
     category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(), required=True)
+
+
+class SetAuthorForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+    author = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.Select(), required=True)
 
 
 class SetRozetkaCategoryForm(forms.Form):
