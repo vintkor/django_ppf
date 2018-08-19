@@ -290,6 +290,7 @@ class Parameter(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     parameter = models.CharField(max_length=200)
     value = models.CharField(max_length=200)
+    is_dop_param_for_rozetka = models.BooleanField(default=False, verbose_name='Доп. параметр для розетки')
 
     def __str__(self):
         return self.parameter

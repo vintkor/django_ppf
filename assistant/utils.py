@@ -166,12 +166,22 @@ def make_xml(products=None):
             # param1.setAttribute('name', 'Артикул')
             # offer.appendChild(param1)
 
-            for feature in product.parameter_set.all():
+            for feature in product.parameter_set.filter(is_dop_param_for_rozetka=False):
                 param2 = doc.createElement('param')
                 param2_text = doc.createTextNode(feature.value)
                 param2.appendChild(param2_text)
                 param2.setAttribute('name', feature.parameter)
                 offer.appendChild(param2)
+
+            dop_parameters = []
+            for dop_param in product.parameter_set.filter(is_dop_param_for_rozetka=True):
+                dop_parameters.append('{}: {}<br/>'.format(dop_param.parameter, dop_param.value))
+
+            param3 = doc.createElement('param')
+            param3.setAttribute('name', 'Дополнительные характеристики')
+            cdata2 = doc.createCDATASection(''.join(dop_parameters))
+            param3.appendChild(cdata2)
+            offer.appendChild(param3)
 
     file_handle = open("rozetka.xml", "w")
     doc.writexml(file_handle, encoding='UTF-8')
