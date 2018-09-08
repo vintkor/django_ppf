@@ -99,6 +99,9 @@
                                 </li>
                             {% endif %}
                             <li class="heeader-nav__li">
+                                <a class="heeader-nav__link" href="{% url 'library:list' %}">{% trans 'Library' %}</a>
+                            </li>
+                            <li class="heeader-nav__li">
                                 <a class="heeader-nav__link" href="{% url 'contacts' %}">{% trans 'Contact us' %}</a>
                             </li>
                         </ul>

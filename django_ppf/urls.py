@@ -55,6 +55,7 @@ urlpatterns += i18n_patterns(
     url(r'^news/', include('news.urls')),
     url(r'^contacts/', ContactsView.as_view(), name='contacts'),
     url(r'^accounts/', include('user_profile.urls')),
+    url(r'^library/', include('library.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemap_dict}, name='django.contrib.sitemaps.views.sitemap'),
     prefix_default_language=False
 )

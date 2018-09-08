@@ -1,0 +1,50 @@
+{% extends 'theme_first_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Library' %}{% endblock %}
+{% block META_DESC %}{% trans 'Library' %}{% endblock %}
+{% block META_KEY %}{% trans 'Library' %}{% endblock %}
+{% block header_scripts %}{% endblock %}
+
+{% block body %}library{% endblock body %}
+
+{% block content %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{% trans 'Library' %}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="library-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <tr>
+                            <th>{% trans 'File' %}</th>
+                            <th>{% trans 'Category' %}</th>
+                        </tr>
+                        {% for documetn in documents %}
+                            <tr>
+                                <td>
+                                    <a target="_blank" href="{{ documetn.file.url }}">{{ documetn.title }}</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'library:list' %}?category={{ documetn.category.slug }}">{{ documetn.category.title }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% include 'django_ppf/partials/_info.html' %}
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}

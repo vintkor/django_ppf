@@ -65,6 +65,7 @@ except:
         'partners',
         'company',
         'telegram_bot',
+        'library',
     ]
 
     MIDDLEWARE = [
