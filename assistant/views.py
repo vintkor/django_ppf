@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from assistant.tasks import update_mizol_prices_task, import_parameters_form_prom_task
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django_ppf import settings
 
 
 def index(request):
@@ -209,6 +210,6 @@ class ImportParametersFormPromView(LoginRequiredMixin, PermissionRequiredMixin, 
         name = get_random_string(20)
         filename = fs.save(name + '.csv', myfile)
 
-        import_parameters_form_prom_task.delay(filename)
+        import_parameters_form_prom_task.delay(settings.MEDIA_ROOT + '/' + filename)
 
         return redirect(reverse_lazy('all-catalog'))
