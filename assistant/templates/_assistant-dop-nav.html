@@ -3,11 +3,14 @@
     <div class="container-fluid">
         <div class="row">
 
-            {% if perms.assistant.can_update_mizol_prices %}
                 <ul class="breadcrumb" style="background: #d3e9f5;">
-                    <li><a href="{% url 'update-mizol-prices' %}">Mizol обновление</a></li>
+                    {% if perms.assistant.can_update_mizol %}
+                        <li><a href="{% url 'update-mizol-prices' %}">Mizol обновление</a></li>
+                    {% endif %}
+                    {% if perms.assistant.can_update_prom_parameters %}
+                        <li><a href="{% url 'import-parameters-from-prom' %}">Импорт характеристик с prom.ua</a></li>
+                    {% endif %}
                 </ul>
-            {% endif %}
 
         </div>
     </div>

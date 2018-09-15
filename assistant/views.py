@@ -4,15 +4,14 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from assistant.models import Product, Feature, Category, Delivery
-from partners.models import Provider
 from xlsxwriter import Workbook
 from django.http import HttpResponse
-import datetime
 from assistant.utils import make_xml
 from .forms import UpdateMizolPriceForm
 from django.urls import reverse_lazy
-from assistant.tasks import update_mizol_prices_task
+from assistant.tasks import update_mizol_prices_task, import_parameters_form_prom_task
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 def index(request):
@@ -170,10 +169,16 @@ class CatalogForRozetkaXML(View):
         return response
 
 
-class UpdateMizolPriceView(LoginRequiredMixin, FormView):
+class UpdateMizolPriceView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     form_class = UpdateMizolPriceForm
     template_name = 'update_mizol.html'
     login_url = reverse_lazy('home')
+    permission_required = ('assistant.can_update_mizol',)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Обновление каталога продукции по компании Mizol'
+        return context
 
     def form_valid(self, form):
         
@@ -182,8 +187,28 @@ class UpdateMizolPriceView(LoginRequiredMixin, FormView):
         name = get_random_string(20)
         filename = fs.save(name + '.xlsx', myfile)
 
-        # from assistant.utils import update_mizol_prices
-        # update_mizol_prices(filename)
         update_mizol_prices_task.delay(filename)
+
+        return redirect(reverse_lazy('all-catalog'))
+
+
+class ImportParametersFormPromView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    login_url = reverse_lazy('home')
+    form_class = UpdateMizolPriceForm
+    template_name = 'update_mizol.html'
+    permission_required = ('assistant.can_update_prom_parameters',)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Импорт характеристик с prom.ua'
+        return context
+
+    def form_valid(self, form):
+        myfile = form.cleaned_data['file']
+        fs = FileSystemStorage()
+        name = get_random_string(20)
+        filename = fs.save(name + '.csv', myfile)
+
+        import_parameters_form_prom_task.delay(filename)
 
         return redirect(reverse_lazy('all-catalog'))

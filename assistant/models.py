@@ -151,7 +151,8 @@ class Product(BaseModel):
         verbose_name_plural = "Товары"
         ordering = ('-code',)
         permissions = (
-            ('Can update mizol prices', 'can_update_mizol_prices'),
+            ('can_update_mizol', 'Может обновлять прайсы Мизол'),
+            ('can_update_prom_parameters', 'Может обновлять параметры с прома'),
             ('Freelanser', 'freelanser'),
         )
 
