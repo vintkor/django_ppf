@@ -308,7 +308,7 @@ def parse_mizol():
         test_category.save()
 
     products_id_in_db = [
-        product['vendor_id'] for product in Product.objects.filter(vendor_name=vendor_name).values('vendor_id')
+        int(product['vendor_id']) for product in Product.objects.filter(vendor_name=vendor_name).values('vendor_id')
     ]
 
     new_products = list()
