@@ -295,6 +295,141 @@ def get_file_ext(url):
     return url.split('.')[-1]
 
 
+def parse_yantarlk():
+    """ Парсер сайта https://yantarlk.com.ua/ """
+
+    try:
+        test_category = Category.objects.get(title='TEST CATEGORY')
+    except Category.DoesNotExist:
+        test_category = Category(title='TEST CATEGORY')
+        test_category.save()
+
+    currency = Currency.objects.get(code='UAH')
+
+    url = 'https://yantarlk.com.ua/'
+    headers = requests.utils.default_headers()
+    headers.update(
+        {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+        }
+    )
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.content, 'lxml')
+
+    category_links = [
+        i.find('a').get('href') for i in
+        soup.find('div', attrs={'id': 'menu2'}).find_all('div', attrs={'class': 'title'})
+    ]
+
+    product_links = []
+    for category_url in category_links:
+        r = requests.get(category_url + '/?limit=2000', headers=headers)
+        soup = BeautifulSoup(r.content, 'lxml')
+        for i in soup.find_all('h4'):
+            link = i.find('a').get('href')
+            product_links.append(link)
+
+    # product_links = ['https://yantarlk.com.ua/spec_sredstva_i_material/mastika_oz']
+    products = []
+    for index, product_link in enumerate(product_links):
+        print('---------- Page {}'.format(index))
+        r = requests.get(product_link, headers=headers)
+        soup = BeautifulSoup(r.content, 'lxml')
+
+        try:
+            types_list = soup.find('div', attrs={'class', 'options_no_buy'}).find_all('div', attrs={'class': 'radio'})
+        except:
+            continue
+
+        params_list = []
+        for type in types_list:
+            temp_types = type.find_all('span')
+            params = dict()
+            params['weight'] = temp_types[0].text
+            try:
+                params['plus_price'] = temp_types[1].text.split('+')[1].split(' ')[0]
+            except IndexError:
+                pass
+            params_list.append(params)
+
+        parameters = []
+        for param_row in soup.find_all('tr', attrs={'itemprop': 'additionalProperty'}):
+            row = param_row.find_all('td')
+            try:
+                parameters.append({
+                    'name': row[0].text,
+                    'value': row[1].text,
+                })
+            except IndexError:
+                pass
+
+        title = soup.find('title').text.split(' - купить ')[0]
+        image_link = soup.find('a', attrs={'class': 'main-image'}).get('href')
+        price = soup.find('span', attrs={'class': 'update_price'}).text.split('грн')[0]
+        desc = soup.find('div', attrs={'id': 'tab-description'}).text
+
+        for pl in params_list:
+            prod_dict = {
+                'title': title + ' ' + pl['weight'],
+                'image': image_link,
+                'description': desc,
+                'parameters': parameters,
+                'weight': pl['weight'],
+                'vendor_name': 'ЯНТАРЬ',
+            }
+            # try:
+            #     prod_dict['price'] = int(price) + int(pl.get('plus_price')) if pl.get('plus_price') else price
+            # except:
+            #     prod_dict['price'] = 0
+
+            products.append(prod_dict)
+
+    print('Finded', len(products), 'products')
+
+    for ind, i in enumerate(products):
+        product = Product()
+        product.category = test_category
+        product.vendor_name = i['vendor_name']
+        product.title = i['title']
+        product.text = i['description']
+        # product.price = decimal.Decimal(i['price'])
+        product.stock_quantity = 100
+        product.active = True
+        product.currency = currency
+        product.save()
+
+        parameter = Parameter()
+        parameter.product = product
+        parameter.parameter = 'Произвадитель'
+        parameter.value = i['vendor_name']
+        parameter.save()
+
+        parameter2 = Parameter()
+        parameter2.product = product
+        parameter2.parameter = 'Страна'
+        parameter2.value = 'Украина'
+        parameter2.save()
+
+        for param in i['parameters']:
+            new_param = Parameter()
+            new_param.product = product
+            new_param.parameter = param['name']
+            new_param.value = param['value'][:199]
+            new_param.save()
+
+        if i['image']:
+            url = i['image']
+
+            ext = get_file_ext(url)
+            filename = make_filename(product.pk, ext)
+            get_and_save_image(url, filename)
+
+            product.image = filename
+            product.save(update_fields=('image',))
+
+        print('Saved', ind + 1, 'from', len(products), 'products')
+
+
 def parse_mizol():
     file_path = 'http://api.mizol.ua/?modelName=Mizol_Characteristics&calledMethod=getProductCharacteristic&methodProperties[price]=RRC&apiKey=52542&hash=5398382aa014f0a06312ff751c5949c4cbb52f61ba02341dbf67ecedfab68bcf'
     r = requests.get(file_path)
