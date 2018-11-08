@@ -532,7 +532,7 @@ def update_mizol_prices(filename):
     for row in sheet.rows:
         data_list.append({
             'id': row[1].value,
-            'available': '-' if row[6].value == '-' else '+',
+            'available': '-' if row[6].value == 'НЕТ' else '+',
             'price': row[10].value,
         })
 
