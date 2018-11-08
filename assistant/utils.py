@@ -540,16 +540,19 @@ def update_mizol_prices(filename):
 
     with atomic():
         for i in data_list:
-            try:
-                product = Product.objects.get(vendor_id=i['id'], vendor_name='Mizol')
-            except:
-                continue
+            # try:
+            #     # TODO Переписать на filter
+            #     # product = Product.objects.get(vendor_id=i['id'], vendor_name='Mizol')
+            # except:
+            #     continue
+            products = Product.objects.filter(vendor_id=i['id'], vendor_name='Mizol')
 
-            product.price = decimal.Decimal(i['price'])
-            product.availability_prom = i['available']
-            product.save(update_fields=('price', 'availability_prom',))
+            for product in products:
+                product.price = decimal.Decimal(i['price'])
+                product.availability_prom = i['available']
+                product.save(update_fields=('price', 'availability_prom',))
 
-            data_update.append(product)
+                data_update.append(product)
 
 
 def import_parameters_form_prom(filename):
