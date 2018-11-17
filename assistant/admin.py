@@ -572,7 +572,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
     list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka', 'vendor_name')
     list_editable = ('price', 're_count', 'course', 'discont')
-    readonly_fields = ('code', 'author')
+    readonly_fields = ('code', 'author', 'vendor_id', 'vendor_name')
     search_fields = ('title', 'code', 'category__title')
     resource_class = ProductResource
     inlines = (FeatureInline, DeliveryInline, PhotoInline, ParameterInline)
