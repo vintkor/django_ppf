@@ -28,7 +28,7 @@
                     {% csrf_token %}
                     {{ form }}
                     <br>
-                    <button class="btn btn-success btn-lg btn-block">Обработать</button>
+                    <button {% if button_id %}{{ button_id }}{% endif %} class="btn btn-success btn-lg btn-block">Обработать</button>
                 </form>
             </div>
         </div>
@@ -46,3 +46,25 @@
         }
     </style>
 {% endblock content %}
+
+{% block footer_scripts %}
+    <script>
+    var counter = 0;
+    $('#addNewPositionToMizol').click(function (e) {
+        e.preventDefault();
+        $(this).attr('disabled', true);
+        counter++;
+        if (counter === 1) {
+            $.ajax({
+                method: 'post',
+                success: function (response) {
+                    alert('Задача на добавление новой продукции поставлена в очередь')
+                },
+                error: function (error) {
+                    alert('Что-то пошло не так. Срочно зовите Саню! Он Вам точно поможет :)')
+                }
+            });
+        }
+    });
+    </script>
+{% endblock footer_scripts %}

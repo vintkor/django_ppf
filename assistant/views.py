@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from assistant.utils import make_xml
 from .forms import UpdateMizolPriceForm
 from django.urls import reverse_lazy
-from assistant.tasks import update_mizol_prices_task, import_parameters_form_prom_task
+from assistant.tasks import update_mizol_prices_task, import_parameters_form_prom_task, add_new_products_by_mizol
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django_ppf import settings
@@ -182,7 +182,7 @@ class UpdateMizolPriceView(LoginRequiredMixin, PermissionRequiredMixin, FormView
         return context
 
     def form_valid(self, form):
-        
+
         myfile = form.cleaned_data['file']
         fs = FileSystemStorage()
         name = get_random_string(20)
@@ -212,4 +212,20 @@ class ImportParametersFormPromView(LoginRequiredMixin, PermissionRequiredMixin, 
 
         import_parameters_form_prom_task.delay(settings.MEDIA_ROOT + '/' + filename)
 
+        return redirect(reverse_lazy('all-catalog'))
+
+
+class AddNewMizolProducts(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ('assistant.can_update_mizol',)
+    login_url = reverse_lazy('home')
+
+    def get(self, request):
+        context = {
+            'button_id': 'id="addNewPositionToMizol"',
+            'title_page': 'Добавление новой продукции по компании Mizol',
+        }
+        return render(request, 'update_mizol.html', context)
+
+    def post(self, request):
+        add_new_products_by_mizol.delay()
         return redirect(reverse_lazy('all-catalog'))

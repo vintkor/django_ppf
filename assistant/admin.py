@@ -570,7 +570,7 @@ class ProductAdmin(admin.ModelAdmin):
         "get_images_count",
         "updated"
     )
-    list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka')
+    list_filter = ('currency', 're_count', 'import_to_prom', 'import_to_rozetka', 'vendor_name')
     list_editable = ('price', 're_count', 'course', 'discont')
     readonly_fields = ('code', 'author')
     search_fields = ('title', 'code', 'category__title')

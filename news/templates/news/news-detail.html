@@ -22,14 +22,23 @@
     <section class="single-news">
         <div class="container-fluid">
             <div class="row">
-                <div class="single-news__text">
+                <div class="container">
                     {% if news.image %}
-                        <img class="single-news__image" src="{{ news.image.url }}" alt="{{ news.title }}">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2" style="text-align: center">
+                            <img class="img-rounded mt-30" src="{{ news.image.url }}" alt="{{ news.title }}" style="max-width: 100%; height: auto">
+                        </div>
+                    </div>
                     {% endif %}
-                    {{ news.text | safe }}
-                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="single-news__text">{{ news.text | safe }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="container-fluid">
             <div class="row geo__products">
                 {% for category in categories %}
                     <div class="col-xs-6 col-sm-4 padding-left-right-0">

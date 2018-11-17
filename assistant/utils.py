@@ -512,13 +512,13 @@ def parse_mizol():
 
         print('----> added', ind, 'items from', len_new_products)
 
-    for ind, i in enumerate(products_for_update):
-        product = Product.objects.get(vendor_name=vendor_name, vendor_id=i['vendor_id'])
-        if product.price != i['price']:
-            product.price = i['price']
-            product.save(update_fields=('price',))
-
-            print('----> updated', ind, 'items from', len_products_for_update)
+    # for ind, i in enumerate(products_for_update):
+    #     product = Product.objects.get(vendor_name=vendor_name, vendor_id=i['vendor_id'])
+    #     if product.price != i['price']:
+    #         product.price = i['price']
+    #         product.save(update_fields=('price',))
+    #
+    #         print('----> updated', ind, 'items from', len_products_for_update)
 
 
 def update_mizol_prices(filename):
@@ -536,23 +536,14 @@ def update_mizol_prices(filename):
             'price': row[10].value,
         })
 
-    data_update = []
-
     with atomic():
         for i in data_list:
-            # try:
-            #     # TODO Переписать на filter
-            #     # product = Product.objects.get(vendor_id=i['id'], vendor_name='Mizol')
-            # except:
-            #     continue
             products = Product.objects.filter(vendor_id=i['id'], vendor_name='Mizol')
 
             for product in products:
                 product.price = decimal.Decimal(i['price'])
                 product.availability_prom = i['available']
                 product.save(update_fields=('price', 'availability_prom',))
-
-                data_update.append(product)
 
 
 def import_parameters_form_prom(filename):

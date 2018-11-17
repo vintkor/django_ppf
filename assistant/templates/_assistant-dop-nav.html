@@ -5,6 +5,7 @@
 
                 <ul class="breadcrumb" style="background: #d3e9f5;">
                     {% if perms.assistant.can_update_mizol %}
+                        <li><a href="{% url 'add-mizol-new-products' %}">Mizol добавление</a></li>
                         <li><a href="{% url 'update-mizol-prices' %}">Mizol обновление</a></li>
                     {% endif %}
                     {% if perms.assistant.can_update_prom_parameters %}
