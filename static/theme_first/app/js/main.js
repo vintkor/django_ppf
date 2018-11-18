@@ -207,23 +207,8 @@ $(document).ready(function(){
         }, 400);
         return false;
     });
+
+    var table = $('table');
+    table.wrap('<div class="table-responsive" style="border: none;"></div>');
+
 });
-
-// ----------------------------------------------------------------------------
-//                Подсветка активного пункта меню
-// ----------------------------------------------------------------------------
-
-// (function () {
-//     var path = window.location.pathname;
-//     var nav = $('.heeader-nav__link');
-//     path = path.split('/')
-//     nav.each(function () {
-//         var nav_path = $(this).attr('href').split('/');
-//         // if (nav_path[2] == 'promo') {
-//         //     $(this).addClass('active');
-//         // } else
-//             if (nav_path[1] == path[1]) {
-//             $(this).addClass('active');
-//         }
-//     });
-// })();
