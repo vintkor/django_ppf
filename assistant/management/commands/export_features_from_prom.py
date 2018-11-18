@@ -6,6 +6,6 @@ class Command(BaseCommand):
     help = 'Импорт характеристик с прома на ассистант через .csv файл'
 
     def handle(self, *args, **option):
-        export = ExportFeatures('prom.csv')
-        export.make_product_list()
-        export.save_parameters()
+        export = ExportFeatures('media/yandex_market.xml')
+        export.parse_features()
+        export.save_params()

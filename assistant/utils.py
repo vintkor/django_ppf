@@ -11,6 +11,7 @@ from openpyxl import load_workbook
 from django.db.transaction import atomic
 import csv
 import os
+import xml.etree.ElementTree as ET
 
 
 class ExportFeatures:
@@ -22,43 +23,76 @@ class ExportFeatures:
         self._filename = filename
         self.products = []
 
-    def make_product_list(self):
-        with open(self._filename, 'r', newline='') as file:
-            reader = csv.reader(file)
-            for idx, row in enumerate(reader):
-                if idx == 0:
-                    continue
-                self.products.append([
-                    i for index, i in enumerate(row) if index in range(34, len(row)+3) or index == 0
-                ])
+    def parse_features(self):
+        tree = ET.parse(self._filename)
+        root = tree.getroot()
+        for offer in root.iter('offer'):
+            product_item = dict()
+            params = list()
+            for product in offer:
 
-    def save_parameters(self):
-        temp = []
+                if product.tag == 'vendorCode':
+                    pf_code = product.text
+                    product_item['pf_code'] = pf_code
+
+                if product.tag == 'country_of_origin':
+                    param_name = 'Страна'
+                    param_value = product.text
+                    params.append({
+                        'name': param_name,
+                        'value': param_value,
+                    })
+
+                if product.tag == 'param':
+                    param_name = product.attrib.get('name')
+                    param_value = product.text
+                    param_unit = product.attrib.get('unit')
+                    if param_unit:
+                        params.append({
+                            'name': param_name,
+                            'value': param_value + param_unit,
+                        })
+                    else:
+                        params.append({
+                            'name': param_name,
+                            'value': param_value,
+                        })
+
+            product_item['params'] = params
+            if len(params) > 2:
+                self.products.append(product_item)
+
+    def print_products(self, short=True):
+        print('-'*80)
+        for index, product in enumerate(self.products):
+            if short:
+                print(index, '---->', product['pf_code'], len(product['params']))
+            else:
+                print(index, '---->', product['pf_code'], len(product['params']))
+                for item in product['params']:
+                    print(item['name'], '--->', item['value'])
+
+    def save_params(self):
         for product in self.products:
-            temp_list = []
-            count_parameters = (len(product) - 1)//3
-            if count_parameters > 0:
-                x, y, z = 1, 3, 2
-                for i in range(count_parameters):
-                    temp_list.append((product[x], product[y] + ' ' + product[z]))
-                    x, y, z = x + 3, y + 3, z + 3
-            temp.append({product[0]: temp_list})
-
-        for i in temp:
-            for product_code, v in i.items():
+            with atomic():
                 try:
-                    p = Product.objects.get(code=product_code)
-                    param_list = []
-                    for j in v:
-                        if len(j[1]) > 1:
-                            param_list.append(Parameter(
+                    p = Product.objects.prefetch_related('parameter_set').get(code=product['pf_code'])
+
+                    for param in p.parameter_set.all():
+                        param.delete()
+
+                    for parameter in product['params']:
+                        if parameter['name'] and parameter['value']:
+                            param = Parameter(
                                 product=p,
-                                parameter=j[0],
-                                value=j[1],
-                            ))
-                    Parameter.objects.bulk_create(param_list)
-                except:
+                                parameter=parameter['name'],
+                                value=parameter['value'],
+                            )
+                            param.save()
+                except Product.DoesNotExist:
                     pass
+
+
 
 
 def clear_content(content):
@@ -548,7 +582,7 @@ def update_mizol_prices(filename):
 
 def import_parameters_form_prom(filename):
     import_csv = ExportFeatures(filename)
-    import_csv.make_product_list()
-    import_csv.save_parameters()
+    import_csv.parse_features()
+    import_csv.save_params()
 
     os.remove(filename)
