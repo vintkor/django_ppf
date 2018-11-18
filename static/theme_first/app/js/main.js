@@ -210,5 +210,8 @@ $(document).ready(function(){
 
     var table = $('table');
     table.wrap('<div class="table-responsive" style="border: none;"></div>');
+    if (!table.hasClass('table')) {
+        table.addClass('table');
+    }
 
 });
