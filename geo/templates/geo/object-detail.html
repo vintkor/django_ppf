@@ -33,20 +33,26 @@
             </div>
         </div>
     </section>
-
+    <div style="background: #fff;">
+    <div class="container">
     <section class="object-detail">
-        <div class="container-fluid">
+{#        <div class="container-fluid- container">#}
             <div class="row">
+                <div class="col-md-12">
                 <div class="object-detail__carousel owl-carousel">
                     {% for image in object.objectimage_set.all %}
-                        {% thumbnail image.image "1800x600" crop="center" format="PNG" as im %}
-                            <div class="object-detail__image" style="background-image: url('{{ im.url }}');" role="img"></div>
-                        {% endthumbnail %}
+{#                        {% thumbnail image.image "1800x600" crop="center" format="PNG" as im %}#}
+{#                            <div class="object-detail__image" style="background-image: url('{{ im.url }}');" role="img"></div>#}
+{#                        {% endthumbnail %}#}
+                        <div class="object-detail__image" style="background-image: url('{{ image.image.url }}');" role="img"></div>
                     {% endfor %}
                 </div>
+                </div>
             </div>
-        </div>
+{#        </div>#}
     </section>
+    </div>
+    </div>
 
     <section class="about-us">
         <div class="container-fluid">
