@@ -24,7 +24,7 @@ class CatalogList(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'products'
     template_name = 'all-products.html'
-    paginate_by = 100
+    paginate_by = 50
     login_url = 'home'
 
     def get_queryset(self, **kwargs):

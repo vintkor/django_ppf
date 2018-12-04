@@ -55,6 +55,7 @@ except:
         'django_nose',
         'phonenumber_field',
         'django_celery_results',
+        'django_cool_paginator',
 
         'user_profile',
         'catalog',
@@ -261,3 +262,6 @@ except:
     }
 
     CELERY_BROKER_URL = 'amqp://localhost'
+
+    COOL_PAGINATOR_NEXT_NAME = 'Следующая'
+    COOL_PAGINATOR_PREVIOUS_NAME = 'Предыдущая'
