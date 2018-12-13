@@ -1,4 +1,5 @@
-from assistant.models import Product, Parameter, Category
+from pprint import pprint
+from assistant.models import Product, Parameter, Category, Photo
 from datetime import datetime
 from xml.dom import minidom
 from django.conf import settings
@@ -12,6 +13,185 @@ from django.db.transaction import atomic
 import csv
 import os
 import xml.etree.ElementTree as ET
+
+
+class ParseHoroz:
+    """
+    Парсер сайта https://horozua.com -> https://horozua.com/index.php?route=feed/yandex_yml
+    """
+
+    def __init__(self, link=None, filename=None, my_currency_code=None):
+        self.products = []
+        self._link = link
+        self._filename = filename
+        self.vendor_name = 'Horoz Electric'
+        self._my_currency_code = 'USD'
+        if my_currency_code:
+            self._set_currency()
+        self._set_headers()
+
+    def _set_headers(self):
+        self.headers = requests.utils.default_headers()
+        self.headers.update(
+            {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+            }
+        )
+
+    def _set_currency(self):
+        try:
+            currency = Currency.objects.get(code__iexact=self._my_currency_code)
+            self._currency = currency
+        except Currency.DoesNotExist:
+            raise ValueError('В базе нет валюты с указанным кодом')
+
+    def _get_source(self):
+        r = requests.get(self._link, headers=self.headers)
+        if r.status_code == 200:
+            with open(settings.MEDIA_ROOT+'/horoz_parse.xml', 'wb') as f:
+                f.write(r.content)
+            self._filename = settings.MEDIA_ROOT+'/horoz_parse.xml'
+
+    def set_products(self):
+        if self._link:
+            self._get_source()
+        tree = ET.parse(self._filename)
+        root = tree.getroot()
+        for offer in root.iter('offer'):
+            product_item = dict()
+            params = list()
+            images = list()
+            for product in offer:
+                if product.tag == 'name':
+                    name = product.text.replace('&quot;', '"')
+                    product_item['title'] = name
+
+                product_item['vendor_name'] = self.vendor_name
+                product_item['currency_id'] = self._currency.id
+
+                if product.tag == 'vendorCode':
+                    product_item['vendor_id'] = product.text
+
+                if product.tag == 'price':
+                    product_item['price'] = decimal.Decimal(product.text)
+
+                if product.tag == 'description':
+                    if product.text and len(product.text) > 50:
+                        product_item['text'] = product.text
+                    else:
+                        product_item['text'] = ''
+
+                if product.tag == 'delivery':
+                    if product.text == 'true':
+                        product_item['availability_prom'] = '+'
+                    else:
+                        product_item['availability_prom'] = '-'
+
+                if product.tag == 'picture':
+                    if product.text:
+                        images.append(product.text)
+
+                product_item['images'] = images
+
+                if product.tag == 'param':
+                    param_name = product.attrib.get('name')
+                    param_value = product.text
+                    if param_name and param_value:
+                        params.append({
+                            'name': param_name,
+                            'value': param_value,
+                        })
+
+                product_item['params'] = params
+            self.products.append(product_item)
+
+    def print_products(self):
+        pprint(self.products)
+        pprint(len(self.products))
+
+    def _get_products_to_update_and_new_products(self):
+        vendor_id = [i.get('vendor_id') for i in self.products]
+        products_id_in_db = [i.vendor_id for i in Product.objects.filter(vendor_name__iexact=self.vendor_name, vendor_id__in=vendor_id)]
+
+        new_products = list()
+        products_to_update = list()
+
+        for product in self.products:
+            if product['vendor_id'] in products_id_in_db:
+                products_to_update.append(product)
+            else:
+                new_products.append(product)
+
+        return new_products, products_to_update
+
+    def add_or_update_products_in_db(self):
+        new_products, products_to_update = self._get_products_to_update_and_new_products()
+        self.products = []
+
+        try:
+            test_category = Category.objects.get(title='TEST CATEGORY')
+        except Category.DoesNotExist:
+            test_category = Category(title='TEST CATEGORY')
+            test_category.save()
+
+        for i in products_to_update:
+            products = Product.objects.filter(vendor_name__iexact=self.vendor_name, vendor_id__in=i['vendor_id'])
+            for product in products:
+                product.price = i['price']
+                product.availability_prom = i['availability_prom']
+                product.save(update_fields=('price', 'availability_prom',))
+
+        for idx, i in enumerate(new_products):
+
+            product = Product(
+                title=i['title'],
+                vendor_name=i['vendor_name'],
+                currency_id=i['currency_id'],
+                vendor_id=i['vendor_id'],
+                price=i['price'],
+                text=i['text'],
+                availability_prom=i['availability_prom'],
+                category=test_category,
+            )
+            product.save()
+
+            bulk_images = list()
+            urls = i['images']
+            for index, url in enumerate(urls):
+                filename = self._make_filename(product.pk)
+                self._get_and_save_image(url, filename)
+                if index == 0:
+                    product.image = filename
+                    product.save(update_fields=('image',))
+                else:
+                    bulk_images.append(Photo(product=product, image=filename))
+            Photo.objects.bulk_create(bulk_images)
+
+            bulk_params = list()
+            for p in i['params']:
+                param = Parameter(
+                    product=product,
+                    parameter=p['name'],
+                    value=p['value'],
+                )
+                bulk_params.append(param)
+            Parameter.objects.bulk_create(bulk_params)
+            print('Saved {} products'.format(idx + 1))
+
+    def _get_and_save_image(self, url, filename):
+        r = requests.get(url, headers=self.headers)
+        if r.status_code == 200:
+            with open('media/' + filename, 'wb') as file:
+                file.write(r.content)
+
+    @staticmethod
+    def _make_filename(pk, ext=None):
+        name = get_random_string(25)
+        return 'images/{}__{}'.format(pk, name)
+
+    @staticmethod
+    def _get_file_ext(url):
+        return url.split('.')[-1]
 
 
 class ExportFeatures:
@@ -91,8 +271,6 @@ class ExportFeatures:
                             param.save()
                 except Product.DoesNotExist:
                     pass
-
-
 
 
 def clear_content(content):
