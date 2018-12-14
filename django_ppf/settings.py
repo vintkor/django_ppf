@@ -262,6 +262,9 @@ except:
     }
 
     CELERY_BROKER_URL = 'amqp://localhost'
+    CELERY_IMPORTS = (
+        "assistant.tasks",
+    )
 
     COOL_PAGINATOR_NEXT_NAME = 'Следующая'
     COOL_PAGINATOR_PREVIOUS_NAME = 'Предыдущая'

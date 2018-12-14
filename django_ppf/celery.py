@@ -11,7 +11,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'start_block_io_checker-each-5-minutes': {
         'task': 'assistant.update_horoz_task',
-        'schedule': crontab(hour=7, minute=30)
+        'schedule': crontab(hour=7, minute=55)
     },
     # 'blockio_transfer_usd_to_user_balance-each-5-minutes': {
     #     'task': 'finance.blockio_transfer_usd_to_user_balance_task',
