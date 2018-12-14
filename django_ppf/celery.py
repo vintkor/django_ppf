@@ -9,9 +9,9 @@ app = Celery('django_ppf')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
-# app.conf.beat_schedule = {
-#     'update_horoz_task_every_day': {
-#         'task': 'assistant.update_horoz_task',
-#         'schedule': crontab(hour=8, minute=24)
-#     },
-# }
+app.conf.beat_schedule = {
+    'update_horoz_task_every_day': {
+        'task': 'assistant.update_horoz_task',
+        'schedule': crontab(hour=16, minute=48)
+    },
+}

@@ -3,7 +3,6 @@ from assistant.utils import (
     update_mizol_prices,
     import_parameters_form_prom,
     parse_mizol,
-    ParseHoroz,
 )
 
 
@@ -22,9 +21,9 @@ def add_new_products_by_mizol():
     parse_mizol()
 
 
+@app.task
 def update_horoz_task():
+    from assistant.utils import ParseHoroz
     ph = ParseHoroz(link='https://horozua.com/index.php?route=feed/yandex_yml', my_currency_code='USD')
     ph.set_products()
     ph.add_or_update_products_in_db()
-
-# app.tasks.register(update_horoz_task())
