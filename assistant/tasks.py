@@ -22,7 +22,7 @@ def add_new_products_by_mizol():
     parse_mizol()
 
 
-@app.task(name='update_horoz_task')
+@app.task
 def update_horoz_task():
     ph = ParseHoroz(link='https://horozua.com/index.php?route=feed/yandex_yml', my_currency_code='USD')
     ph.set_products()

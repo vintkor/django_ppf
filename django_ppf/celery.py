@@ -9,9 +9,9 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'start_block_io_checker-each-5-minutes': {
+    'update_horoz_task_every_day': {
         'task': 'assistant.update_horoz_task',
-        'schedule': crontab(hour=7, minute=55)
+        'schedule': crontab(hour=8, minute=4)
     },
     # 'blockio_transfer_usd_to_user_balance-each-5-minutes': {
     #     'task': 'finance.blockio_transfer_usd_to_user_balance_task',
