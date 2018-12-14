@@ -12,7 +12,7 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.beat_schedule = {
     'update_horoz_task_every_day': {
         'task': 'assistant.update_horoz_task',
-        'schedule': crontab(hour=8, minute=18)
+        'schedule': crontab(hour=8, minute=24)
     },
     # 'blockio_transfer_usd_to_user_balance-each-5-minutes': {
     #     'task': 'finance.blockio_transfer_usd_to_user_balance_task',
