@@ -27,4 +27,4 @@ def update_horoz_task():
     ph.set_products()
     ph.add_or_update_products_in_db()
 
-app.tasks.register(update_horoz_task())
+# app.tasks.register(update_horoz_task())
