@@ -4,7 +4,6 @@ from assistant.utils import (
     import_parameters_form_prom,
     parse_mizol,
 )
-from celery import task
 
 
 @app.task(name='assistant.update_mizol_prices_task')
@@ -22,7 +21,7 @@ def add_new_products_by_mizol():
     parse_mizol()
 
 
-@task
+@app.task
 def update_horoz_task():
     from assistant.utils import ParseHoroz
     ph = ParseHoroz(link='https://horozua.com/index.php?route=feed/yandex_yml', my_currency_code='USD')
