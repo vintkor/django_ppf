@@ -12,6 +12,6 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.beat_schedule = {
     'update_horoz_task_every_day': {
         'task': 'assistant.tasks.update_horoz_task',
-        'schedule': crontab(hour=17, minute=2)
+        'schedule': crontab(hour=7, minute=30)
     },
 }
