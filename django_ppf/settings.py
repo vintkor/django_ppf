@@ -56,6 +56,7 @@ except:
         'phonenumber_field',
         'django_celery_results',
         'django_cool_paginator',
+        'django_social_share',
 
         'user_profile',
         'catalog',
@@ -67,6 +68,7 @@ except:
         'company',
         'telegram_bot',
         'library',
+        'pages',
     ]
 
     MIDDLEWARE = [

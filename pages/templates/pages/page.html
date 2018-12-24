@@ -1,0 +1,50 @@
+{% extends 'theme_first_base.html' %}
+{% load ppf_tags %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block META_DESC %}{{ page.meta_description }}{% endblock %}
+{% block META_KEY %}{{ page.meta_keywords }}{% endblock %}
+{% block header_scripts %}{% endblock %}
+{% block body %}page-detail{% endblock body %}
+
+{% block content %}
+
+    {% news_breadcrumbs _('Pages') False page.title %}
+
+    <section class="page-title">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="page-title__title align-center">{{ page.title }}</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="single-news">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="single-news__text">{{ page.text | safe }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row geo__products">
+                {% for category in categories %}
+                    <div class="col-xs-6 col-sm-4 padding-left-right-0">
+                        <div class="row">{% include 'catalog/partials/_category.html' %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'django_ppf/partials/_info.html' %}
+
+
+{% endblock %}
+
+{% block footer_scripts %}{% endblock %}
