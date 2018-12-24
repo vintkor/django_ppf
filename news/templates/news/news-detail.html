@@ -1,10 +1,23 @@
 {% extends 'theme_first_base.html' %}
 {% load ppf_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ news.title }}{% endblock %}
 {% block META_DESC %}{{ news.meta_description }}{% endblock %}
 {% block META_KEY %}{{ news.meta_keywords }}{% endblock %}
-{% block header_scripts %}{% endblock %}
+{% block header_scripts %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ news.title }}" />
+    <meta property="og:description" content="{{ news.text | truncatechars_html:170 | striptags }}" />
+    {% if promo.image %}
+        {% thumbnail news.image "600x315" format="PNG" crop="center" as im %}
+            <meta property="og:image" content="//{{ request.get_host }}{{ im.url }}" />
+            <meta property="og:image:width" content="600" />
+            <meta property="og:image:height" content="315" />
+        {% endthumbnail %}
+    {% endif %}
+{% endblock %}
 {% block body %}news-detail{% endblock body %}
 
 {% block content %}
@@ -33,6 +46,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="single-news__text">{{ news.text | safe }}</div>
+                            <div id="fb-root"></div>
+                            <script>(function(d, s, id) {
+                              var js, fjs = d.getElementsByTagName(s)[0];
+                              if (d.getElementById(id)) return;
+                              js = d.createElement(s); js.id = id;
+                              js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.11&appId=823397084482428&autoLogAppEvents=1';
+                              fjs.parentNode.insertBefore(js, fjs);
+                            }(document, 'script', 'facebook-jssdk'));</script>
+                            <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Поделиться</a></div>
                         </div>
                     </div>
                 </div>
