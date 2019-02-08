@@ -106,6 +106,15 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Open Sans Condensed', sans-serif;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+}
+
+p {
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
 }
 
 .container-fluid {
@@ -1104,6 +1113,9 @@ body.home .header__pinned {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
 }
 
 .news-item__promo {
