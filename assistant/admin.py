@@ -166,7 +166,7 @@ def set_course(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetCourseForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetCourseForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -196,7 +196,7 @@ def set_author(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetAuthorForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetAuthorForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -227,7 +227,7 @@ def set_unit(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetUnitForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetUnitForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -258,7 +258,7 @@ def set_category(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetCategoryForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetCategoryForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -289,7 +289,7 @@ def set_category_rozetka(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetRozetkaCategoryForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetRozetkaCategoryForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -320,7 +320,7 @@ def set_manufacturer(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetManufacturerForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetManufacturerForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -350,7 +350,7 @@ def set_currency(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetCurrencyForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetCurrencyForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -380,7 +380,7 @@ def set_price(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetPriceForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetPriceForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -493,7 +493,7 @@ def set_percent_price(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetPricePercentForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetPricePercentForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
@@ -537,7 +537,7 @@ def set_available_from_prom(modeladmin, request, queryset):
             return HttpResponseRedirect(request.get_full_path())
 
     if not form:
-        form = SetAvailableFromPromForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        form = SetAvailableFromPromForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
         context['form'] = form
 
     return render(request, template, context)
