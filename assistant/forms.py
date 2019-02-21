@@ -67,6 +67,14 @@ class SetPriceForm(forms.Form):
     ))
 
 
+class SetPercentForOldPriceForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+
+    percent = forms.CharField(label='Процент', widget=forms.NumberInput(
+        attrs={'placeholder': 'Процент', 'step': '0.01'},
+    ))
+
+
 class SetAvailableFromPromForm(forms.Form):
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
 

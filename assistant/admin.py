@@ -1,3 +1,5 @@
+import decimal
+
 from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import models
@@ -15,6 +17,7 @@ from .forms import (
     SetRozetkaCategoryForm,
     SetAvailableFromPromForm,
     SetAuthorForm,
+    SetPercentForOldPriceForm,
 )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -389,6 +392,36 @@ def set_price(modeladmin, request, queryset):
 set_price.short_description = 'Установить цену'
 
 
+def set_old_price_percent(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Установить процент для старой цены', 'action': 'set_old_price_percent'}
+
+    if 'apply' in request.POST:
+        form = SetPercentForOldPriceForm(request.POST)
+
+        if form.is_valid():
+            percent = form.cleaned_data['percent']
+
+            count = 0
+            for item in queryset.iterator():
+                item.old_price_percent = percent
+                item.save()
+                count += 1
+
+            modeladmin.message_user(request, "Значение {}% установлено у {} товаров.".format(percent, count), level=messages.SUCCESS)
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetPercentForOldPriceForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
+        context['form'] = form
+
+    return render(request, template, context)
+
+
+set_old_price_percent.short_description = 'Установить процент для старой цены'
+
+
 def save_as_xlsx(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/xlsx')
     response['Content-Disposition'] = 'attachment; filename="ppf-catalog-{}.xlsx"'.format(datetime.datetime.now())
@@ -558,6 +591,7 @@ class ProductAdmin(admin.ModelAdmin):
         "code",
         "active",
         "price",
+        "old_price_percent",
         "discont",
         "get_currency_code",
         "stock_quantity",
@@ -598,6 +632,7 @@ class ProductAdmin(admin.ModelAdmin):
         not_import_to_rozetka,
         set_available_from_prom,
         set_author,
+        set_old_price_percent,
     )
     save_on_top = True
     save_as = True

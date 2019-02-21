@@ -123,6 +123,8 @@ class Product(BaseModel):
     import_to_rozetka = models.BooleanField(verbose_name='На розетку', default=False)
     import_to_prom = models.BooleanField(verbose_name='На PROM', default=False)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
+    old_price_percent = models.DecimalField(
+        verbose_name="Наценка в процентах для старай цены", max_digits=5, decimal_places=2, blank=True, null=True)
     discont = models.DecimalField(verbose_name='Скидка', decimal_places=2, max_digits=4, blank=True, null=True)
     stock_quantity = models.PositiveSmallIntegerField(default=100, verbose_name='Остаток')
     availability_prom = models.CharField(
@@ -196,6 +198,11 @@ class Product(BaseModel):
                 return round(price, 3)
         return False
     get_price_UAH.short_description = 'Цена в валюте'
+
+    def get_old_price(self):
+        price_uah = self.get_price_UAH()
+        old_price = (price_uah * self.old_price_percent) / 100 + price_uah
+        return round(old_price, 2)
 
     def get_delivery_count(self):
         return self.delivery_set.count()
