@@ -372,16 +372,21 @@ def make_xml(products=None):
             offer_url.appendChild(offer_url_text)
             offer.appendChild(offer_url)
 
-            price = doc.createElement('price')
-            price_text = doc.createTextNode(str(product.get_price_UAH()))
-            price.appendChild(price_text)
-            offer.appendChild(price)
-
             if product.old_price_percent:
-                old_price = doc.createElement('price_old')
+                price = doc.createElement('price')
                 price_text = doc.createTextNode(str(product.get_old_price()))
+                price.appendChild(price_text)
+                offer.appendChild(price)
+
+                old_price = doc.createElement('price_old')
+                price_text = doc.createTextNode(str(product.get_price_UAH()))
                 old_price.appendChild(price_text)
                 offer.appendChild(old_price)
+            else:
+                price = doc.createElement('price')
+                price_text = doc.createTextNode(str(product.get_price_UAH()))
+                price.appendChild(price_text)
+                offer.appendChild(price)
 
             currencyId = doc.createElement('currencyId')
             currencyId_text = doc.createTextNode('UAH')

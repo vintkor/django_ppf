@@ -72,7 +72,7 @@ class SetPercentForOldPriceForm(forms.Form):
 
     percent = forms.CharField(label='Процент', widget=forms.NumberInput(
         attrs={'placeholder': 'Процент', 'step': '0.01'},
-    ))
+    ), required=False)
 
 
 class SetAvailableFromPromForm(forms.Form):
