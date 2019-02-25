@@ -76,5 +76,26 @@ class Promo(BaseModel):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        new_promo = False
+        if not self.pk:
+            new_promo = True
+
+        super(Promo, self).save(args, kwargs)
+
+        if new_promo:
+            bot = TelegramBot.objects.first()
+            users = TelegramUser.objects.all()
+
+            text = '📢 {} \n\n 🔗 Читать о новой акции {}{}'.format(
+                self.title,
+                SITE_URL,
+                self.get_absolute_url(),
+            )
+
+            telegram = Telegram(bot.token)
+            for user in users:
+                telegram.send_message(user.user_id, text)
+
     def get_absolute_url(self):
         return reverse('promo-detail', args=[str(self.slug)])
