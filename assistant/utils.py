@@ -364,7 +364,10 @@ def make_xml(products=None):
         if product.import_to_rozetka:
             offer = doc.createElement('offer')
             offer.setAttribute('id', '{}'.format(product.id))
-            offer.setAttribute('available', 'true')
+            if product.stock_quantity == 0:
+                offer.setAttribute('available', 'false')
+            else:
+                offer.setAttribute('available', 'true')
             offers.appendChild(offer)
 
             offer_url = doc.createElement('url')
@@ -745,8 +748,7 @@ def parse_mizol():
 
 
 def update_mizol_prices(filename):
-    print('-'*80)
-    wb = load_workbook(settings.MEDIA_ROOT + '/' +filename)
+    wb = load_workbook(settings.MEDIA_ROOT + '/' + filename)
     sheet_name = wb.sheetnames[0]
     sheet = wb[sheet_name]
 
@@ -756,6 +758,7 @@ def update_mizol_prices(filename):
         data_list.append({
             'id': row[1].value,
             'available': '-' if row[6].value == 'НЕТ' else '+',
+            'stock_quantity_for_rozetka': 0 if row[6].value == 'НЕТ' else 100,
             'price': row[10].value,
         })
 
@@ -766,7 +769,8 @@ def update_mizol_prices(filename):
             for product in products:
                 product.price = decimal.Decimal(i['price'])
                 product.availability_prom = i['available']
-                product.save(update_fields=('price', 'availability_prom',))
+                product.stock_quantity = i['stock_quantity_for_rozetka']
+                product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
 
 
 def import_parameters_form_prom(filename):
