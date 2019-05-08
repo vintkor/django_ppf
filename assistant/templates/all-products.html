@@ -1,6 +1,7 @@
 {% extends 'theme_first_base.html' %}
 {% load my_tags %}
 {% load i18n %}
+{% load thumbnail %}
 
 {% block title %}ППФ - все товары{% endblock title %}
 {% block body %}assistant-all-products{% endblock body %}
@@ -55,7 +56,14 @@
                     </tr>
                     {% for product in products %}
                     <tr>
-                        <td><div class="product-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}//via.placeholder.com/350x300{% endif %}');"></div></th>
+                        <td>
+                            {% if product.image %}
+                                {% thumbnail product.image "60x40" crop="center" format="PNG" as im %}
+                                    <img class="product-image" src="{{ im.url }}" alt="{{ product.title }}">
+                                {% endthumbnail %}
+                            {% endif %}
+                        </td>
+{#                        <td><div class="product-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}//via.placeholder.com/350x300{% endif %}');"></div></th>#}
                         <td><code>{{ product.code }}</code></td>
                         <td>{% if product.category %}<a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a> {% endif %}</td>
                         <td>{% if product.category_rozetka %}{{ product.category_rozetka }}{% endif %}</td>
