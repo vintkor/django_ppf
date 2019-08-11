@@ -47,7 +47,7 @@ class SolOffer(models.Model):
         verbose_name_plural = 'Офферы'
 
     def __str__(self):
-        return f'{self.product.title} > {self.title[:150]}'
+        return f'{self.product.title} > {self.title}'
 
 
 class SolVariant(models.Model):
