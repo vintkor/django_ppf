@@ -8,6 +8,7 @@ from telegram_bot.utils import Telegram
 from django_ppf.settings import SITE_URL
 import requests
 from geo.models import Region
+from solutions.models import SolProduct
 
 
 class CatalogRootView(ListView):
@@ -45,6 +46,8 @@ class ProductListView(ListView):
             except Region.DoesNotExist:
                 pass
 
+        in_ = self.category.get_descendants(include_self=True).values_list('id', flat=True).iterator()
+        context['solutions'] = SolProduct.objects.filter(category_id__in=in_, is_active=True)
         context['category'] = self.category
         context['children'] = self.category.get_children_with_products()
         return context

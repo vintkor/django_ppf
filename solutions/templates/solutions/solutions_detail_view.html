@@ -1,0 +1,100 @@
+{% extends 'theme_first_base.html' %}
+{% load l10n %}
+
+{% block body %}solutions-list{% endblock body %}
+{% block title %}{{ solution.title }}{% endblock title %}
+{% block META_DESC %}{{ solution.meta_description }}{% endblock %}
+{% block META_KEY %}{{ solution.meta_keywords }}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <section class="one-solution__first-block" style="background-image: url('{{ solution.image.url }}')">
+            <div class="one-solution__first-block__pre-title">ГОТОВЫЕ РЕШЕНИЯ</div>
+            <h1 class="one-solution__first-block__title">{{ solution.title }}</h1>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="one-solution__second-block">
+            <div class="one-solution__second-block__desc">{{ solution.description }}</div>
+            <div class="one-solution__second-block__grid-wrapper">
+                {% for offer in solution.offers.all %}
+                    <div class="one-solution__second-block__grid-item">
+                        <h2 class="one-solution__second-block__package-title">
+                            <small>Пакет</small>
+                            {{ offer.title }}
+                        </h2>
+                        <div class="one-solution__second-block__package-image">
+                            {% if offer.image %}
+                                <img class="" src="{{ offer.image.url }}" alt="{{ offer.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="one-solution__second-block--">
+                            <div class="one-solution__second-block__variant-wrapper">
+                                {% for variant in offer.variants.all %}
+                                    <div data-target="#offer-variant-{{ variant.id }}{{ forloop.counter }}" class="one-solution__second-block__variant-item {% if forloop.first %}is-active{% endif %}">{{ variant }}</div>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% for variant in offer.variants.all %}
+                                    <div id="offer-variant-{{ variant.id }}{{ forloop.counter }}" class="one-solution__second-block__offer-variant {% if forloop.first %}is-active{% endif %}">
+                                        <div class="one-solution__second-block__offer-price">от
+                                            <span>{{ variant.price|unlocalize }}$</span>
+                                        </div>
+                                        <table class="table table-hover one-solution__second-block__table">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <h3 class="text-center one-solution__second-block__table-title">
+                                                            Состав пакета
+                                                            <span>"{{ offer.title }} {{ variant.title }}"</span>
+                                                        </h3>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            {% for offer_variant in variant.products.all %}
+                                                <tr>
+                                                    <td style="max-width: 350px">
+                                                        <a href="{{ offer_variant.get_absolute_url }}" target="_blank">{{ offer_variant.title }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <div class="row product-detail__form__section">
+        <div class="col-lg-10 col-lg-offset-1 col-md-12 col-md-offset-0">
+            <h2 class="text-center mb-30">Бесплатная консультация!</h2>
+            <h3 class="text-center mb-30">Оставьте Ваш номер телефона и наш менеджер обязательно свяжется с Вами</h3>
+            <div class="col-md-4 col-md-offset-4">
+                <form action="" class="product-detail__form" method="post">
+                    {% csrf_token %}
+                    {% for item in form %}
+                        <div class="form-group">
+                            {{ item }}
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <button id="sendOrderForm" class="product-detail__form__button">Перезвоните мне</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% include 'django_ppf/partials/_info.html' %}
+
+{% endblock content %}

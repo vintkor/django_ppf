@@ -103,6 +103,21 @@ $('document').ready(function () {
         navText: ['&larr;', '&rarr;']
     });
 
+    //  ---------------------------------- Widget last news ----------------------------------
+
+    var variant = $(".one-solution__second-block__variant-item");
+    variant.click(function() {
+        var target = $(this).data('target');
+        var parent = $(this).parents('.one-solution__second-block--');
+        console.log(parent);
+        var buttons = parent.find(".one-solution__second-block__variant-item");
+        var variants = parent.find(".one-solution__second-block__offer-variant");
+        buttons.removeClass('is-active');
+        $(this).addClass('is-active');
+        $(variants).hide();
+        $(target).show();
+    });
+
 });
 
 // ----------------------------------------------------------------------------

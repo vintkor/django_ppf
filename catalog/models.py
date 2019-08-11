@@ -141,39 +141,25 @@ class Product(BaseModel):
         return reverse('catalog-product', args=[str(self.slug)])
 
     def is_documents(self):
-        if Document.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Document.objects.filter(product=self).exists()
 
     def is_features(self):
-        if Feature.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Feature.objects.filter(product=self).exists()
 
     def is_benefits(self):
-        if Benefit.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Benefit.objects.filter(product=self).exists()
 
     def is_galleries(self):
-        if Gallery.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Gallery.objects.filter(product=self).exists()
 
     def is_videos(self):
-        if Video.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Video.objects.filter(product=self).exists()
 
     def is_digits(self):
-        if Digits.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Digits.objects.filter(product=self).exists()
 
     def is_colors(self):
-        if Color.objects.filter(product=self).count() > 0:
-            return True
-        return False
+        return Color.objects.filter(product=self).exists()
 
 
 class Order(BaseModel):

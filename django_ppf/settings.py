@@ -31,7 +31,7 @@ except:
     SITE_URL = 'https://ppf-company.com.ua'
 
     ALLOWED_HOSTS = ['*']
-    INTERNAL_IPS = '127.0.0.2'
+    INTERNAL_IPS = '127.0.0.1'
 
 
     # Application definition
@@ -69,6 +69,7 @@ except:
         'telegram_bot',
         'library',
         'pages',
+        'solutions',
     ]
 
     MIDDLEWARE = [

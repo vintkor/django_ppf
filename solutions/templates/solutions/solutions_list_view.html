@@ -1,0 +1,26 @@
+{% extends 'theme_first_base.html' %}
+
+{% block body %}solutions-list{% endblock body %}
+
+{% block content %}
+
+<section class="squares">
+    <div class="container-fluid">
+        <div class="row">
+        {% for solution in solutions %}
+            <a href="{% url 'solutions:detail' solution.id %}">{{ solution }}</a>
+        {% endfor %}
+{#        {% for category in categories %}#}
+{#            <div class="col-xs-6 col-sm-4 padding-left-right-0">#}
+{#                <div class="row">#}
+{#                    {% include 'catalog/partials/_category.html' %}#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+        </div>
+    </div>
+</section>
+
+{% include 'django_ppf/partials/_info.html' %}
+
+{% endblock content %}

@@ -42,6 +42,27 @@
     <div class="container-fluid">
         <div class="row">
             <div class="products__grid">
+                {% for solution in solutions %}
+                    <div class="product prod_hover">
+                        <div class="product__body">
+                            <div class="product__image-wrapper">
+                                {% if solution.image %}
+                                    {% thumbnail solution.image "200x200" crop="center" format="PNG" as im %}
+                                        <img class="product__image" src="{{ im.url }}" alt="{{ solution.title }}">
+                                    {% endthumbnail %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="product__footer">
+                            <h2 class="product__title">{{ solution.title }}</h2>
+                        </div>
+                        <a class="product__link" href="{{ solution.get_absolute_url }}"></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="products__grid">
                 {% for product in products %}
                     <div class="product prod_hover">
                         <div class="product__body">

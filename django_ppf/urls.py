@@ -3,6 +3,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django_ppf.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
+
+from solutions.sitemap import SolProductSitemap
 from .views import HomeView, ContactsView
 from django.conf import settings
 from django.contrib import sitemaps
@@ -32,6 +34,7 @@ sitemap_dict = {
     'aux_page': AuxPageSitemap,
     'categories': CategorySitemap,
     'products': ProductSitemap,
+    'solutions': SolProductSitemap,
     'regions': RegionSitemap,
     'objects': ObjectPPFSitemap,
     'news': NewsSitemap,
@@ -57,6 +60,7 @@ urlpatterns += i18n_patterns(
     url(r'^accounts/', include('user_profile.urls')),
     url(r'^library/', include('library.urls')),
     url(r'^pages/', include('pages.urls')),
+    url(r'^solutions/', include('solutions.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemap_dict}, name='django.contrib.sitemaps.views.sitemap'),
     prefix_default_language=False
 )
