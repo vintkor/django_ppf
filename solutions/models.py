@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from catalog.models import Category, Product
 from sorl.thumbnail import ImageField
 from django.utils.crypto import get_random_string
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 def set_image_name(instanse, filename):
@@ -22,6 +23,7 @@ class SolProduct(models.Model):
     meta_description = models.CharField(max_length=200, verbose_name=_('META Description'), blank=True, null=True)
     meta_keywords = models.CharField(max_length=200, verbose_name=_('META Keywords'), blank=True, null=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
+    text = RichTextUploadingField(verbose_name=_('Text'), blank=True, null=True)
     is_active = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Created'))
@@ -41,6 +43,7 @@ class SolOffer(models.Model):
     product = models.ForeignKey(SolProduct, on_delete=models.SET_NULL, related_name='offers', null=True)
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     image = ImageField(verbose_name=_('Image'), upload_to=set_image_name, blank=True, null=True)
+    text = RichTextUploadingField(verbose_name=_('Text'), blank=True, null=True)
 
     class Meta:
         verbose_name = 'Оффер'

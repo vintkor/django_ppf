@@ -1,10 +1,24 @@
 {% extends 'theme_first_base.html' %}
 {% load l10n %}
+{% load thumbnail %}
 
 {% block body %}solutions-list{% endblock body %}
 {% block title %}{{ solution.title }}{% endblock title %}
 {% block META_DESC %}{{ solution.meta_description }}{% endblock %}
 {% block META_KEY %}{{ solution.meta_keywords }}{% endblock %}
+{% block header_scripts %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ solution.title }}" />
+    <meta property="og:description" content="{{ solution.description | truncatechars_html:170 | striptags }}" />
+    {% if solution.image %}
+        {% thumbnail solution.image "600x315" format="PNG" crop="center" as im %}
+            <meta property="og:image" content="//{{ request.get_host }}{{ im.url }}" />
+            <meta property="og:image:width" content="600" />
+            <meta property="og:image:height" content="315" />
+        {% endthumbnail %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
@@ -66,10 +80,34 @@
                                     </div>
                                 {% endfor %}
                             </div>
+                            {% if offer.text %}
+                                <div class="one-solution__second-block__offer-text">{{ offer.text | safe }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
+
+            <div class="text-center" style="padding-top: 10px;">
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.11&appId=823397084482428&autoLogAppEvents=1';
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Поделиться</a></div>
+            </div>
+            {% if solution.text %}
+            <div class="container-fluid" style="margin: 30px 0 -30px;">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="products__cat_desc" style="padding: 30px 0; ">{{ solution.text | safe }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </section>
     </div>
 
