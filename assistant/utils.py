@@ -754,7 +754,7 @@ def update_prices(filename, vendor_name):
             'stock_quantity_for_rozetka': 0 if row[6].value == 'НЕТ' else 100,
             'price': row[10].value,
         })
-        logging.debug('-----> Debug row {}: id({}) {}'.format(
+        logging.info('-----> Debug row {}: id({}) {}'.format(
             idx,
             row[1].value,
             row[10].value),
@@ -770,9 +770,9 @@ def update_prices(filename, vendor_name):
                     product.availability_prom = i['available']
                     product.stock_quantity = i['stock_quantity_for_rozetka']
                     product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
-        logging.debug('[SUCCESS]: Ubpating product by mizol form ({})'.format(datetime.now()))
+        logging.info('[SUCCESS]: Ubpating product by mizol form ({})'.format(datetime.now()))
     except:
-        logging.error('[ERROR]: Ubpating product by mizol form ({})'.format(datetime.now()))
+        logging.info('[ERROR]: Ubpating product by mizol form ({})'.format(datetime.now()))
     finally:
         os.remove(file_path)
 
