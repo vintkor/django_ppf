@@ -748,17 +748,13 @@ def update_prices(filename, vendor_name):
     data_list = []
 
     for idx, row in enumerate(sheet.rows, start=1):
-        data_list.append({
-            'id': row[1].value,
-            'available': '-' if row[6].value == 'НЕТ' else '+',
-            'stock_quantity_for_rozetka': 0 if row[6].value == 'НЕТ' else 100,
-            'price': row[10].value,
-        })
-        logging.info('-----> Debug row {}: id({}) {}'.format(
-            idx,
-            row[1].value,
-            row[10].value),
-        )
+        if idx > 2 and row[1].value:
+            data_list.append({
+                'id': row[1].value,
+                'available': '-' if row[6].value == 'НЕТ' else '+',
+                'stock_quantity_for_rozetka': 0 if row[6].value == 'НЕТ' else 100,
+                'price': row[10].value,
+            })
 
     try:
         with atomic():
@@ -770,9 +766,9 @@ def update_prices(filename, vendor_name):
                     product.availability_prom = i['available']
                     product.stock_quantity = i['stock_quantity_for_rozetka']
                     product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
-        logging.info('[SUCCESS]: Ubpating product by mizol form ({})'.format(datetime.now()))
+        logging.info('[SUCCESS]: Ubpating product by mizol')
     except:
-        logging.info('[ERROR]: Ubpating product by mizol form ({})'.format(datetime.now()))
+        logging.info('[ERROR]: Ubpating product by mizol')
     finally:
         os.remove(file_path)
 
