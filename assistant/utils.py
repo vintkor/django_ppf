@@ -13,6 +13,7 @@ from django.db.transaction import atomic
 import csv
 import os
 import xml.etree.ElementTree as ET
+import logging
 
 
 class ParseHoroz:
@@ -746,25 +747,34 @@ def update_prices(filename, vendor_name):
 
     data_list = []
 
-    for row in sheet.rows:
+    for idx, row in enumerate(sheet.rows, start=1):
         data_list.append({
             'id': row[1].value,
             'available': '-' if row[6].value == 'НЕТ' else '+',
             'stock_quantity_for_rozetka': 0 if row[6].value == 'НЕТ' else 100,
             'price': row[10].value,
         })
+        logging.debug('-----> Debug row {}: id({}) {}'.format(
+            idx,
+            row[1].value,
+            row[10].value),
+        )
 
-    with atomic():
-        for i in data_list:
-            products = Product.objects.filter(vendor_id=i['id'], vendor_name=vendor_name)
+    try:
+        with atomic():
+            for i in data_list:
+                products = Product.objects.filter(vendor_id=i['id'], vendor_name=vendor_name)
 
-            for product in products:
-                product.price = decimal.Decimal(i['price'])
-                product.availability_prom = i['available']
-                product.stock_quantity = i['stock_quantity_for_rozetka']
-                product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
-
-    os.remove(file_path)
+                for product in products:
+                    product.price = decimal.Decimal(i['price'])
+                    product.availability_prom = i['available']
+                    product.stock_quantity = i['stock_quantity_for_rozetka']
+                    product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
+        logging.debug('[SUCCESS]: Ubpating product by mizol form ({})'.format(datetime.now()))
+    except:
+        logging.error('[ERROR]: Ubpating product by mizol form ({})'.format(datetime.now()))
+    finally:
+        os.remove(file_path)
 
 
 def import_parameters_form_prom(filename):
