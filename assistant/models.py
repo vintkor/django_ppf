@@ -178,9 +178,9 @@ class Product(BaseModel):
     def import_for_admin(self):
         styles = "color: #fff; border-radius: 2px; padding: 3px 7px; min-width: 50px; display: block; text-align: center;"
         if self.import_to_rozetka:
-            return mark_safe(f"<span style='background: green;{styles}'>Rozetka</span>")
+            return mark_safe("<span style='background: green;{}'>Rozetka</span>".format(styles))
         elif self.import_to_prom:
-            return mark_safe(f"<span style='background: linear-gradient(135deg,#4854a2,#772088);{styles}'>Prom</span>")
+            return mark_safe("<span style='background: linear-gradient(135deg,#4854a2,#772088);{}'>Prom</span>".format(styles))
 
     import_for_admin.short_description = 'Импорт'
 
