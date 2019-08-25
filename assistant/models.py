@@ -10,6 +10,7 @@ from django.utils.html import format_html
 from catalog.models import Manufacturer
 from django.contrib.auth.models import User
 from assistant.middleware import get_current_user
+from django.utils.safestring import mark_safe
 
 
 def set_image_name(instance, filename):
@@ -173,6 +174,15 @@ class Product(BaseModel):
 
     def get_absolute_url(self):
         return reverse('single-product', args=[str(self.id)])
+
+    def import_for_admin(self):
+        styles = "color: #fff; border-radius: 2px; padding: 3px 7px; min-width: 50px; display: block; text-align: center;"
+        if self.import_to_rozetka:
+            return mark_safe(f"<span style='background: green;{styles}'>Rozetka</span>")
+        elif self.import_to_prom:
+            return mark_safe(f"<span style='background: linear-gradient(135deg,#4854a2,#772088);{styles}'>Prom</span>")
+
+    import_for_admin.short_description = 'Импорт'
 
     def get_currency_code(self):
         if self.currency:

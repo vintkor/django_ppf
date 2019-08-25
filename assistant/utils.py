@@ -696,7 +696,6 @@ def parse_mizol():
                 'price': decimal.Decimal(product.find('price').text) if product.find('price').text else 0,
             })
 
-    len_products_for_update = len(products_for_update)
     len_new_products = len(new_products)
 
     currency = Currency.objects.get(code='UAH')
@@ -738,17 +737,10 @@ def parse_mizol():
 
         print('----> added', ind, 'items from', len_new_products)
 
-    # for ind, i in enumerate(products_for_update):
-    #     product = Product.objects.get(vendor_name=vendor_name, vendor_id=i['vendor_id'])
-    #     if product.price != i['price']:
-    #         product.price = i['price']
-    #         product.save(update_fields=('price',))
-    #
-    #         print('----> updated', ind, 'items from', len_products_for_update)
 
-
-def update_mizol_prices(filename):
-    wb = load_workbook(settings.MEDIA_ROOT + '/' + filename)
+def update_prices(filename, vendor_name):
+    file_path = settings.MEDIA_ROOT + '/' + filename
+    wb = load_workbook(file_path)
     sheet_name = wb.sheetnames[0]
     sheet = wb[sheet_name]
 
@@ -764,13 +756,15 @@ def update_mizol_prices(filename):
 
     with atomic():
         for i in data_list:
-            products = Product.objects.filter(vendor_id=i['id'], vendor_name='Mizol')
+            products = Product.objects.filter(vendor_id=i['id'], vendor_name=vendor_name)
 
             for product in products:
                 product.price = decimal.Decimal(i['price'])
                 product.availability_prom = i['available']
                 product.stock_quantity = i['stock_quantity_for_rozetka']
                 product.save(update_fields=('price', 'availability_prom', 'stock_quantity'))
+
+    os.remove(file_path)
 
 
 def import_parameters_form_prom(filename):

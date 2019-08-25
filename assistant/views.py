@@ -1,4 +1,3 @@
-import decimal
 from django.utils.crypto import get_random_string
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View, FormView
@@ -176,19 +175,26 @@ class UpdateMizolPriceView(LoginRequiredMixin, PermissionRequiredMixin, FormView
     login_url = reverse_lazy('home')
     permission_required = ('assistant.can_update_mizol',)
 
+    def get_form_kwargs(self):
+        kwargs = super(UpdateMizolPriceView, self).get_form_kwargs()
+        vendors = [[i, i] for i in set(Product.objects.values_list('vendor_name', flat=True)) if i]
+        kwargs['vendors'] = vendors
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_page'] = 'Обновление каталога продукции по компании Mizol'
+        context['title_page'] = 'Обновление каталога продукции по стандартному шаблону файла'
         return context
 
     def form_valid(self, form):
+        vendor_name = form.cleaned_data['vendor_name']
 
         myfile = form.cleaned_data['file']
         fs = FileSystemStorage()
         name = get_random_string(20)
         filename = fs.save(name + '.xlsx', myfile)
 
-        update_mizol_prices_task.delay(filename)
+        update_mizol_prices_task.delay(filename, vendor_name)
 
         return redirect(reverse_lazy('all-catalog'))
 

@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ValidationError
 from .models import Unit, Category, Currency, RozetkaCategory, availability_prom_help_text
 from catalog.models import Manufacturer
 from django.contrib.auth.models import User
@@ -22,12 +21,6 @@ class SetPricePercentForm(forms.Form):
     CHOICES = (('+', '+ (добавление)'),
                ('-', '- (вычитание)'))
     action_ = forms.ChoiceField(choices=CHOICES, widget=forms.Select())
-
-    # def clean_percent(self):
-    #     percent = self.cleaned_data.get('percent')
-    #     if float(percent) <= 0:
-    #         raise ValidationError('% не должен быть 0 и меньше')
-    #     return percent
 
 
 class SetUnitForm(forms.Form):
@@ -89,3 +82,11 @@ class SetManufacturerForm(forms.Form):
 
 class UpdateMizolPriceForm(forms.Form):
     file = forms.FileField(label='Файл')
+
+    def __init__(self, *args, **kwargs):
+        vendors = kwargs.pop('vendors', None)
+        super(UpdateMizolPriceForm, self).__init__(*args, **kwargs)
+        if vendors:
+            self.fields['vendor_name'] = forms.CharField(widget=forms.Select(choices=vendors, attrs={
+                'class': 'form-control'
+            }), label='Вендор')

@@ -1,15 +1,15 @@
 from __future__ import absolute_import, unicode_literals
 from django_ppf.celery import app
 from assistant.utils import (
-    update_mizol_prices,
+    update_prices,
     import_parameters_form_prom,
     parse_mizol,
 )
 
 
 @app.task(name='assistant.update_mizol_prices_task')
-def update_mizol_prices_task(filename):
-    update_mizol_prices(filename)
+def update_mizol_prices_task(filename, vendor_name):
+    update_prices(filename, vendor_name)
 
 
 @app.task(name='assistant.import_parameters_form_prom')
