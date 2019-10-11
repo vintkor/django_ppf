@@ -5,28 +5,13 @@ from django_ppf.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
 
 from solutions.sitemap import SolProductSitemap
-from .views import HomeView, ContactsView
+from .views import HomeView, ContactsView, StaticViewSitemap
 from django.conf import settings
-from django.contrib import sitemaps
 from catalog.sitemap import ProductSitemap, CategorySitemap, AuxPageSitemap
 from geo.sitemap import RegionSitemap, ObjectPPFSitemap
 from news.sitemap import NewsSitemap, PromoSitemap
 from django.contrib.sitemaps.views import sitemap
-from django.urls import path, reverse
-import sys
-
-
-class StaticViewSitemap(sitemaps.Sitemap):
-    priority = 0.5
-    changefreq = 'daily'
-
-    def items(self):
-        return (
-            'home', 'contacts', 'news-list', 'geo-root', 'catalog',
-        )
-
-    def location(self, item):
-        return reverse(item)
+from django.urls import path
 
 
 sitemap_dict = {

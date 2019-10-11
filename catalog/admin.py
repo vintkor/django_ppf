@@ -1,57 +1,61 @@
 from django.contrib import admin
 from .models import Category, Product, Manufacturer, Order, Feature, Benefit, Gallery, Document, Video, Digits, Color
 from mptt.admin import DraggableMPTTAdmin
-from sorl.thumbnail.admin import AdminImageMixin, AdminInlineImageMixin
 from django.utils.translation import ugettext_lazy as _
-# import catalog.translation
-# from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import (
+    TabbedTranslationAdmin,
+    TabbedDjangoJqueryTranslationAdmin,
+    TranslationTabularInline,
+    TranslationStackedInline,
+)
+import catalog.translation
 
 
-class ColorInline(admin.TabularInline):
+class ColorInline(TranslationTabularInline):
     extra = 0
     model = Color
 
 
-class DigitsInline(admin.StackedInline):
+class DigitsInline(TranslationTabularInline):
     extra = 0
     model = Digits
 
 
-class VideoInline(admin.TabularInline):
+class VideoInline(TranslationTabularInline):
     extra = 0
     model = Video
 
 
-class FeatureInline(admin.TabularInline):
+class FeatureInline(TranslationTabularInline):
     extra = 0
     model = Feature
 
 
-class BenefitInline(AdminInlineImageMixin, admin.StackedInline):
+class BenefitInline(TranslationStackedInline):
     extra = 0
     model = Benefit
 
 
-class GalleryInline(AdminInlineImageMixin, admin.TabularInline):
+class GalleryInline(TranslationTabularInline):
     extra = 0
     model = Gallery
 
 
-class DocumentInline(admin.TabularInline):
+class DocumentInline(TranslationTabularInline):
     extra = 0
     model = Document
 
 
 @admin.register(Category)
-class CategoryAdmin(AdminImageMixin, DraggableMPTTAdmin):
+class CategoryAdmin(DraggableMPTTAdmin, TabbedTranslationAdmin):
     list_display = ('tree_actions',  'indented_title', 'get_count_products', 'sort', 'is_auxpage',)
     prepopulated_fields = {'slug': ('title',)}
     Category.get_count_products.short_description = _('Products')
 
 
 @admin.register(Product)
-class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
-    list_display = ('title', 'manufacturer', 'active')
+class ProductAdmin(TabbedDjangoJqueryTranslationAdmin):
+    list_display = ('title', 'manufacturer', 'author', 'is_checked', 'active')
     list_filter = ('category',)
     search_fields = ('title',)
     inlines = (FeatureInline, BenefitInline, GalleryInline, ColorInline, DocumentInline, VideoInline, DigitsInline)
@@ -60,9 +64,19 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('countries', 'category',)
 
+    def get_queryset(self, request):
+        user = request.user
+        qs = super(ProductAdmin, self).get_queryset(request)
+        if user.is_superuser:
+            return qs
+        elif user.has_perm('catalog.Freelanser'):
+            return qs.filter(author=user, is_checked=False)
+        else:
+            return qs
+
 
 @admin.register(Manufacturer)
-class ManufacturerAdmin(admin.ModelAdmin):
+class ManufacturerAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'get_count_product')
     search_fields = ('title',)
 
@@ -75,21 +89,21 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 @admin.register(Video)
-class VideoAdmin(admin.ModelAdmin):
+class VideoAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'product', 'created')
 
 
 @admin.register(Digits)
-class DigitsAdmin(admin.ModelAdmin):
+class DigitsAdmin(TabbedTranslationAdmin):
     list_display = ('digit', 'title', 'product', 'created')
 
 
 @admin.register(Gallery)
-class GalleryAdmin(admin.ModelAdmin):
+class GalleryAdmin(TabbedTranslationAdmin):
     list_display = ('alt', 'product', 'created')
 
 
 @admin.register(Color)
-class ColorAdmin(admin.ModelAdmin):
+class ColorAdmin(TabbedTranslationAdmin):
     list_display = ('alt', 'product', 'created')
 

@@ -42,6 +42,15 @@
 </head>
 <body class="{% block body %}home{% endblock body %}">
 
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-8">
+
+
+
+    </div>
+</div>
+
 <header class="header">
     <div class="container-fluid">
         <div class="super">
@@ -63,7 +72,7 @@
                     <div class="super__phones">
                         <div class="super__phones__wrapper">
 {#                            <div class="super__phone"><span>+38 (067)</span> 498-09-33</div>#}
-                            <div class="super__phone"><span>+38 (063)</span> 439-25-95</div>
+                            <div style="margin-top: 2px;" class="super__phone"><span>+38 (063)</span> 439-25-95</div>
                         </div>
                         <div class="super__phones__wrapper">
                             <div class="super__phone"><span>+38 (067)</span> 340-21-60</div>
@@ -103,6 +112,17 @@
                             </li>
                             <li class="heeader-nav__li">
                                 <a class="heeader-nav__link" href="{% url 'contacts' %}">{% trans 'Contact us' %}</a>
+                            </li>
+                            <li class="heeader-nav__li">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% for lang in LANGUAGES %}
+                                    {% if lang.0 != LANGUAGE_CODE %}
+                                        <a class="heeader-nav__link" href="{% get_lang_url request.build_absolute_uri lang.0 LANGUAGE_CODE %}">
+                                            <img width="34px" src="{% static 'theme_first/app/img/' %}{{ lang.0 }}.svg">
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
                             </li>
                         </ul>
                     </nav>

@@ -146,7 +146,7 @@ class Product(BaseModel):
     vendor_id = models.CharField(blank=True, null=True, max_length=50)
     vendor_name = models.CharField(blank=True, null=True, max_length=200)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     is_checked = models.BooleanField(default=False)
 
     class Meta:
@@ -168,7 +168,7 @@ class Product(BaseModel):
                 user = get_current_user()
                 self.author = user
             except:
-                user = None
+                self.user = None
 
         return super(Product, self).save(*args, **kwargs)
 

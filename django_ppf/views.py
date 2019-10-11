@@ -1,8 +1,9 @@
 from django.views.generic import View
 from catalog.models import Category
 from django.shortcuts import render
-
+from django.urls import reverse
 from company.models import Company
+from django.contrib import sitemaps
 
 
 class HomeView(View):
@@ -32,3 +33,15 @@ class ContactsView(View):
         }
         return render(request, 'django_ppf/contacts.html', context)
 
+
+class StaticViewSitemap(sitemaps.Sitemap):
+    priority = 0.5
+    changefreq = 'daily'
+
+    def items(self):
+        return (
+            'home', 'contacts', 'news-list', 'geo-root', 'catalog',
+        )
+
+    def location(self, item):
+        return reverse(item)

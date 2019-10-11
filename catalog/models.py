@@ -1,4 +1,5 @@
 from django.db import models
+from assistant.middleware import get_current_user
 from django_ppf.basemodel import BaseModel
 from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
@@ -8,6 +9,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from sorl.thumbnail import ImageField
 from phonenumber_field.modelfields import PhoneNumberField
 from .utils import FileUtil
+from django.contrib.auth.models import User
 
 
 def set_image_name(instanse, filename):
@@ -129,13 +131,26 @@ class Product(BaseModel):
     title_country = models.CharField(max_length=250, verbose_name=_('Map block title'), blank=True, null=True)
 
     active = models.BooleanField(default=False)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='author')
+    is_checked = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
+        permissions = (
+            ('Freelanser', 'freelanser'),
+        )
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.author:
+            try:
+                self.author = get_current_user()
+            except:
+                self.user = None
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('catalog-product', args=[str(self.slug)])

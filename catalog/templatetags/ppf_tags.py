@@ -8,6 +8,20 @@ from catalog.models import Category
 register = template.Library()
 
 
+@register.simple_tag
+def get_lang_url(current_url, next_lang, current_lang):
+    ru_lang = 'ru'
+    if current_lang == ru_lang:
+        path = current_url.split('/')
+        new_url = '/'.join([*path[:3], next_lang, *path[3:]])
+    else:
+        if next_lang == ru_lang:
+            new_url = current_url.replace('/' + current_lang, '')
+        else:
+            new_url = current_url.replace(current_lang, next_lang)
+    return new_url
+
+
 @register.inclusion_tag('django_ppf/partials/_last-news-tag.html')
 def last_news():
     news = News.objects.all()[:5]
