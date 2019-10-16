@@ -9,6 +9,24 @@ from modeltranslation.admin import (
     TranslationStackedInline,
 )
 import catalog.translation
+from assistant.admin import set_author
+
+
+class FrelancerTranslatorAccessMixin:
+
+    def get_queryset(self, request):
+        user = request.user
+        qs = self.model._default_manager.select_related('product__author').all()
+        ordering = self.get_ordering(request)
+        if ordering:
+            qs = qs.order_by(*ordering)
+        if user.is_superuser:
+            return qs
+        elif user.has_perm('catalog.Freelanser'):
+            qs = qs.filter(product__author=user, product__is_checked=False)
+            return qs
+        else:
+            return qs
 
 
 class ColorInline(TranslationTabularInline):
@@ -53,6 +71,18 @@ class CategoryAdmin(DraggableMPTTAdmin, TabbedTranslationAdmin):
     Category.get_count_products.short_description = _('Products')
 
 
+def reverse_active(modeladmin, request, queryset):
+    for item in queryset:
+        item.active = not item.active
+        item.save(update_fields=('active',))
+
+
+def reverse_is_checked(modeladmin, request, queryset):
+    for item in queryset:
+        item.is_checked = not item.is_checked
+        item.save(update_fields=('is_checked',))
+
+
 @admin.register(Product)
 class ProductAdmin(TabbedDjangoJqueryTranslationAdmin):
     list_display = ('title', 'manufacturer', 'author', 'is_checked', 'active')
@@ -63,6 +93,11 @@ class ProductAdmin(TabbedDjangoJqueryTranslationAdmin):
     list_editable = ('active',)
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('countries', 'category',)
+    actions = (
+        reverse_active,
+        set_author,
+        reverse_is_checked,
+    )
 
     def get_queryset(self, request):
         user = request.user
@@ -84,26 +119,26 @@ class ManufacturerAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(FrelancerTranslatorAccessMixin, admin.ModelAdmin):
     list_display = ('phone', 'product', 'created')
 
 
 @admin.register(Video)
-class VideoAdmin(TabbedTranslationAdmin):
+class VideoAdmin(FrelancerTranslatorAccessMixin, TabbedTranslationAdmin):
     list_display = ('title', 'product', 'created')
 
 
 @admin.register(Digits)
-class DigitsAdmin(TabbedTranslationAdmin):
+class DigitsAdmin(FrelancerTranslatorAccessMixin, TabbedTranslationAdmin):
     list_display = ('digit', 'title', 'product', 'created')
 
 
 @admin.register(Gallery)
-class GalleryAdmin(TabbedTranslationAdmin):
+class GalleryAdmin(FrelancerTranslatorAccessMixin, TabbedTranslationAdmin):
     list_display = ('alt', 'product', 'created')
 
 
 @admin.register(Color)
-class ColorAdmin(TabbedTranslationAdmin):
+class ColorAdmin(FrelancerTranslatorAccessMixin, TabbedTranslationAdmin):
     list_display = ('alt', 'product', 'created')
 
