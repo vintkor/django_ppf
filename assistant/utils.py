@@ -519,7 +519,10 @@ def make_filename(pk, ext):
 
 
 def get_file_ext(url):
-    return url.split('.')[-1]
+    ext = url.split('.')[-1]
+    if len(ext) > 3:
+        return ''
+    return ext
 
 
 def parse_yantarlk():

@@ -36,6 +36,7 @@ except:
         'django_celery_results',
         'django_cool_paginator',
         'django_social_share',
+        'django_json_widget',
 
         'user_profile',
         'catalog',
@@ -49,6 +50,7 @@ except:
         'library',
         'pages',
         'solutions',
+        'spider',
     ]
 
     MIDDLEWARE = [

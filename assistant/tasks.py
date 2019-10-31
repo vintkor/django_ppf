@@ -28,3 +28,11 @@ def update_horoz_task():
     ph = ParseHoroz(link='https://horozua.com/index.php?route=feed/yandex_yml', my_currency_code='USD')
     ph.set_products()
     ph.add_or_update_products_in_db()
+
+
+@app.task
+def run_xml_spider():
+    from spider.utils.spider import Spider
+    spider = Spider.init()
+    spider.start_parse()
+

@@ -14,4 +14,8 @@ app.conf.beat_schedule = {
         'task': 'assistant.tasks.update_horoz_task',
         'schedule': crontab(hour=7, minute=30)
     },
+    'run_xml_spider_every_hour': {
+        'task': 'assistant.tasks.run_xml_spider',
+        'schedule': crontab(hour='*/1', minute=0)
+    },
 }
