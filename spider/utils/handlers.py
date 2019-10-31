@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
 import html
-from assistant.models import Product, Photo
+from assistant.models import Product, Photo, Category
 from assistant.utils import get_file_ext, make_filename, get_and_save_image
 from currency.models import Currency
 
@@ -23,6 +23,7 @@ class BaseHandler:
     vendor_name = None
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                              '(KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+    category = Category.objects.get(title='TEST CATEGORY')
 
     def __init__(self, sourse):
         self.sourse = sourse
@@ -66,6 +67,7 @@ class BaseHandler:
 
     def _create_product(self, product):
         new_product = Product()
+        new_product.category = self.category
         new_product.title = product.title
         new_product.price = product.price
         new_product.text = product.text
