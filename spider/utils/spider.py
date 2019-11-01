@@ -17,10 +17,8 @@ class Spider:
     @staticmethod
     def handler(type_):
         type__ = type_.lower()
-        if type__ == 'VitanHandler'.lower():
-            return handlers.VitanHandler
-        elif type__ == 'OptovikHandler'.lower():
-            return handlers.OptovikHandler
+        if type__ == 'YMLYandexCatalogHandler'.lower():
+            return handlers.YMLYandexCatalogHandler
         else:
             raise ConfigError('Handler for type {} not found'.format(type_))
 

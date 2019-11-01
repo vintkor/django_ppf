@@ -20,7 +20,6 @@ class ProductTemplate:
 
 
 class BaseHandler:
-    vendor_name = None
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                              '(KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
     category = Category.objects.get(title='TEST CATEGORY')
@@ -30,6 +29,7 @@ class BaseHandler:
         self.content = None
         self.products = []
         self._set_currencies()
+        self.vendor_name = sourse.rules['vandor_name'].lower()
 
     def _set_currencies(self):
         self.currencies = {i.code.upper(): i.id for i in Currency.objects.all()}
@@ -95,7 +95,7 @@ class BaseHandler:
         for product in self.products:
             products_in_db = Product.objects.filter(
                 vendor_id=product.vendor_id,
-                vendor_name=self.vendor_name.lower()
+                vendor_name=self.vendor_name
             )
             if len(products_in_db) > 0:
                 for product_in_db in products_in_db:
@@ -116,8 +116,7 @@ class BaseHandler:
         self.create_or_update()
 
 
-class VitanHandler(BaseHandler):
-    vendor_name = 'vitan'
+class YMLYandexCatalogHandler(BaseHandler):
 
     def prepare_content(self):
         soup = BeautifulSoup(self.content, 'html5lib')
@@ -130,14 +129,10 @@ class VitanHandler(BaseHandler):
                     price=self.decimal_or_none(offer.find(mapping['get_price']).text),
                     images=[i.text for i in offer.find_all(mapping['get_image'])],
                     text=html.unescape(offer.find(mapping['get_text']).text),
-                    vendor_id=offer.find('vendorcode').text,
-                    currency_id=self.currencies.get(offer.find('currencyid').text.upper()),
-                    available=True if offer['available'] == 'true' else False,
+                    vendor_id=offer.find(mapping['get_vendor_code']).text,
+                    currency_id=self.currencies.get(offer.find(mapping['get_currency']).text.upper()),
+                    available=True if offer[mapping['get_available']] == 'true' else False,
                 )
                 self.products.append(product)
             except:
                 print('[ERROR] Parsing error in VitanHandler')
-
-
-class OptovikHandler(VitanHandler):
-    vendor_name = 'optovik'
