@@ -121,6 +121,7 @@ class YMLYandexCatalogHandler(BaseHandler):
     def prepare_content(self):
         soup = BeautifulSoup(self.content, 'html5lib')
         mapping = self.sourse.rules['mapping']
+        reset_currency = self.sourse.rules.get('reset_currency_code', False)
 
         for offer in soup.find_all(self.sourse.rules['cycle_tag']):
             try:
@@ -130,7 +131,8 @@ class YMLYandexCatalogHandler(BaseHandler):
                     images=[i.text for i in offer.find_all(mapping['get_image'])],
                     text=html.unescape(offer.find(mapping['get_text']).text),
                     vendor_id=offer.find(mapping['get_vendor_code']).text,
-                    currency_id=self.currencies.get(offer.find(mapping['get_currency']).text.upper()),
+                    currency_id=self.currencies.get(reset_currency.upper()) if reset_currency else self.currencies.get(
+                        offer.find(mapping['get_currency']).text.upper()),
                     available=True if offer[mapping['get_available']] == 'true' else False,
                 )
                 self.products.append(product)
