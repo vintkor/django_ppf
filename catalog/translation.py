@@ -78,6 +78,7 @@ class VideoTranslation(TranslationOptions):
 @register(Digits)
 class DigitsTranslation(TranslationOptions):
     fields = (
+        'digit',
         'title',
         'subtitle',
         'text',

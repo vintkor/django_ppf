@@ -4,7 +4,9 @@
 {% load static %}
 
 {% block title %}{% trans 'Contact us' %}{% endblock %}
-{% block header_scripts %}{% endblock %}
+{% block header_scripts %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block body %}profile-page{% endblock body %}
 
@@ -33,6 +35,7 @@
                                 {% for info in office.info_set.all %}
                                     <li>
                                         <i class="fa {{ info.fa_icon_class }}"></i>
+                                        {{ info.label }}
                                         {{ info.field }}
                                     </li>
                                 {% endfor %}

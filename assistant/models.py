@@ -123,6 +123,7 @@ class Product(BaseModel):
     category_rozetka = TreeForeignKey(RozetkaCategory, blank=True, null=True, verbose_name='Категория розетка', on_delete=None)
     import_to_rozetka = models.BooleanField(verbose_name='На розетку', default=False)
     import_to_prom = models.BooleanField(verbose_name='На PROM', default=False)
+    count_in_package = models.PositiveSmallIntegerField(verbose_name="Кол-во в упаковке", default=1)
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
     old_price_percent = models.DecimalField(
         verbose_name="Наценка в процентах для старай цены", max_digits=5, decimal_places=2, blank=True, null=True)
@@ -203,9 +204,9 @@ class Product(BaseModel):
         price = self.get_price()
         if price:
             if self.re_count:
-                return round(price * self.course, 3)
+                return round(price * self.course * self.count_in_package, 3)
             else:
-                return round(price, 3)
+                return round(price * self.count_in_package, 3)
         return False
     get_price_UAH.short_description = 'Цена в валюте'
 
