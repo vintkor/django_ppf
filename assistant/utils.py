@@ -14,6 +14,7 @@ import csv
 import os
 import xml.etree.ElementTree as ET
 import logging
+from xlsxwriter import Workbook
 
 
 class ParseHoroz:
@@ -463,6 +464,68 @@ def make_xml(products=None):
     file_handle = open("rozetka.xml", "w")
     doc.writexml(file_handle, encoding='UTF-8')
     file_handle.close()
+
+
+def make_xlsx_for_prom():
+    file_name = 'prom.xlsx'
+    queryset = Product.objects.select_related('category', 'unit').filter(active=True, import_to_prom=True)
+
+    workbook = Workbook(file_name)
+    worksheet = workbook.add_worksheet('Export Products Sheet')
+    worksheet_2 = workbook.add_worksheet('Export Groups Sheet')
+
+    header = (
+        'Название_позиции',
+        'Ключевые_слова',
+        'Описание',
+        'Тип_товара',
+        'Цена',
+        'Валюта',
+        'Единица_измерения',
+        'Ссылка_изображения',
+        'Наличие',
+        'Идентификатор_товара',
+        'Идентификатор_группы',
+        'Код_товара',
+        'Номер_группы',
+    )
+
+    [worksheet.write(0, col, i) for col, i in enumerate(header)]
+
+    for row, item in enumerate(queryset):
+        worksheet.write(row + 1, 0, item.title)
+        worksheet.write(row + 1, 1, item.category.title)
+        worksheet.write(row + 1, 2, item.text.replace(chr(13), '').replace(chr(10), '').replace(
+            'src="/media/uploads/', 'src="{}/media/uploads/'.format(settings.SITE_URL)))
+        worksheet.write(row + 1, 3, 'r')
+        worksheet.write(row + 1, 4, item.get_price_UAH())
+        worksheet.write(row + 1, 5, item.get_currency_code())
+        worksheet.write(row + 1, 6, item.get_unit())
+        worksheet.write_string(row + 1, 7, ''.join(
+            ['{}{}, '.format(settings.SITE_URL, img) for img in item.get_all_photo()]
+        ))
+        worksheet.write(row + 1, 8, item.availability_prom)
+        worksheet.write(row + 1, 9, item.code)
+        worksheet.write(row + 1, 10, item.category.id)
+        worksheet.write(row + 1, 11, item.code)
+        worksheet.write(row + 1, 12, item.category.id)
+
+    header_2 = (
+        'Номер_группы',
+        'Название_группы',
+        'Идентификатор_группы',
+        'Номер_родителя',
+        'Идентификатор_родителя',
+    )
+
+    [worksheet_2.write(0, col, i) for col, i in enumerate(header_2)]
+
+    for row, item in enumerate(Category.objects.all()):
+        worksheet_2.write(row + 1, 0, item.id)
+        worksheet_2.write(row + 1, 1, item.title)
+        worksheet_2.write(row + 1, 2, item.id)
+        worksheet_2.write(row + 1, 3, item.get_id())
+        worksheet_2.write(row + 1, 4, item.get_id())
 
 
 def parse_atmosfera():

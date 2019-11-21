@@ -18,4 +18,12 @@ app.conf.beat_schedule = {
         'task': 'assistant.tasks.run_xml_spider',
         'schedule': crontab(hour='*/1', minute=0)
     },
+    'make_xml_for_rozetka_every_20_minutes': {
+        'task': 'assistant.tasks.make_xml_for_rozetka',
+        'schedule': crontab(minute='*/30'),
+    },
+    'make_xlsx_for_prom_every_20_minutes': {
+        'task': 'assistant.tasks.make_xlsx_for_prom_task',
+        'schedule': crontab(minute='*/20'),
+    }
 }

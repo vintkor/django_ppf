@@ -5,6 +5,7 @@ from assistant.utils import (
     import_parameters_form_prom,
     parse_mizol,
 )
+from assistant.utils import make_xml, make_xlsx_for_prom
 
 
 @app.task(name='assistant.update_mizol_prices_task')
@@ -36,3 +37,12 @@ def run_xml_spider():
     spider = Spider.init()
     spider.start_parse()
 
+
+@app.task
+def make_xml_for_rozetka():
+    make_xml()
+
+
+@app.task
+def make_xlsx_for_prom_task():
+    make_xlsx_for_prom()
