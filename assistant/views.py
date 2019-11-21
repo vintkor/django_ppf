@@ -95,7 +95,7 @@ class CatalogForPromXLSX(View):
 
         with open('prom.xlsx', 'r') as f:
             file = f.read()
-            response.content = file
+            response.content = file.encode('UTF-8')
 
         return response
 
