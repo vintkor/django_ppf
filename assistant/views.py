@@ -93,9 +93,9 @@ class CatalogForPromXLSX(View):
         response = HttpResponse(content_type='text/xlsx')
         response['Content-Disposition'] = 'attachment; filename="prom.xlsx"'
 
-        with open('prom.xlsx', 'r') as f:
+        with open('prom.xlsx', 'rb') as f:
             file = f.read()
-            response.content = file.encode('UTF-8')
+            response.content = file
 
         return response
 
@@ -106,7 +106,7 @@ class CatalogForRozetkaXML(View):
         response = HttpResponse(content_type='text/xml')
         response['Content-Disposition'] = 'attachment; filename="catalog-rozetka.xml"'
 
-        with open('rozetka.xml', 'r') as f:
+        with open('rozetka.xml', 'rb') as f:
             file = f.read()
             response.content = file
 
