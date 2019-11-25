@@ -392,6 +392,36 @@ def set_price(modeladmin, request, queryset):
 set_price.short_description = 'Установить цену'
 
 
+def set_promo_percent(modeladmin, request, queryset):
+    form = None
+    template = 'set-course.html'
+    context = {'items': queryset, 'title': 'Установить промо процент', 'action': 'set_promo_percent'}
+
+    if 'apply' in request.POST:
+        form = SetPriceForm(request.POST)
+
+        if form.is_valid():
+            promo_percent = form.cleaned_data['price']
+
+            count = 0
+            for item in queryset:
+                item.promo_percent = promo_percent
+                item.save()
+                count += 1
+
+            modeladmin.message_user(request, "Процент промо {} установлен у {} товаров.".format(promo_percent, count), level=messages.SUCCESS)
+            return HttpResponseRedirect(request.get_full_path())
+
+    if not form:
+        form = SetPriceForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
+        context['form'] = form
+
+    return render(request, template, context)
+
+
+set_promo_percent.short_description = 'Изменить промо процент'
+
+
 def set_old_price_percent(modeladmin, request, queryset):
     form = None
     template = 'set-course.html'
@@ -597,6 +627,7 @@ class ProductAdmin(admin.ModelAdmin):
         "active",
         "price",
         "old_price_percent",
+        "get_promo_price",
         "discont",
         "get_currency_code",
         "stock_quantity",
@@ -625,6 +656,7 @@ class ProductAdmin(admin.ModelAdmin):
     }
     actions = (
         set_percent_price,
+        set_promo_percent,
         set_category,
         set_course,
         set_unit,

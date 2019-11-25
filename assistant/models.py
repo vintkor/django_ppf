@@ -11,6 +11,7 @@ from catalog.models import Manufacturer
 from django.contrib.auth.models import User
 from assistant.middleware import get_current_user
 from django.utils.safestring import mark_safe
+from decimal import Decimal
 
 
 def set_image_name(instance, filename):
@@ -127,6 +128,8 @@ class Product(BaseModel):
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True)
     old_price_percent = models.DecimalField(
         verbose_name="Наценка в процентах для старай цены", max_digits=5, decimal_places=2, blank=True, null=True)
+    promo_percent = models.DecimalField(
+        verbose_name="Процент скидки для промо", max_digits=5, decimal_places=2, blank=True, null=True)
     discont = models.DecimalField(verbose_name='Скидка', decimal_places=2, max_digits=4, blank=True, null=True)
     stock_quantity = models.PositiveSmallIntegerField(default=100, verbose_name='Остаток')
     availability_prom = models.CharField(
@@ -209,6 +212,13 @@ class Product(BaseModel):
                 return round(price * self.count_in_package, 3)
         return False
     get_price_UAH.short_description = 'Цена в валюте'
+
+    def get_promo_price(self):
+        price = self.get_price_UAH()
+        if price and self.promo_percent:
+            return round(price - (price * self.promo_percent) / 100, 2)
+        return False
+    get_promo_price.short_description = 'Цена промо'
 
     def get_old_price(self):
         price_uah = self.get_price_UAH()
