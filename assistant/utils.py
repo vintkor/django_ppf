@@ -393,10 +393,9 @@ def make_xml(products=None):
                 price.appendChild(price_text)
                 offer.appendChild(price)
 
-            promo_percent = product.promo_percent
-            if promo_percent:
+            if product.promo_percent:
                 price_promo = doc.createElement('price_promo')
-                price_promo_text = doc.createTextNode(str(promo_percent))
+                price_promo_text = doc.createTextNode(str(product.get_promo_price()))
                 price_promo.appendChild(price_promo_text)
                 offer.appendChild(price_promo)
 
