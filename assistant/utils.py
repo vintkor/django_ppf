@@ -389,7 +389,7 @@ def make_xml(products=None):
                 offer.appendChild(old_price)
             else:
                 price = doc.createElement('price')
-                price_text = doc.createTextNode(str(product.get_promo_price()))
+                price_text = doc.createTextNode(str(product.get_price_UAH()))
                 price.appendChild(price_text)
                 offer.appendChild(price)
 
