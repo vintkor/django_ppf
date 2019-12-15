@@ -362,6 +362,11 @@ def make_xml(products=None):
     offers = doc.createElement('offers')
     shop.appendChild(offers)
 
+    def create_node(node_name, node_value):
+        node = doc.createElement(node_name)
+        node.appendChild(doc.createTextNode(str(node_value)))
+        offer.appendChild(node)
+
     for product in products:
         if product.import_to_rozetka:
             offer = doc.createElement('offer')
@@ -372,72 +377,32 @@ def make_xml(products=None):
                 offer.setAttribute('available', 'true')
             offers.appendChild(offer)
 
-            offer_url = doc.createElement('url')
-            offer_url_text = doc.createTextNode('{}{}'.format(settings.SITE_URL, product.get_absolute_url()))
-            offer_url.appendChild(offer_url_text)
-            offer.appendChild(offer_url)
+            create_node('url', '{}{}'.format(settings.SITE_URL, product.get_absolute_url()))
 
             if product.old_price_percent:
-                price = doc.createElement('price')
-                price_text = doc.createTextNode(str(product.get_old_price()))
-                price.appendChild(price_text)
-                offer.appendChild(price)
-
-                old_price = doc.createElement('price_old')
-                price_text = doc.createTextNode(str(product.get_price_UAH()))
-                old_price.appendChild(price_text)
-                offer.appendChild(old_price)
+                create_node('price', product.get_old_price())
+                create_node('price_old', product.get_price_UAH())
             else:
-                price = doc.createElement('price')
-                price_text = doc.createTextNode(str(product.get_price_UAH()))
-                price.appendChild(price_text)
-                offer.appendChild(price)
+                create_node('price', product.get_price_UAH())
 
             if product.promo_percent:
-                price_promo = doc.createElement('price_promo')
-                price_promo_text = doc.createTextNode(str(product.get_promo_price()))
-                price_promo.appendChild(price_promo_text)
-                offer.appendChild(price_promo)
+                create_node('price_promo', product.get_promo_price())
 
-            currencyId = doc.createElement('currencyId')
-            currencyId_text = doc.createTextNode('UAH')
-            currencyId.appendChild(currencyId_text)
-            offer.appendChild(currencyId)
-
-            categoryId = doc.createElement('categoryId')
-            categoryId_text = doc.createTextNode(str(product.category_rozetka.id))  # <--
-            categoryId.appendChild(categoryId_text)
-            offer.appendChild(categoryId)
+            create_node('currencyId', 'UAH')
+            create_node('categoryId', product.category_rozetka.id)
 
             if product.image:
-                picture = doc.createElement('picture')
-                picture_text = doc.createTextNode('{}{}'.format(settings.SITE_URL, product.image.url))
-                picture.appendChild(picture_text)
-                offer.appendChild(picture)
+                create_node('picture', '{}{}'.format(settings.SITE_URL, product.image.url))
 
             for photo in product.get_images():
-                picture_set = doc.createElement('picture')
-                picture_set_text = doc.createTextNode('{}{}'.format(settings.SITE_URL, photo.image.url))
-                picture_set.appendChild(picture_set_text)
-                offer.appendChild(picture_set)
+                create_node('picture', '{}{}'.format(settings.SITE_URL, photo.image.url))
 
-            vendor = doc.createElement('vendor')
-            vendor_text = doc.createTextNode(product.manufacturer.title)
-            vendor.appendChild(vendor_text)
-            offer.appendChild(vendor)
-
-            stock_quantity = doc.createElement('stock_quantity')
-            stock_quantity_text = doc.createTextNode(str(product.stock_quantity))
-            stock_quantity.appendChild(stock_quantity_text)
-            offer.appendChild(stock_quantity)
-
-            name = doc.createElement('name')
-            name_text = doc.createTextNode('{title} ({code})'.format(
+            create_node('vendor', product.manufacturer.title)
+            create_node('stock_quantity', product.stock_quantity)
+            create_node('name', '{title} ({code})'.format(
                 title=product.title,
                 code=product.code,
             ))
-            name.appendChild(name_text)
-            offer.appendChild(name)
 
             description = doc.createElement('description')
             cdata = doc.createCDATASection(clear_content(product.text))
