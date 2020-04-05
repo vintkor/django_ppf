@@ -37,6 +37,7 @@ except:
         'django_cool_paginator',
         'django_social_share',
         'django_json_widget',
+        'storages',
 
         'user_profile',
         'catalog',
