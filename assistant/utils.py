@@ -392,10 +392,10 @@ def make_xml(products=None):
             create_node('categoryId', product.category_rozetka.id)
 
             if product.image:
-                create_node('picture', '{}{}'.format(settings.SITE_URL, product.image.url))
+                create_node('picture', '{}'.format(product.image.url))
 
             for photo in product.get_images():
-                create_node('picture', '{}{}'.format(settings.SITE_URL, photo.image.url))
+                create_node('picture', '{}'.format(photo.image.url))
 
             create_node('vendor', product.manufacturer.title)
             create_node('stock_quantity', product.stock_quantity)
@@ -473,7 +473,7 @@ def make_xlsx_for_prom():
         worksheet.write(row + 1, 5, item.get_currency_code())
         worksheet.write(row + 1, 6, item.get_unit())
         worksheet.write_string(row + 1, 7, ''.join(
-            ['{}{}, '.format(settings.SITE_URL, img) for img in item.get_all_photo()]
+            ['{}, '.format(img) for img in item.get_all_photo()]
         ))
         worksheet.write(row + 1, 8, item.availability_prom)
         worksheet.write(row + 1, 9, item.code)
