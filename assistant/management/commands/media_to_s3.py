@@ -37,6 +37,8 @@ class Command(BaseCommand):
             if not images:
                 continue
 
+            templates = []
+
             for image in images:
                 basename = '/media/{}'.format(image)
                 full_path = '{}{}'.format(settings.BASE_DIR, basename)
@@ -51,5 +53,10 @@ class Command(BaseCommand):
                         print(error)
 
                 file_url = storage.url(image)
-                setattr(item, field, text.replace(basename, file_url))
-                item.save(update_fields=(field,))
+                templates.append([basename, file_url])
+
+            for i in templates:
+                text = text.replace(i[0], i[1])
+
+            setattr(item, field, text)
+            item.save(update_fields=(field,))
